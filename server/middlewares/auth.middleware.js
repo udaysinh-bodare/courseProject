@@ -3,9 +3,10 @@ const result = require("../utils/result");
 const config = require("../utils/config");
 
 function authUser(req, res, next) {
+  console.log(req.path);
   const publicRoutes = [
-    "/auth/login",
-    "/student/register-to-course"
+    "/api/student/",
+    "/register-to-course"
   ];
 
   if (publicRoutes.includes(req.path)) {

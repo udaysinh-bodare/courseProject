@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
-
+const authRoutes = require("./routes/auth.routes");
+const authUser = require("./middlewares/auth.middleware");
 const app = express();
 
 // ======================
@@ -12,9 +13,7 @@ app.use(express.json());
 // ======================
 // Routes
 // ======================
-
-
-
+app.use("/api/student", authRoutes);
 // ======================
 // Health Check (optional but useful)
 // ======================
