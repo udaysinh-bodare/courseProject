@@ -10,4 +10,4 @@ function createResult(error, data) {
     return result;
 }
 
-module.exports = { createResult } 
+module.exports = { createResult }
