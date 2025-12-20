@@ -6,7 +6,8 @@ function authUser(req, res, next) {
   console.log(req.path);
   const publicRoutes = [
     "/api/student/",
-    "/register-to-course"
+    "/register-to-course",
+    "/login"
   ];
 
   if (publicRoutes.includes(req.path)) {
