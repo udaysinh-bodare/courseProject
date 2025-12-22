@@ -10,7 +10,8 @@ function registerToCourse(req, res) {
         if (err) {
             return res.status(500).send({
                 status: "ERROR",
-                message: "databse error"
+                message: "databse error",
+                error: err
             });
         }
         if (result.length == 0) {
@@ -20,6 +21,7 @@ function registerToCourse(req, res) {
                     return res.status(500).send({
                         status: "ERROR",
                         message: "Failed to create user"
+
                     });
                 }
                 pool.query(registerstudent, [name, email, courseid, mobileNo], (err, results) => {
@@ -32,7 +34,8 @@ function registerToCourse(req, res) {
                     }
                     res.send({
                         status: "SUCCESS",
-                        message: "User registered to course successfully"
+                        message: "User registered to course successfully" + `\nRegister no : ${results.insertId}`,
+                        reg_no: results.insertId
                     });
                 });
             });
@@ -43,12 +46,18 @@ function registerToCourse(req, res) {
                     console.error("Error registering student:", err);
                     return res.status(500).send({
                         status: "ERROR",
-                        message: "Failed to register student"
+                        message: "Failed to register student",
+
                     });
                 }
+
+                console.log(results);
+                
+
                 res.send({
                     status: "SUCCESS",
-                    message: "User registered to course successfully"
+                    message: "User registered to course successfully" + `\nRegister no : ${results.insertId}`,
+                    reg_no: results.insertId
                 });
             });
         }
