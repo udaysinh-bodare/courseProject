@@ -15,8 +15,10 @@ app.use(express.json());
 // Routes
 // ======================
 
-app.use("/api/student", authRoutes);
-app.use("/api/student",studentRoutes);
+app.use("/api/auth", authRoutes);
+
+app.use("/api/student", studentRoutes)
+
 // ======================
 // Health Check (optional but useful)
 // ======================
