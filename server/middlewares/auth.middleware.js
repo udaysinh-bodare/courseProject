@@ -7,7 +7,8 @@ function authUser(req, res, next) {
   const publicRoutes = [
     "/api/student/",
     "/register-to-course",
-    "/login"
+    "/login",
+    "/all-active-courses"
   ];
 
   if (publicRoutes.includes(req.path)) {
@@ -30,7 +31,7 @@ function authUser(req, res, next) {
       role: payload.role
     };
 
-    next();
+    return next();
   } catch (err) {
     return res
       .status(401)

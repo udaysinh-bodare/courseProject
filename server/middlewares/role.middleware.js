@@ -1,14 +1,18 @@
-const {createResult} = require("../utils/result");
+const { createResult } = require("../utils/result");
 
 const allowRoles = (allowedRoles) => {
   return (req, res, next) => {
-    if (!req.user || !allowedRoles.includes(req.user.role)) {
-      return res
-        .status(403)
-        .send(createResult("Access denied"));
+    console.log(allowedRoles);
+    console.log(req.user.role);
+    if (allowedRoles == (req.user.role)) {
+      return next();
     }
-    return next();
+    else {
+    return res
+      .status(403)
+      .send(createResult("Access denied"));
+    }
   };
 };
 
-module.exports = allowRoles; 
+module.exports = allowRoles;
