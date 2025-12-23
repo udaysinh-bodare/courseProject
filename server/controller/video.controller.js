@@ -1,11 +1,6 @@
 const pool = require("../config/db");
-<<<<<<< HEAD
-const {allVideo}=require("../services/video.services")
-const {addVideo}=require("../services/video.services")
 const {delete_Video_sql} = require("../services/video.services")
-=======
 const { allVideo, addVideo, updateVideo } = require("../services/video.services");
->>>>>>> ab314d2cf054860687e35d0b86ab69f39081c08a
 
 // GET videos by course_id
 function videos(req, res) {
