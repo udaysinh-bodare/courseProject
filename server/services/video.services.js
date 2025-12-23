@@ -1,5 +1,5 @@
-const allVideo="select * from videos"
-const addVideo="insert into videos(course_id,title,discription,youtube_url) values(?,?,?,?)";
+const allVideo="select * from videos WHERE course_id = ?"
+const addVideo="insert into videos(course_id,title,description,youtube_url,added_at) values(?,?,?,?,current_date())";
 
 module.exports = {
     allVideo,

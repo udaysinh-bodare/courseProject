@@ -67,6 +67,8 @@ function registerToCourse(req, res) {
 }
 
 function changePassword(req, res) {
+    console.log(req.body);
+    
     const newpassword = req.body.password;
     const hash = crypto.SHA256(newpassword).toString()
     pool.query(changePasswordsql, [hash], (err, result) => {
