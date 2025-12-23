@@ -3,7 +3,8 @@ const cors = require("cors");
 const authRoutes = require("./routes/auth.routes");
 const studentRoutes = require("./routes/student.routes")
 const authUser = require("./middlewares/auth.middleware");
-const courseRouter = require('./routes/courses.routes')
+const videoRoutes = require("./routes/video.routes");
+
 const app = express();
 
 // ======================
@@ -15,12 +16,8 @@ app.use(express.json());
 // ======================
 // Routes
 // ======================
-
-app.use("/api/auth", authRoutes);
-app.use("/api/admin", courseRouter)
-
-app.use("/api/student", studentRoutes)
-
+app.use("/api/student", authRoutes);
+app.use("/api/student",videoRoutes);
 // ======================
 // Health Check (optional but useful)
 // ======================
