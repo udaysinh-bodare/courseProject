@@ -31,7 +31,7 @@ function authUser(req, res, next) {
       role: payload.role
     };
 
-    next();
+    return next();
   } catch (err) {
     return res
       .status(401)

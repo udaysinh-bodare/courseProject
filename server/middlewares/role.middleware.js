@@ -12,7 +12,6 @@ const allowRoles = (allowedRoles) => {
       .status(403)
       .send(createResult("Access denied"));
     }
-    return next();
   };
 };
 
