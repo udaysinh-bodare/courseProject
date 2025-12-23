@@ -1,7 +1,7 @@
 const pool = require("../config/db");
 const { createuser, registerstudent, allusers } = require("../services/auth.services");
 const crypto = require("crypto-js");
-const { changePasswordsql, myCoursessql } = require("../services/student.services")
+const { changePasswordsql, myCoursessql,myCourseandvediosql } = require("../services/student.services")
 
 function registerToCourse(req, res) {
     const { name, email, password, courseid, mobileNo } = req.body;
@@ -104,8 +104,27 @@ function myCourses(req, res) {
 
 }
 
+function myCoursesandvedio(req, res) {
+    const email = req.user.email
+    pool.query(myCourseandvediosql, [email], (err, result) => {
+        if (err) {
+            console.error("Error while showing my courses and vedios :", err);
+            return res.status(500).send({
+                status: "ERROR",
+                message: "Failed to fetch courses and vedios"
+            });
+        }
+        res.send({
+            status: "SUCCESS",
+            message: "courses and vedios are fetched",
+            result: result
+        });
+    }
+)}
+
 module.exports = {
     registerToCourse,
     changePassword,
-    myCourses
+    myCourses,
+    myCoursesandvedio
 };
