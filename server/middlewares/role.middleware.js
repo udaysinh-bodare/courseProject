@@ -5,13 +5,14 @@ const allowRoles = (allowedRoles) => {
     console.log(allowedRoles);
     console.log(req.user.role);
     if (allowedRoles == (req.user.role)) {
-       next();
+      return next();
     }
     else {
     return res
       .status(403)
       .send(createResult("Access denied"));
     }
+    return next();
   };
 };
 

@@ -12,7 +12,7 @@ function loginUser(req, res) {
             console.error("Error during login:", err);
             return res.status(500).send({
                 status: "ERROR",
-                message: "Login failed"
+                message: "Login failed : "
             });
         } 
         if (results.length === 0) {
@@ -26,7 +26,10 @@ function loginUser(req, res) {
         res.send({
             status: "SUCCESS",
             message: "Login successful",
-            data: results[0],
+            data: {
+                role: results[0].role,
+                email: results[0].email
+            },
             token: token
         });
     });
