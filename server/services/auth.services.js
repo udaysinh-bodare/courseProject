@@ -4,9 +4,11 @@ const registerstudent = "insert into students (name,email,course_id,mobile_no) v
 const loginuser = "select * from users where email=? and password=?";
 const allusers = "select * from users where email = ?"
 
+
 module.exports = {
   createuser,
   registerstudent,
   loginuser,
+  allCourse,
   allusers
 }; 

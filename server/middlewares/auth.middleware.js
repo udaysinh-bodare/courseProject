@@ -8,6 +8,8 @@ function authUser(req, res, next) {
     "/api/student/",
     "/register-to-course",
     "/login",
+    "/allvideo",
+    
     "/all-active-courses"
   ];
 
