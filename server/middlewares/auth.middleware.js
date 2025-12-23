@@ -3,13 +3,11 @@ const result = require("../utils/result");
 const config = require("../utils/config");
 
 function authUser(req, res, next) {
-  console.log(req.path);
+  console.log("Path : " , req.path);
   const publicRoutes = [
-    "/api/student/",
-    "/register-to-course",
     "/login",
+    "/register-to-course",
     "/allvideo",
-    
     "/all-active-courses"
   ];
 

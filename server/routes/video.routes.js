@@ -6,7 +6,12 @@ const{videos} =require("../controller/video.controller");
 const{addvideo}=require("../controller/video.controller");
 const allowRoles = require("../middlewares/role.middleware");
 
+<<<<<<< HEAD
 router.get("/all-videos",authUser,videos);
 router.post("/add",authUser, allowRoles("admin") ,addvideo);
+=======
+router.get("/all-videos/:course_id",authUser,allowRoles("admin"),videos);
+router.post("/add-video",authUser, allowRoles("admin") ,addvideo);
+>>>>>>> 7bb3d7fd099c7fade04e2dc86c3690107620dd35
 
 module.exports = router;
