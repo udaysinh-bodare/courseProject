@@ -5,8 +5,11 @@ const getallcourses = `select courses.course_id, course_name, start_date, end_da
 
 const allCourse="select * from courses"
 
+const getstudentsbycourses = `select * from students where course_id = ?`
+
 
 module.exports = {
     getallcourses,
-	allCourse
+	allCourse,
+	getstudentsbycourses
 }
