@@ -17,6 +17,7 @@ app.use(express.json());
 // ======================
 // Routes
 // ======================
+
 app.use("/api/student", studentRoutes);
 app.use("/api/video",videoRoutes);
 app.use("/api/auth" , authRoutes);

@@ -9,6 +9,6 @@ module.exports = {
   createuser,
   registerstudent,
   loginuser,
-  allCourse,
+  // allCourse,
   allusers
 }; 
