@@ -1,4 +1,5 @@
 const pool = require("../config/db");
+const {delete_Video_sql} = require("../services/video.services")
 const { allVideo, addVideo, updateVideo } = require("../services/video.services");
 
 // GET videos by course_id
@@ -51,6 +52,36 @@ function addvideo(req, res) {
   );
 }
 
+function deleteVideo(req, res) {
+    const video_id = req.params.video_id
+    if(!video_id) {
+        return res.status(403).json({
+            "status" : "Error",
+            "message": "Video_id not found."
+        })
+    }
+    pool.query(delete_Video_sql, [video_id], (error, data)=>{
+        if(data) {
+            if(data.length == 0) {
+                return res.status(400).json({
+                    "status" : "Error",
+                    "message": "Video_id not avaiable."
+                })
+            }
+            else {
+                res.status(200).json({
+                    status: "Success",
+                    data: data
+                })
+            }
+        }
+        else {
+            res.status(500).send(error)
+        }
+    })
+}
+
+
 // UPDATE video
 function updatevideo(req, res) {
   const video_id = req.params.video_id;
@@ -89,5 +120,6 @@ function updatevideo(req, res) {
 module.exports = {
   videos,
   addvideo,
-  updatevideo
+  updatevideo,
+  deleteVideo
 };
