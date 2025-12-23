@@ -1,6 +1,6 @@
 const express = require('express')
 
-const {getCourses} = require('../controller/courses.controller')
+const {getCourses, enrolledstudents} = require('../controller/courses.controller')
 const {addCourse} = require('../controller/courses.controller')
 const {updateCourse} = require("../controller/courses.controller")
 const {deleteCourse} = require("../controller/courses.controller")
@@ -14,5 +14,8 @@ router.post("/all-courses", getCourses)
 router.post("/update-course/:course_id", authUser, allowRoles("admin"), updateCourse)
 router.delete("/delete-course/:course_id", authUser, allowRoles("admin"), deleteCourse)
 router.get("/all-active-courses", authUser , activeCourses)
+
+
+router.post("/enrolled-students", authUser, allowRoles("admin"), enrolledstudents)
 
 module.exports = router
