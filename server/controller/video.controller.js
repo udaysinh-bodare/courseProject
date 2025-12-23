@@ -3,11 +3,18 @@ const {allVideo}=require("../services/video.services")
 const {addVideo}=require("../services/video.services")
 
 function videos(req,res){
-    pool.query(allVideo,(err,result)=>{
+    const course_id = req.params.course_id
+    if(!course_id){
+        return res.status(403).json({
+            "status" : "Error",
+            "message": "Course ID not found."
+        })
+    }
+    pool.query(allVideo, [course_id] ,(err,result)=>{
         if(err){
-            res.status(500).send(err)
+            return res.status(500).send(err)
         }else{
-            res.status(200).json({
+            return res.status(200).json({
                 status:"success",
                 data:result
             })

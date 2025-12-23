@@ -55,6 +55,8 @@ function getCourses(req, res) {
 }
 
 function updateCourse(req, res) {
+    console.log(req.body);
+    
     const course_id = req.params.course_id;
     const {
         course_name,
