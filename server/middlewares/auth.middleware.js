@@ -7,7 +7,9 @@ function authUser(req, res, next) {
   const publicRoutes = [
     "/api/student/",
     "/register-to-course",
-    "/login"
+    "/login",
+    "/allvideo"
+    
   ];
 
   if (publicRoutes.includes(req.path)) {

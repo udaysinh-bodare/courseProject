@@ -9,9 +9,11 @@ const pool = mysql.createPool({
     database: process.env.DB_NAME,
     waitForConnections: true,
     connectionLimit: 10,
+    
 });
+console.log(process.env.DB_USER, process.env.DB_PASS);
+
 
 
 module.exports = pool;
 
-  

@@ -7,4 +7,5 @@ const { registerToCourse } = require("../controller/studentregister.controller")
 
 router.post("/register-to-course", authUser, registerToCourse);
 router.post("/login", authUser, loginUser);
+
 module.exports = router;
