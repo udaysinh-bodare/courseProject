@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const authRoutes = require("./routes/auth.routes");
+const studentRoutes = require("./routes/student.routes")
 const authUser = require("./middlewares/auth.middleware");
 const videoRoutes = require("./routes/video.routes");
 

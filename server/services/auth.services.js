@@ -2,6 +2,7 @@
 const createuser = "insert into users (email,password,role) values (?,?,?)";
 const registerstudent = "insert into students (name,email,course_id,mobile_no) values (?,?,?,?)";
 const loginuser = "select * from users where email=? and password=?";
+const allusers = "select * from users where email = ?"
 
 const allVideo="select * from videos"
 const addVideo="insert into videos(course_id,title,discription,youtube_url) values(?,?,?,?)";
@@ -13,5 +14,6 @@ module.exports = {
   loginuser,
   allCourse,
   allVideo,
-  addVideo
+  addVideo,
+  allusers
 }; 

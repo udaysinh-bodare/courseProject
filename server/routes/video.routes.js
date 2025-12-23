@@ -7,7 +7,7 @@ const authUser = require("../middlewares/auth.middleware");
 const{videos} =require("../controller/video.controller");
 const{addvideo}=require("../controller/addVideo.controller");
 
-router.get("/allvideo",authUser,videos);
-router.post("/addvideo",authUser,addvideo);
+router.get("/video/all-videos",authUser,videos);
+router.post("/video/add",authUser,addvideo);
 
 module.exports = router;
