@@ -9,9 +9,11 @@ const {
 
 // REGISTER TO COURSE
 function registerToCourse(req, res) {
-  const { name, email, password, courseid, mobileNo } = req.body;
+  const { name, email, password, course_id, mobile_no } = req.body;
 
-  if (!name || !email || !password || !courseid || !mobileNo) {
+  if (!name || !email || !password || !course_id || !mobile_no) {
+    console.log(req.body);
+    
     return res.status(400).send({
       status: "ERROR",
       message: "Missing required fields"
@@ -41,7 +43,7 @@ function registerToCourse(req, res) {
 
         pool.query(
           registerstudent,
-          [name, email, courseid, mobileNo],
+          [name, email, course_id, mobile_no],
           (err, results) => {
             if (err) {
               return res.status(500).send({
@@ -63,12 +65,13 @@ function registerToCourse(req, res) {
     else {
       pool.query(
         registerstudent,
-        [name, email, courseid, mobileNo],
+        [name, email, course_id, mobile_no],
         (err, results) => {
           if (err) {
             return res.status(500).send({
               status: "ERROR",
-              message: "Failed to register student"
+              message: "Failed to register student",
+              error: err.sqlMessage
             });
           }
 
