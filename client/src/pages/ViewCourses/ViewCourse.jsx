@@ -1,6 +1,6 @@
 import { useLocation } from "react-router";
 
-function ViewPage() {
+function ViewCourse() {
   const { state } = useLocation();
   const course_id = state?.course_id;
 
@@ -16,4 +16,4 @@ function ViewPage() {
   );
 }
 
-export default ViewPage;
+export default ViewCourse;
