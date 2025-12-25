@@ -1,39 +1,102 @@
-import React from 'react'
-import { Link, Links } from 'react-router'
-import Register from './Register'
-
+import React, { useState } from "react";
+import { Link, Links } from "react-router";
+import Register from "./Register";
+import { loginStudent } from "../services/studentServices";
+import { toast } from "react-toastify";
+import bg from "../assets/background.png"
 function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const signIn = async (e) => {
+    e.preventDefault()
+    if (!email) toast.warn("Email Is Empty!")
+    if (!password) toast.warn("Password Is Empty");
+
+    try{
+        const res = await loginStudent(email, password);
+        if (res.data.status == "SUCCESS") {
+        console.log("hi");
+        
+        toast.success("Logged In Successfully!");
+        }
+    }
+    catch(ex) {
+        toast.error("Invalid Email or Password")
+    }
+    
+  };
+
   return (
     <div>
-        <div className="wrapper h-screen w-full  bg-gradient-to-br from-blue-600 to-white flex justify-center items-center px-4">
-            <div className="login-box bg-white/20 w-[25%]  backdrop-blur-md  rounded-xl   border border-white/30   px-6 py-3 shadow-[0_8px_32px_0_rgba(31,38,135,0.37)]">
-                <h1 className='text-3xl text-center mb-10 font-semibold  py-2'>Login</h1>
+      <div className="wrapper h-screen w-full  flex justify-center items-center px-4" style={{backgroundImage: `url(${bg})`, backgroundSize: 'cover'}}>
+        <div className="login-box bg-white/20 w-[25%]  backdrop-blur-md  rounded-xl   border border-white/30   px-6 py-3 shadow-[0_8px_32px_12px_rgba(31,38,135,0.37)]">
+          <h1 className="text-4xl text-center mb-10 font-bold text-blue-900 py-2">
+            Login
+          </h1>
 
-                <form>
-                    <div className="email-box flex flex-col mb-10">
-                        <label htmlFor="email" className='text-xl mb-2 ml-1 font-semibold' >Email</label>
-                        <input type="text" className='bg-gray-100 rounded-md p-1.5' placeholder='Enter Email' />
-                    </div>
-
-                    <div className="pass-box flex flex-col mb-10">
-                        <label htmlFor="password" className='text-xl mb-2 ml-1 font-semibold'>Password</label>
-                        <input type="password" className='bg-gray-100 rounded-md p-1.5' placeholder='Enter Password' />
-                    </div>
-
-                    <div className="btn w-full flex justify-center">
-                        <button className='text-xl border border-green-400 bg-green-400 hover:opacity-[.5] cursor-pointer p-2 rounded-3xl text-white font-semibold px-4 text-center'>Login</button>
-                    </div>
-
-                    <div className="mess mt-5 mb-5 text-center">
-                        Don't have an account?<Link  className='text-blue-700 border-b-blue-700 no-underline hover:underline' to='/'> SignUp</Link>
-                    </div>
-
-                    
-                </form>
+          <form>
+            <div className="email-box flex flex-col mb-10">
+              <label
+                htmlFor="email"
+                className="text-xl mb-2 ml-1 font-semibold text-gray-600"
+              >
+                Email
+              </label>
+              <div className="iconNInput flex items-center bg-gray-100 px-2 rounded-md">
+                <i className="fa-solid fa-envelope text-xl"></i>
+                <input
+                  type="text"
+                  className="bg-gray-100 rounded-md p-1.5 w-full focus:outline-none"
+                  placeholder="Enter Email"
+                  required
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
             </div>
+
+            <div className="pass-box flex flex-col mb-10">
+              <label
+                htmlFor="password"
+                className="text-xl mb-2 ml-1 font-semibold text-gray-600"
+              >
+                Password
+              </label>
+              <div className="iconNInput flex items-center bg-gray-100  px-2 rounded-md">
+                <i className="fa-solid fa-key text-xl"></i>
+                <input
+                  type="password"
+                  className="bg-gray-100 rounded-md p-1.5 w-full focus:outline-none"
+                  placeholder="Enter Password"
+                  required
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </div>
+            </div>
+
+            <div className="btn w-full flex justify-center">
+              <button className="text-xl border border-green-400 bg-[#1aac9f] hover:opacity-[.8] cursor-pointer py-2 rounded-3xl text-white font-semibold px-7 flex items-center p-[0_0_10px_0]"
+               onClick={signIn}
+              >
+                Login
+              </button>
+            </div>
+
+            <div className="mess mt-5 mb-5 text-center">
+              Don't have an account?
+              <Link
+                className="text-blue-700 border-b-blue-700 no-underline hover:underline"
+                to="/register"
+              >
+                {" "}
+                SignUp
+              </Link>
+            </div>
+          </form>
         </div>
+      </div>
     </div>
-  )
+  );
 }
 
-export default Login
+export default Login;
