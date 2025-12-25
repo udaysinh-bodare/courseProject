@@ -11,17 +11,16 @@ export async function loginStudent(email, password) {
     return response
 }
 
-export async function registerStudent(name, email, password, courseId, mobile, profilePic) {
+export async function registerStudent(name, email, password, course_id, mobile_no, profile_pic) {
     const url = config.BASE_URL + '/api/student/register-to-course'
-    console.log(body);
     
     const body = {
         name, 
         email, 
         password, 
-        courseId, 
-        mobile,
-        profilePic
+        course_id, 
+        mobile_no,
+        profile_pic
     }
     const response = await axios.post(url, body)
     return response

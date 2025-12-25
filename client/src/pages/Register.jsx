@@ -12,16 +12,16 @@ function Register() {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [courseId, setcourseId] = useState(null)
-  const [mobile, setmobile] = useState('')
-  const [profilePic, setprofilePic] = useState(null)
+  const [course_id, setcourseId] = useState(null)
+  const [mobile_no, setmobile] = useState('')
+  const [profile_pic, setprofilePic] = useState(null)
 
   const signUp = async(e)=>{
     console.log(name);
     console.log(email);
-    console.log(courseId);
+    console.log(course_id);
     console.log(password);
-    console.log(mobile);
+    console.log(mobile_no);
     
     e.preventDefault()
     if(!name) 
@@ -30,13 +30,13 @@ function Register() {
       toast.warn("Email is Empty")
     if(!password)
       toast.warn("Password is Empty")
-    if(!courseId) 
+    if(!course_id) 
       toast.warn("Course Id Not Entered")
-    if(!mobile)
+    if(!mobile_no)
       toast.warn("Mobile Number Not Entered")
 
     try{
-      const res = await registerStudent(name, email, password, courseId, mobile, profilePic)
+      const res = await registerStudent(name, email, password, course_id, mobile_no, profile_pic)
       console.log(res);
       
       if(res.data.status == "SUCCESS") {
@@ -45,6 +45,8 @@ function Register() {
     }
     catch(ex){
       toast.error("Invalid Details Entered")
+      console.log(ex);
+      
     }
   }
 

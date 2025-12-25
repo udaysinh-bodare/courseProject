@@ -1,6 +1,5 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router'
-import { createContext } from 'react';
 import { loginContext } from '../App';  
 
 function Navbar() {
@@ -11,7 +10,7 @@ function Navbar() {
 
 
     <div>
-      <nav className=" mx-auto  w-[90%] max-w-full">
+      <nav className=" mx-auto  w-[90%] max-w-full pt-2">
         <div className="flex items-center justify-between rounded-full px-8 py-2 bg-white/10 backdrop-blur-xl border border-white/20 shadow-lg">
 
 

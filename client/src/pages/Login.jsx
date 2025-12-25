@@ -26,7 +26,7 @@ function Login() {
 
         localStorage.setItem("token", res.data.token);
         toast.success("Logged In Successfully!");
-        navigate("/register");
+        navigate("/dashboard");
       }
     } catch (ex) {
       console.log(ex);
