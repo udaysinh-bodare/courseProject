@@ -3,6 +3,7 @@ import bg from "../../assets/background.png";
 import heroImg from "../../assets/hero.png";
 import studentsImg from "../../assets/students.png";
 import Navbar from "../../components/Navbar";
+import { useNavigate } from "react-router";
 
 function Landing() {
   const [loading, setLoading] = useState(true);
@@ -38,9 +39,9 @@ function Landing() {
           <Navbar/>
 
         {/* HERO */}
-        <section className="flex flex-col md:flex-row items-center px-10 pt-6 gap-10">
+        <section className="flex flex-col md:flex-row items-center px-3 pt-6 gap-3">
 
-          <div className="md:w-1/2 flex flex-col gap-5">
+          <div className="md:w-1/2 flex flex-col gap-1">
             <h1 className="text-4xl font-semibold text-blue-950 leading-tight">
               Upgrade Your Skills <br /> With Our Training Programs
             </h1>
@@ -69,7 +70,7 @@ function Landing() {
             <img
               src={heroImg}
               alt="Training Illustration"
-              className="w-[520px] max-w-full drop-shadow-[0_20px_40px_rgba(0,0,0,0.25)]"
+              className="w-[620px] max-w-full drop-shadow-[0_20px_40px_rgba(0,0,0,0.25)]"
             />
           </div>
         </section>
@@ -94,7 +95,7 @@ function Landing() {
         </section>
 
         {/* LIVE COURSES — CAROUSEL */}
-        <section className="mt-12 px-10">
+        <section className="mt-12 px-6">
           <h2 className="text-2xl font-semibold text-center mb-6">
             Live Courses
           </h2>
@@ -103,7 +104,7 @@ function Landing() {
         </section>
 
         {/* WHY CHOOSE US */}
-        <section className="mt-16 px-10 pb-16">
+        <section className="mt-16 px-5 pb-16">
           <div className="bg-white/85 backdrop-blur-lg shadow-xl rounded-3xl p-8
                           flex flex-col md:flex-row gap-6 border border-white/50">
 
@@ -143,11 +144,20 @@ function Landing() {
 
 function CourseCarousel() {
   const courses = [
-    { title: "Full-Stack Development", duration: "Live • 6 Months • Certification" },
-    { title: "Data Science", duration: "Live • 4 Months • Certification" },
-    { title: "Digital Marketing", duration: "Live • 3 Months • Certification" },
-    { title: "UI / UX Designing", duration: "Live • 5 Months • Certification" },
+    {course_id : 1,  title: "Full-Stack Development", duration: "Live • 6 Months • Certification" },
+    { course_id : 2, title: "Data Science", duration: "Live • 4 Months • Certification" },
+    { course_id : 3, title: "Digital Marketing", duration: "Live • 3 Months • Certification" },
+    { course_id : 4, title: "UI / UX Designing", duration: "Live • 5 Months • Certification" },
   ];
+
+  const navigate = useNavigate();
+
+  const goToCourse = (course_id) => {
+    navigate("/viewcourse", {
+      state: { course_id }
+    });
+  };
+
 
   const getCardsPerView = () =>
     typeof window !== "undefined" && window.innerWidth < 768 ? 1 : 3;
@@ -215,7 +225,7 @@ function CourseCarousel() {
 
               <button className="mt-3 w-full py-2 rounded-xl
                 bg-gradient-to-r from-teal-400 to-green-500
-                text-white font-semibold shadow-md">
+                text-white font-semibold shadow-md" onClick={() => goToCourse(c.course_id)}>
                 View Details
               </button>
             </div>
