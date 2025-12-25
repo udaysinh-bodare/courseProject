@@ -1,35 +1,46 @@
-import React, { useState } from "react";
-import { Link, Links } from "react-router";
+import React, { useContext, useState } from "react";
+import { Link, Links, useNavigate } from "react-router";
+import { toast } from "react-toastify";
+
+import { loginContext } from "../App";
 import Register from "./Register";
 import { loginStudent } from "../services/studentServices";
-import { toast } from "react-toastify";
-import bg from "../assets/background.png"
+import bg from "../assets/background.png";
+
 function Login() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const { loginStatus, setLoginStatus } = useContext(loginContext);
   const signIn = async (e) => {
-    e.preventDefault()
-    if (!email) toast.warn("Email Is Empty!")
+    e.preventDefault();
+    if (!email) toast.warn("Email Is Empty!");
     if (!password) toast.warn("Password Is Empty");
-
-    try{
-        const res = await loginStudent(email, password);
-        if (res.data.status == "SUCCESS") {
+    setLoginStatus(true);
+    try {
+      const res = await loginStudent(email, password);
+      if (res.data.status == "SUCCESS") {
         console.log("hi");
-        
+        console.log(res.data.token);
+        console.log(loginStatus);
+
+        localStorage.setItem("token", res.data.token);
         toast.success("Logged In Successfully!");
-        }
+        navigate("/register");
+      }
+    } catch (ex) {
+      console.log(ex);
+
+      toast.error("Invalid Email or Password");
     }
-    catch(ex) {
-        toast.error("Invalid Email or Password")
-    }
-    
   };
 
   return (
     <div>
-      <div className="wrapper h-screen w-full  flex justify-center items-center px-4" style={{backgroundImage: `url(${bg})`, backgroundSize: 'cover'}}>
+      <div
+        className="wrapper h-screen w-full  flex justify-center items-center px-4"
+        style={{ backgroundImage: `url(${bg})`, backgroundSize: "cover" }}
+      >
         <div className="login-box bg-white/20 w-[25%]  backdrop-blur-md  rounded-xl   border border-white/30   px-6 py-3 shadow-[0_8px_32px_12px_rgba(31,38,135,0.37)]">
           <h1 className="text-4xl text-center mb-10 font-bold text-blue-900 py-2">
             Login
@@ -75,8 +86,9 @@ function Login() {
             </div>
 
             <div className="btn w-full flex justify-center">
-              <button className="text-xl border border-green-400 bg-[#1aac9f] hover:opacity-[.8] cursor-pointer py-2 rounded-3xl text-white font-semibold px-7 flex items-center p-[0_0_10px_0]"
-               onClick={signIn}
+              <button
+                className="text-xl border border-green-400 bg-[#1aac9f] hover:opacity-[.8] cursor-pointer py-2 rounded-3xl text-white font-semibold px-7 flex items-center p-[0_0_10px_0]"
+                onClick={signIn}
               >
                 Login
               </button>
