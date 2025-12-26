@@ -2,11 +2,12 @@ import React, { createContext } from "react";
 import { useState } from "react"
 import { ToastContainer } from "react-toastify";
 
-import Login from "./pages/Login";
+import Login from "./pages/Auth/Login";
 import { Route, Routes } from "react-router";
-import Register from "./pages/Register";
+import Register from "./pages/Auth/Register";
 import Landing from "./pages/LandingPage/Landing";
 import ViewCourse from "./pages/ViewCourses/ViewCourse"
+import StudentDash from "./pages/dashboard/StudentDash";
 
 export const loginContext = createContext()
 function App() {
@@ -19,9 +20,9 @@ function App() {
 					<Route path="/login" element={<Login />} />
 					<Route path="/register" element={<Register />} />
 					<Route path="/viewcourse" element={<ViewCourse/>} />
+					<Route path="/student/dashboard" element={<StudentDash/>}/>
 				</Routes>
 			</loginContext.Provider>
-		
 		<ToastContainer />
 		</>
 	);

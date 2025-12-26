@@ -2,10 +2,10 @@ import React, { useContext, useState } from "react";
 import { Link, Links, useNavigate } from "react-router";
 import { toast } from "react-toastify";
 
-import { loginContext } from "../App";
+import { loginContext } from "../../App";
 import Register from "./Register";
-import { loginStudent } from "../services/studentServices";
-import bg from "../assets/background.png";
+import { loginStudent } from "../../services/studentServices";
+import bg from "../../assets/background.png";
 
 function Login() {
   const navigate = useNavigate();
@@ -26,7 +26,7 @@ function Login() {
 
         localStorage.setItem("token", res.data.token);
         toast.success("Logged In Successfully!");
-        navigate("/dashboard");
+        navigate("/student/dashboard");
       }
     } catch (ex) {
       console.log(ex);
