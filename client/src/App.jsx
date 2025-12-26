@@ -20,7 +20,7 @@ function App() {
 					<Route path="/login" element={<Login />} />
 					<Route path="/register" element={<Register />} />
 					<Route path="/viewcourse/:course_id" element={<ViewCourse/>} />
-					<Route path="/addcourse" element={<AddCourse/>} />
+					<Route path="/addcourse" element={<AddCourse/> } />
 				</Routes>
 			</loginContext.Provider>
 		
