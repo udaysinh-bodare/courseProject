@@ -146,12 +146,6 @@ function Landing() {
 	);
 }
 
-async function getallcoursesforcarousel() {
-	let courses = await getAllCourses();
-
-	return courses.data;
-}
-
 
 function CourseCarousel() {
   const navigate = useNavigate();

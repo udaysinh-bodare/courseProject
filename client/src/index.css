@@ -13,3 +13,10 @@
   animation: carousel-scroll var(--speed) linear infinite;
   will-change: transform;
 }
+
+.glass-input {
+  @apply px-4 py-2 rounded-xl border
+  bg-white/40 backdrop-blur
+  border-white/50 shadow-sm
+  focus:outline-none focus:ring-2 focus:ring-emerald-300;
+}
