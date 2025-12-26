@@ -18,3 +18,9 @@ export async function addCourse(payload) {
   const url = config.BASE_URL + "/api/courses-add";
   return await axios.post(url, payload, { headers: authHeaders() });
 }
+
+export async function getCourseDetails(course_id) {
+    const url = config.BASE_URL + `/api/courses/course-details/${course_id}`
+    const response = await axios.get(url)
+    return response
+}

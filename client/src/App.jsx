@@ -18,7 +18,7 @@ function App() {
 				<Routes>
 					<Route path="/" element={<Landing/>} />
 					<Route path="/login" element={<Login />} />
-					<Route path="/register" element={<Register />} />
+					<Route path="/register/:course_id" element={<Register />} />
 					<Route path="/viewcourse/:course_id" element={<ViewCourse/>} />
 					<Route path="/addcourse" element={<AddCourse/> } />
 				</Routes>
