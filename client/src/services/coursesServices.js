@@ -5,9 +5,7 @@ function authHeaders() {
   const token = localStorage.getItem("token");
 
   return {
-    Authorization: token ? `Bearer ${token}` : undefined,
-    "Content-Type": "application/json",
-    Accept: "application/json",
+    token: token
   };
 }
 
@@ -17,7 +15,7 @@ export async function getAllCourses() {
 }
 
 export async function addCourse(payload) {
-  const url = `${config.BASE_URL}/api/courses-add`;
+  const url = `${config.BASE_URL}/api/courses/courses-add`;
   return axios.post(url, payload, { headers: authHeaders() });
 }
 
