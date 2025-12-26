@@ -8,7 +8,7 @@ export async function getAllCourses() {
 }
 
 export async function myCourses(token) {
-    const url = config.BASE_URL + '/api/student/my-courses'
+    const url = config.BASE_URL + '/api/student/my-course-description'
     const headers = {
         token
     }

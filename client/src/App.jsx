@@ -7,6 +7,7 @@ import { Route, Routes } from "react-router";
 import Register from "./pages/Auth/Register";
 import Landing from "./pages/LandingPage/Landing";
 import ViewCourse from "./pages/ViewCourses/ViewCourse"
+import AddCourse from "./pages/AddCourse/AddCourse";
 import StudentDash from "./pages/dashboard/StudentDash";
 
 export const loginContext = createContext()
@@ -21,6 +22,7 @@ function App() {
 					<Route path="/register" element={<Register />} />
 					<Route path="/viewcourse/:course_id" element={<ViewCourse/>} />
 					<Route path="/student/dashboard" element={<StudentDash/>}/>
+					<Route path="/addcourse" element={<AddCourse/>} />
 				</Routes>
 			</loginContext.Provider>
 		<ToastContainer />
