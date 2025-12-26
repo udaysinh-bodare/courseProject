@@ -84,7 +84,7 @@ function AddCourse() {
       await addCourse(form);
       toast.success("Course added successfully 🎉");
 
-      setTimeout(() => navigate("/all-courses"), 1200);
+      setTimeout(() => navigate("/allcourses"), 1200);
 
     } catch (err) {
       console.error(err);

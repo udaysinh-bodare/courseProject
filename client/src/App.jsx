@@ -23,7 +23,7 @@ function App() {
 					<Route path="/register/:course_id" element={<Register />} />
 					<Route path="/viewcourse/:course_id" element={<ViewCourse/>} />
 					<Route path="/addcourse" element={<AddCourse/> } />
-					<Route path="/addvideo" element={<AddVideo/> } />
+					<Route path="/addvideo/:course_id" element={<AddVideo/> } />
 					<Route path="/allcourses" element={<AdminAllCourses/> } />
 				</Routes>
 			</loginContext.Provider>
