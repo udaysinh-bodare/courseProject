@@ -9,7 +9,8 @@ const {
 
 const {
   getallcourses,
-  getstudentsbycourses
+  getstudentsbycourses,
+  getCourseDetailsql
 } = require("../services/courses.services");
 
 // ADD COURSE
@@ -192,11 +193,36 @@ function enrolledstudents(req, res) {
   });
 }
 
+function getCourseDetails(req, res) {
+  const { course_id } = req.params;
+
+  if (!course_id) {
+    return res.status(400).json({
+      status: "error",
+      message: "Invalid Course ID"
+    });
+  }
+  pool.query(getCourseDetailsql, [course_id], (err, data) => {
+    if (err) {
+      return res.status(500).send(result.createResult(err));
+    } 
+    if (data.length === 0) {
+      return res.send(
+        result.createResult("No course found with the given ID")
+      );
+    }
+    return res.send(result.createResult(null, data));
+  });
+}
+
+
+
 module.exports = {
   addCourse,
   getCourses,
   updateCourse,
   deleteCourse,
   activeCourses,
-  enrolledstudents
+  enrolledstudents,
+  getCourseDetails
 };

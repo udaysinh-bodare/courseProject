@@ -6,9 +6,7 @@ import Login from "./pages/Login";
 import { Route, Routes } from "react-router";
 import Register from "./pages/Register";
 import Landing from "./pages/LandingPage/Landing";
-
-
-
+import ViewCourse from "./pages/ViewCourses/ViewCourse"
 
 export const loginContext = createContext()
 function App() {
@@ -20,6 +18,7 @@ function App() {
 					<Route path="/" element={<Landing/>} />
 					<Route path="/login" element={<Login />} />
 					<Route path="/register" element={<Register />} />
+					<Route path="/viewcourse" element={<ViewCourse/>} />
 				</Routes>
 			</loginContext.Provider>
 		
