@@ -22,13 +22,14 @@ function loginUser(req, res) {
             });
         }
 
-        token = generateToken({ email: results[0].email, role: results[0].role });
+        token = generateToken({ email: results[0].email, role: results[0].role, name: results[0].name });
         res.send({
             status: "SUCCESS",
             message: "Login successful",
             data: {
                 role: results[0].role,
-                email: results[0].email
+                email: results[0].email,
+                name: results[0].name
             },
             token: token
         });
