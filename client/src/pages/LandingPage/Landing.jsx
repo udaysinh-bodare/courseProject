@@ -9,6 +9,8 @@ import { getAllCourses } from "../../services/coursesServices";
 function Landing() {
 	const [loading, setLoading] = useState(true);
 
+	const navigate = useNavigate();
+
 	useEffect(() => {
 		const timer = setTimeout(() => setLoading(false), 800);
 		return () => clearTimeout(timer);
@@ -51,23 +53,17 @@ function Landing() {
 							and real-world projects.
 						</p>
 
-						<div className="flex gap-4 mt-1">
-							<button
-								className="px-7 py-3 rounded-full font-semibold text-white
-                bg-gradient-to-r from-emerald-400 to-teal-500 shadow-lg
-                hover:shadow-emerald-400/60 hover:-translate-y-0.5 transition-all"
-							>
-								Enroll Now
-							</button>
+						<div className="flex gap-4 mt-4">
+  <button
+    onClick={() => navigate("/courses")}
+    className="px-8 py-3 rounded-full font-semibold text-white
+      bg-gradient-to-r from-emerald-400 to-teal-500 shadow-lg
+      hover:shadow-emerald-400/60 hover:-translate-y-0.5 transition-all"
+  >
+    Explore Courses
+  </button>
+</div>
 
-							<button
-								className="px-7 py-3 rounded-full font-semibold
-                bg-white/80 backdrop-blur border shadow-md
-                hover:-translate-y-0.5 hover:shadow-lg transition-all"
-							>
-								View Courses
-							</button>
-						</div>
 					</div>
 
 					<div className="md:w-1/2 flex justify-center">
@@ -237,7 +233,7 @@ function CourseCarousel() {
 
 	const looped = [...filled, ...filled];
 
-	const speed = 2;
+	const speed = 1.6;
 
 	// autoplay
 	useEffect(() => {
