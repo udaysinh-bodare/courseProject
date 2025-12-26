@@ -15,7 +15,7 @@ function Login() {
   const signIn = async (e) => {
     e.preventDefault();
     if (!email) toast.warn("Email Is Empty!");
-    if (!password) toast.warn("Password Is Empty");
+    else if (!password) toast.warn("Password Is Empty");
     setLoginStatus(true);
     try {
       const res = await loginStudent(email, password);
@@ -41,7 +41,7 @@ function Login() {
         className="wrapper h-screen w-full  flex justify-center items-center px-4"
         style={{ backgroundImage: `url(${bg})`, backgroundSize: "cover" }}
       >
-        <div className="login-box bg-white/20 w-[25%]  backdrop-blur-md  rounded-xl   border border-white/30   px-6 py-3 shadow-[0_8px_32px_12px_rgba(31,38,135,0.37)]">
+        <div className="login-box bg-white/20 lg:min-w-[35%] md:min-w-[35%] sm:min-w-[30%]  backdrop-blur-md  rounded-xl   border border-white/30   px-6 py-3 shadow-[0_8px_32px_12px_rgba(31,38,135,0.37)]">
           <h1 className="text-4xl text-center mb-10 font-bold text-blue-900 py-2">
             Login
           </h1>

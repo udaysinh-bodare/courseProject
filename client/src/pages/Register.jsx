@@ -9,47 +9,47 @@ import bg from "../assets/background.png";
 import { registerStudent } from "../services/studentServices";
 
 function Register() {
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [course_id, setcourseId] = useState(null)
-  const [mobile_no, setmobile] = useState('')
-  const [profile_pic, setprofilePic] = useState(null)
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [course_id, setcourseId] = useState(null);
+  const [mobile_no, setmobile] = useState("");
+  const [profile_pic, setprofilePic] = useState(null);
 
-  const signUp = async(e)=>{
+  const signUp = async (e) => {
     console.log(name);
     console.log(email);
     console.log(course_id);
     console.log(password);
     console.log(mobile_no);
-    
-    e.preventDefault()
-    if(!name) 
-      toast.warn("Name is Empty")
-    if(!email)
-      toast.warn("Email is Empty")
-    if(!password)
-      toast.warn("Password is Empty")
-    if(!course_id) 
-      toast.warn("Course Id Not Entered")
-    if(!mobile_no)
-      toast.warn("Mobile Number Not Entered")
 
-    try{
-      const res = await registerStudent(name, email, password, course_id, mobile_no, profile_pic)
-      console.log(res);
-      
-      if(res.data.status == "SUCCESS") {
-        toast.success("Registered to the course successfuly")
+    e.preventDefault();
+    if (!name) toast.warn("Name is Empty");
+    else if (!email) toast.warn("Email is Empty");
+    else if (!password) toast.warn("Password is Empty");
+    else if (!course_id) toast.warn("Course Id Not Entered");
+    else if (!mobile_no) toast.warn("Mobile Number Not Entered");
+    else {
+      try {
+        const res = await registerStudent(
+          name,
+          email,
+          password,
+          course_id,
+          mobile_no,
+          profile_pic
+        );
+        console.log(res);
+
+        if (res.data.status == "SUCCESS") {
+          toast.success("Registered to the course successfuly");
+        }
+      } catch (ex) {
+        toast.error("Invalid Details Entered");
+        console.log(ex);
       }
     }
-    catch(ex){
-      toast.error("Invalid Details Entered")
-      console.log(ex);
-      
-    }
-  }
-
+  };
 
   return (
     <div>
@@ -58,13 +58,12 @@ function Register() {
           className="wrapper h-screen w-full  flex justify-center items-center px-4"
           style={{ backgroundImage: `url(${bg})`, backgroundSize: "cover" }}
         >
-          <div className="login-box bg-white/20 w-[25%]  backdrop-blur-md  rounded-xl   border border-white/30   px-6 py-3 shadow-[0_8px_32px_12px_rgba(31,38,135,0.37)]">
+          <div className="login-box bg-white/20 lg:min-w-[35%] md:min-w-[35%] sm:min-w-[30%] backdrop-blur-md  rounded-xl   border border-white/30   px-6 py-3 shadow-[0_8px_32px_12px_rgba(31,38,135,0.37)]">
             <h1 className="text-3xl text-center mb-5 font-bold text-blue-900 py-2">
               Register Student
             </h1>
 
             <form>
-
               <div className="name-box flex flex-col mb-6">
                 <label
                   htmlFor="name"
@@ -130,7 +129,6 @@ function Register() {
                   CourseId
                 </label>
                 <div className="iconNInput flex items-center bg-gray-100 px-2 rounded-md">
-                 
                   <input
                     type="number"
                     className="bg-gray-100 rounded-md p-1.5 w-full focus:outline-none"
