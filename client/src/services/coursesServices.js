@@ -23,3 +23,9 @@ export async function getCourseDetails(course_id) {
   const url = `${config.BASE_URL}/api/courses/course-details/${course_id}`;
   return axios.get(url, { headers: authHeaders() });
 }
+
+
+export async function deleteCourse(course_id) {
+  const url = `${config.BASE_URL}/api/courses/delete-course/${course_id}`;
+  return axios.delete(url, { headers: authHeaders() });
+}
