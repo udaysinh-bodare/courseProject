@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import bg from "../../assets/background.png";
 import Navbar from "../../components/Navbar";
 import { toast } from "react-toastify";
@@ -9,6 +9,7 @@ import { addVideo } from "../../services/videoServices";
 function AddVideo() {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const { course_id } = useParams();   // <<--- GET FROM URL
 
   // ---------- ROLE CHECK ----------
   useEffect(() => {
@@ -26,6 +27,7 @@ function AddVideo() {
       return;
     }
 
+    setForm(f => ({ ...f, course_id: course_id || "" })); // prefill
     setLoading(false);
   }, []);
 
@@ -34,7 +36,7 @@ function AddVideo() {
     title: "",
     description: "",
     youtube_url: "",
-    course_id: "",
+    course_id: "",      // prefilled + locked
   });
 
   const [errors, setErrors] = useState({});
@@ -48,15 +50,16 @@ function AddVideo() {
 
     if (!form.title.trim()) errs.title = "Title is required";
     if (!form.description.trim()) errs.description = "Description is required";
-    if (!form.youtube_url.trim()) errs.youtube_url = "YouTube URL is required";
 
-    // basic YouTube pattern check (optional but useful)
+    if (!form.youtube_url.trim())
+      errs.youtube_url = "YouTube URL is required";
+
     const ytRegex = /(youtube\.com|youtu\.be)\//i;
-    if (form.youtube_url && !ytRegex.test(form.youtube_url)) {
+    if (form.youtube_url && !ytRegex.test(form.youtube_url))
       errs.youtube_url = "Enter a valid YouTube link";
-    }
 
-    if (!form.course_id.trim()) errs.course_id = "Course ID is required";
+    if (!form.course_id.trim())
+      errs.course_id = "Course ID is required";
 
     setErrors(errs);
     return Object.keys(errs).length === 0;
@@ -130,9 +133,7 @@ function AddVideo() {
                 className="w-full glass-input"
                 placeholder="Enter video title"
               />
-              {errors.title && (
-                <p className="text-red-600 text-sm">{errors.title}</p>
-              )}
+              {errors.title && <p className="text-red-600 text-sm">{errors.title}</p>}
             </div>
 
             {/* Description */}
@@ -166,15 +167,14 @@ function AddVideo() {
               )}
             </div>
 
-            {/* Course ID */}
+            {/* Course ID (readonly + gray) */}
             <div>
               <label className="font-medium">Course ID</label>
               <input
                 name="course_id"
                 value={form.course_id}
-                onChange={handleChange}
-                className="w-full glass-input"
-                placeholder="Enter course id"
+                readOnly
+                className="w-full glass-input bg-gray-200 cursor-not-allowed"
               />
               {errors.course_id && (
                 <p className="text-red-600 text-sm">{errors.course_id}</p>
