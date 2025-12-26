@@ -1,15 +1,33 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
-import axios from "axios";
 import bg from "../../assets/background.png";
 import Navbar from "../../components/Navbar";
-import { config } from "../../config/config";
 import { addCourse } from "../../services/coursesServices";
+import { getAuthUser } from "../../utils/auth";
 import { toast } from "react-toastify";
 
 function AddCourse() {
+
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const user = getAuthUser();
+
+    if (!user) {
+      toast.error("Please login first");
+      navigate("/login");
+      return;
+    }
+
+    if (user.role !== "admin") {
+      toast.error("Access denied — admin only");
+      navigate("/");
+      return;
+    }
+
+    setLoading(false);
+  }, []);
 
   const [form, setForm] = useState({
     course_name: "",
@@ -22,35 +40,30 @@ function AddCourse() {
 
   const [errors, setErrors] = useState({});
 
-  useEffect(() => {
-    const t = setTimeout(() => setLoading(false), 800);
-    return () => clearTimeout(t);
-  }, []);
-
-  const handleChange = (e) => {
+  const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
-  };
 
-  // -------- FORM VALIDATION ----------
   const validate = () => {
     const errs = {};
 
-    if (!form.course_name.trim()) errs.course_name = "Course name is required";
-    if (!form.description.trim()) errs.description = "Description is required";
+    if (!form.course_name.trim())
+      errs.course_name = "Course name is required";
+
+    if (!form.description.trim())
+      errs.description = "Description is required";
 
     if (!form.fees || form.fees <= 0)
       errs.fees = "Enter a valid fees amount";
 
-    if (!form.start_date) errs.start_date = "Start date is required";
-    if (!form.end_date) errs.end_date = "End date is required";
+    if (!form.start_date)
+      errs.start_date = "Start date is required";
 
-    if (
-      form.start_date &&
-      form.end_date &&
-      new Date(form.end_date) < new Date(form.start_date)
-    ) {
+    if (!form.end_date)
+      errs.end_date = "End date is required";
+
+    if (form.start_date && form.end_date &&
+      new Date(form.end_date) < new Date(form.start_date))
       errs.end_date = "End date cannot be before start date";
-    }
 
     if (!form.video_expire_days || form.video_expire_days <= 0)
       errs.video_expire_days = "Enter valid expiry days";
@@ -59,29 +72,25 @@ function AddCourse() {
     return Object.keys(errs).length === 0;
   };
 
-  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
+    if (!validate()) {
+      toast.error("Please fix form errors before submitting");
+      return;
+    }
 
-  if (!validate()) {
-    toast.error("Please fix form errors before submitting");
-    return;
-  }
+    try {
+      await addCourse(form);
+      toast.success("Course added successfully 🎉");
 
-  try {
-    await addCourse(form);
+      setTimeout(() => navigate("/all-courses"), 1200);
 
-    toast.success("Course added successfully 🎉");
-
-    setTimeout(() => navigate("/all-courses"), 1200);
-  } catch (err) {
-    console.error(err);
-    toast.error(err?.response?.data?.message || "Failed to add course");
-  }
-};
-
-
+    } catch (err) {
+      console.error(err);
+      toast.error(err?.response?.data?.message || "Failed to add course");
+    }
+  };
 
   if (loading) {
     return (
@@ -226,7 +235,8 @@ const handleSubmit = async (e) => {
               <button
                 type="submit"
                 className="px-8 py-2 rounded-full font-semibold text-white
-                bg-gradient-to-r from-emerald-400 to-teal-500 shadow-lg hover:-translate-y-0.5 transition-all"
+                  bg-gradient-to-r from-emerald-400 to-teal-500
+                  shadow-lg hover:-translate-y-0.5 transition-all"
               >
                 Save Course
               </button>
