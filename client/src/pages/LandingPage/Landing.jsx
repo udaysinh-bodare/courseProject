@@ -4,6 +4,7 @@ import heroImg from "../../assets/hero.png";
 import studentsImg from "../../assets/students.png";
 import Navbar from "../../components/Navbar";
 import { useNavigate } from "react-router";
+import { getAllCourses } from "../../services/coursesServices";
 
 function Landing() {
 	const [loading, setLoading] = useState(true);
@@ -149,63 +150,76 @@ function Landing() {
 	);
 }
 
+async function getallcoursesforcarousel() {
+	let courses = await getAllCourses();
+
+	return courses.data;
+}
+
 function CourseCarousel() {
-	// Temporary hard-coded courses (replace with DB data later)
-	const courses = [
+	const navigate = useNavigate();
+
+	const [courses, setCourses] = useState([]);
+	const [paused, setPaused] = useState(false);
+
+	const trackRef = React.useRef(null);
+	const posRef = React.useRef(0);
+
+	const fallbackCourses = [
 		{
 			course_id: 1,
 			course_name: "Full-Stack MERN Development",
 			description:
-				"Learn MongoDB, Express, React and Node with real-world projects and mentorship.",
+				"Learn MongoDB, Express, React and Node with real projects.",
 			fees: 12999,
 			start_date: "2025-02-10",
-			video_expire_days: 180,
 		},
 		{
 			course_id: 2,
 			course_name: "Data Science & Machine Learning",
-			description:
-				"Hands-on Python, Pandas, NumPy, ML models and real datasets — beginner friendly.",
+			description: "Hands-on Python, Pandas, ML models and datasets.",
 			fees: 14999,
 			start_date: "2025-03-01",
-			video_expire_days: 200,
 		},
 		{
 			course_id: 3,
-			course_name: "Digital Marketing & SEO Mastery",
-			description:
-				"SEO, Google Ads, Social Media strategy and performance analytics with live projects.",
-			fees: 9999,
-			start_date: "2025-02-20",
-			video_expire_days: 120,
-		},
-		{
-			course_id: 4,
 			course_name: "UI / UX Design Fundamentals",
-			description:
-				"Figma, wireframing, user research and portfolio-ready design workflows.",
+			description: "Figma, wireframing, user research and portfolios.",
 			fees: 10999,
 			start_date: "2025-02-15",
-			video_expire_days: 150,
 		},
 	];
 
-	const navigate = useNavigate();
+	// Fetch courses
+	useEffect(() => {
+		async function load() {
+			try {
+				const res = await getAllCourses();
+				const data = res?.data.data;
+
+				if (Array.isArray(data) && data.length > 0) {
+					setCourses(data);
+				} else {
+					setCourses(fallbackCourses);
+				}
+			} catch (e) {
+				console.error("API failed — using fallback", e);
+				console.log(e);
+				setCourses(fallbackCourses);
+			}
+		}
+
+		load();
+	}, []);
 
 	const goToCourse = (course_id) => {
-		navigate("/viewcourse", {
-			state: { course_id },
-		});
+		navigate(`/viewcourse/${course_id}`);
 	};
 
-	// responsive layout (1 mobile, 3 desktop)
 	const getCardsPerView = () =>
 		typeof window !== "undefined" && window.innerWidth < 768 ? 1 : 3;
 
 	const [cardsPerView, setCardsPerView] = useState(getCardsPerView);
-	const [paused, setPaused] = useState(false);
-	const trackRef = React.useRef(null);
-	const posRef = React.useRef(0);
 
 	useEffect(() => {
 		const handler = () => setCardsPerView(getCardsPerView());
@@ -213,11 +227,19 @@ function CourseCarousel() {
 		return () => window.removeEventListener("resize", handler);
 	}, []);
 
-	// duplicate for infinite scroll
-	const looped = [...courses, ...courses];
+	const minItems = cardsPerView * 2;
+	const base = courses.length ? courses : fallbackCourses;
 
-	const speed = 2.2; // smooth autoplay
+	const filled =
+		base.length >= minItems
+			? base
+			: Array.from({ length: minItems }, (_, i) => base[i % base.length]);
 
+	const looped = [...filled, ...filled];
+
+	const speed = 2;
+
+	// autoplay
 	useEffect(() => {
 		let frame;
 
@@ -240,7 +262,7 @@ function CourseCarousel() {
 
 		frame = requestAnimationFrame(animate);
 		return () => cancelAnimationFrame(frame);
-	}, [paused]);
+	}, [paused, courses]);
 
 	return (
 		<div
@@ -249,21 +271,19 @@ function CourseCarousel() {
 			onMouseLeave={() => setPaused(false)}
 		>
 			<div ref={trackRef} className="flex gap-6 will-change-transform">
+				{/* Render skeleton while loading */}
+				{!courses.length && (
+					<p className="text-gray-500 px-3">Loading courses…</p>
+				)}
+
 				{looped.map((c, i) => (
 					<div
 						key={i}
 						className="flex-none px-3"
 						style={{ width: `${100 / cardsPerView}%` }}
 					>
-						<div
-							className="bg-white/80 backdrop-blur shadow-lg rounded-2xl p-4
-                            hover:-translate-y-1 hover:shadow-2xl transition-all"
-						>
-							{/* Image placeholder */}
-							<div
-								className="h-[140px] rounded-xl bg-gradient-to-br from-sky-100 to-blue-200
-                flex items-center justify-center"
-							>
+						<div className="bg-white/80 backdrop-blur shadow-lg rounded-2xl p-4 hover:-translate-y-1 hover:shadow-2xl transition-all">
+							<div className="h-[140px] rounded-xl bg-gradient-to-br from-sky-100 to-blue-200 flex items-center justify-center">
 								<span className="text-3xl text-blue-500">
 									📘
 								</span>
@@ -274,33 +294,29 @@ function CourseCarousel() {
 							</h3>
 
 							<p className="text-sm text-gray-600 line-clamp-2">
-								{c.description}
+								{c.description ||
+									"Course description coming soon."}
 							</p>
 
 							<div className="flex justify-between items-center mt-2">
-								{/* Start Date */}
-								<span className="text-xs text-gray-700">
-									📅{" "}
-									{new Date(
-										c.start_date
-									).toLocaleDateString()}
-								</span>
+								{c.start_date && (
+									<span className="text-xs text-gray-700">
+										📅{" "}
+										{new Date(
+											c.start_date
+										).toLocaleDateString()}
+									</span>
+								)}
 
-								{/* Fees badge (optional) */}
 								{c.fees && (
-									<span
-										className="text-xs font-semibold px-2 py-1
-                                   rounded-lg bg-emerald-100 text-emerald-700"
-									>
+									<span className="text-xs font-semibold px-2 py-1 rounded-lg bg-emerald-100 text-emerald-700">
 										From ₹{c.fees}
 									</span>
 								)}
 							</div>
 
 							<button
-								className="mt-3 w-full py-2 rounded-xl
-                  bg-gradient-to-r from-teal-400 to-green-500
-                  text-white font-semibold shadow-md"
+								className="mt-3 w-full py-2 rounded-xl bg-gradient-to-r from-teal-400 to-green-500 text-white font-semibold shadow-md"
 								onClick={() => goToCourse(c.course_id)}
 							>
 								View Details
