@@ -73,14 +73,14 @@ function AddVideo() {
 
     const payload = {
       ...form,
-      added_at: new Date().toISOString(), // auto-set timestamp
+      added_at: new Date().toISOString(),
     };
 
     try {
       await addVideo(payload);
       toast.success("Video added successfully 🎉");
 
-      setTimeout(() => navigate("/all-videos"), 1200);
+      setTimeout(() => navigate("/allvideos"), 1200);
     } catch (err) {
       console.error(err);
       toast.error(err?.response?.data?.message || "Failed to add video");

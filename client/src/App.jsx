@@ -9,6 +9,7 @@ import Landing from "./pages/LandingPage/Landing";
 import ViewCourse from "./pages/ViewCourses/ViewCourse"
 import AddCourse from "./pages/AddCourse/AddCourse";
 import AddVideo from "./pages/AddVideo/AddVideo";
+import AdminAllCourses from "./pages/AdminPages/AdminAllCourses";
 
 export const loginContext = createContext()
 function App() {
@@ -23,6 +24,7 @@ function App() {
 					<Route path="/viewcourse/:course_id" element={<ViewCourse/>} />
 					<Route path="/addcourse" element={<AddCourse/> } />
 					<Route path="/addvideo" element={<AddVideo/> } />
+					<Route path="/allcourses" element={<AdminAllCourses/> } />
 				</Routes>
 			</loginContext.Provider>
 		
