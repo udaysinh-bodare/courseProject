@@ -133,7 +133,7 @@ function myCourses(req, res) {
     });
   }
 
-  pool.query(myCoursessql, [email], (err, result) => {
+  pool.query(myCoursessql, [email], (err, data) => {
     if (err) {
       return res.status(500).send({
         status: "ERROR",
@@ -144,7 +144,7 @@ function myCourses(req, res) {
     return res.send({
       status: "SUCCESS",
       message: "Courses fetched successfully",
-      result
+      data: data
     });
   });
 }

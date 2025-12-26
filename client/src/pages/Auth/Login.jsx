@@ -12,11 +12,13 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { loginStatus, setLoginStatus } = useContext(loginContext);
+
   const signIn = async (e) => {
     e.preventDefault();
     if (!email) toast.warn("Email Is Empty!");
     else if (!password) toast.warn("Password Is Empty");
     setLoginStatus(true);
+    
     try {
       const res = await loginStudent(email, password);
       if (res.data.status == "SUCCESS") {
