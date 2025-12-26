@@ -7,7 +7,13 @@ import { Route, Routes } from "react-router-dom";
 import Register from "./pages/Register";
 import Landing from "./pages/LandingPage/Landing";
 import ViewCourse from "./pages/ViewCourses/ViewCourse"
+<<<<<<< HEAD
 import Profile from "./pages/profile";
+=======
+import AddCourse from "./pages/AddCourse/AddCourse";
+import AddVideo from "./pages/AddVideo/AddVideo";
+import AdminAllCourses from "./pages/AdminPages/AdminAllCourses";
+>>>>>>> 554cf82ac8dbd964968ad74a6190289290a3ba00
 
 export const loginContext = createContext()
 function App() {
@@ -18,10 +24,18 @@ function App() {
 				<Routes>
 					<Route path="/" element={<Landing/>} />
 					<Route path="/login" element={<Login />} />
+<<<<<<< HEAD
 					<Route path="/register" element={<Register />} />
 					<Route path="/viewcourse" element={<ViewCourse/>} />
 					<Route path="/profile" element={<Profile />} />
 					<Route path="/dashboard" element={<Profile />} />
+=======
+					<Route path="/register/:course_id" element={<Register />} />
+					<Route path="/viewcourse/:course_id" element={<ViewCourse/>} />
+					<Route path="/addcourse" element={<AddCourse/> } />
+					<Route path="/addvideo/:course_id" element={<AddVideo/> } />
+					<Route path="/allcourses" element={<AdminAllCourses/> } />
+>>>>>>> 554cf82ac8dbd964968ad74a6190289290a3ba00
 				</Routes>
 			</loginContext.Provider>
 		

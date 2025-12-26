@@ -10,7 +10,8 @@ const {
 const {
   getallcourses,
   getstudentsbycourses,
-  getCourseDetailsql
+  getCourseDetailsql,
+  myCourses
 } = require("../services/courses.services");
 
 // ADD COURSE
@@ -214,7 +215,6 @@ function getCourseDetails(req, res) {
     return res.send(result.createResult(null, data));
   });
 }
-
 
 
 module.exports = {

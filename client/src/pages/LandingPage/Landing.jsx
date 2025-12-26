@@ -4,9 +4,13 @@ import heroImg from "../../assets/hero.png";
 import studentsImg from "../../assets/students.png";
 import Navbar from "../../components/Navbar";
 import { useNavigate } from "react-router";
+import { getAllCourses } from "../../services/coursesServices";
+import CourseCard from "../../components/CourseCard";
 
 function Landing() {
 	const [loading, setLoading] = useState(true);
+
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		const timer = setTimeout(() => setLoading(false), 800);
@@ -50,21 +54,14 @@ function Landing() {
 							and real-world projects.
 						</p>
 
-						<div className="flex gap-4 mt-1">
+						<div className="flex gap-4 mt-4">
 							<button
-								className="px-7 py-3 rounded-full font-semibold text-white
-                bg-gradient-to-r from-emerald-400 to-teal-500 shadow-lg
-                hover:shadow-emerald-400/60 hover:-translate-y-0.5 transition-all"
+								onClick={() => navigate("/courses")}
+								className="px-8 py-3 rounded-full font-semibold text-white
+      bg-gradient-to-r from-emerald-400 to-teal-500 shadow-lg
+      hover:shadow-emerald-400/60 hover:-translate-y-0.5 transition-all"
 							>
-								Enroll Now
-							</button>
-
-							<button
-								className="px-7 py-3 rounded-full font-semibold
-                bg-white/80 backdrop-blur border shadow-md
-                hover:-translate-y-0.5 hover:shadow-lg transition-all"
-							>
-								View Courses
+								Explore Courses
 							</button>
 						</div>
 					</div>
@@ -149,168 +146,119 @@ function Landing() {
 	);
 }
 
+
 function CourseCarousel() {
-	// Temporary hard-coded courses (replace with DB data later)
-	const courses = [
-		{
-			course_id: 1,
-			course_name: "Full-Stack MERN Development",
-			description:
-				"Learn MongoDB, Express, React and Node with real-world projects and mentorship.",
-			fees: 12999,
-			start_date: "2025-02-10",
-			video_expire_days: 180,
-		},
-		{
-			course_id: 2,
-			course_name: "Data Science & Machine Learning",
-			description:
-				"Hands-on Python, Pandas, NumPy, ML models and real datasets — beginner friendly.",
-			fees: 14999,
-			start_date: "2025-03-01",
-			video_expire_days: 200,
-		},
-		{
-			course_id: 3,
-			course_name: "Digital Marketing & SEO Mastery",
-			description:
-				"SEO, Google Ads, Social Media strategy and performance analytics with live projects.",
-			fees: 9999,
-			start_date: "2025-02-20",
-			video_expire_days: 120,
-		},
-		{
-			course_id: 4,
-			course_name: "UI / UX Design Fundamentals",
-			description:
-				"Figma, wireframing, user research and portfolio-ready design workflows.",
-			fees: 10999,
-			start_date: "2025-02-15",
-			video_expire_days: 150,
-		},
-	];
+  const navigate = useNavigate();
 
-	const navigate = useNavigate();
+  const [courses, setCourses] = useState([]);
+  const [isPaused, setIsPaused] = useState(false);
+  const trackRef = React.useRef(null);
 
-	const goToCourse = (course_id) => {
-		navigate("/viewcourse", {
-			state: { course_id },
-		});
-	};
+  const fallbackCourses = [
+    {
+      course_id: 1,
+      course_name: "Full-Stack MERN Development",
+      description: "Learn MongoDB, Express, React and Node with real projects.",
+      fees: 12999,
+      start_date: "2025-02-10",
+    },
+    {
+      course_id: 2,
+      course_name: "Data Science & Machine Learning",
+      description: "Hands-on Python, Pandas, ML models and datasets.",
+      fees: 14999,
+      start_date: "2025-03-01",
+    },
+    {
+      course_id: 3,
+      course_name: "UI / UX Design Fundamentals",
+      description: "Figma, wireframing, user research and portfolios.",
+      fees: 10999,
+      start_date: "2025-02-15",
+    },
+  ];
 
-	// responsive layout (1 mobile, 3 desktop)
-	const getCardsPerView = () =>
-		typeof window !== "undefined" && window.innerWidth < 768 ? 1 : 3;
+  // fetch courses
+  useEffect(() => {
+    async function load() {
+      try {
+        const res = await getAllCourses();
+        const data = res?.data?.data;
 
-	const [cardsPerView, setCardsPerView] = useState(getCardsPerView);
-	const [paused, setPaused] = useState(false);
-	const trackRef = React.useRef(null);
-	const posRef = React.useRef(0);
+        setCourses(Array.isArray(data) && data.length ? data : fallbackCourses);
+      } catch {
+        setCourses(fallbackCourses);
+      }
+    }
+    load();
+  }, []);
 
-	useEffect(() => {
-		const handler = () => setCardsPerView(getCardsPerView());
-		window.addEventListener("resize", handler);
-		return () => window.removeEventListener("resize", handler);
-	}, []);
+  const getCardsPerView = () =>
+    typeof window !== "undefined" && window.innerWidth < 768 ? 1 : 3;
 
-	// duplicate for infinite scroll
-	const looped = [...courses, ...courses];
+  const [cardsPerView, setCardsPerView] = useState(getCardsPerView);
 
-	const speed = 2.2; // smooth autoplay
+  useEffect(() => {
+    const handler = () => setCardsPerView(getCardsPerView());
+    window.addEventListener("resize", handler);
+    return () => window.removeEventListener("resize", handler);
+  }, []);
 
-	useEffect(() => {
-		let frame;
+  const base = courses.length ? courses : fallbackCourses;
+  const minItems = Math.max(cardsPerView * 2, 4);
+  const filled =
+    base.length >= minItems
+      ? base
+      : Array.from({ length: minItems }, (_, i) => base[i % base.length]);
+  const looped = [...filled, ...filled];
 
-		const animate = () => {
-			if (!paused && trackRef.current) {
-				posRef.current -= speed;
+  const handlePause = () => {
+    if (!trackRef.current) return;
 
-				const track = trackRef.current;
-				const width = track.scrollWidth / 2;
+    const computed = window.getComputedStyle(trackRef.current);
+    const matrix = computed.transform;
 
-				if (Math.abs(posRef.current) >= width) {
-					posRef.current = 0;
-				}
+    trackRef.current.style.transform = matrix;
+    trackRef.current.style.animationPlayState = "paused";
 
-				track.style.transform = `translateX(${posRef.current}px)`;
-			}
+    setIsPaused(true);
+  };
 
-			frame = requestAnimationFrame(animate);
-		};
+  const handleResume = () => {
+    if (!trackRef.current) return;
 
-		frame = requestAnimationFrame(animate);
-		return () => cancelAnimationFrame(frame);
-	}, [paused]);
+    trackRef.current.style.animationPlayState = "running";
+    setIsPaused(false);
+  };
 
-	return (
-		<div
-			className="relative max-w-6xl mx-auto overflow-hidden"
-			onMouseEnter={() => setPaused(true)}
-			onMouseLeave={() => setPaused(false)}
-		>
-			<div ref={trackRef} className="flex gap-6 will-change-transform">
-				{looped.map((c, i) => (
-					<div
-						key={i}
-						className="flex-none px-3"
-						style={{ width: `${100 / cardsPerView}%` }}
-					>
-						<div
-							className="bg-white/80 backdrop-blur shadow-lg rounded-2xl p-4
-                            hover:-translate-y-1 hover:shadow-2xl transition-all"
-						>
-							{/* Image placeholder */}
-							<div
-								className="h-[140px] rounded-xl bg-gradient-to-br from-sky-100 to-blue-200
-                flex items-center justify-center"
-							>
-								<span className="text-3xl text-blue-500">
-									📘
-								</span>
-							</div>
+  const goToCourse = (id) => navigate(`/viewcourse/${id}`);
 
-							<h3 className="font-semibold mt-3">
-								{c.course_name}
-							</h3>
-
-							<p className="text-sm text-gray-600 line-clamp-2">
-								{c.description}
-							</p>
-
-							<div className="flex justify-between items-center mt-2">
-								{/* Start Date */}
-								<span className="text-xs text-gray-700">
-									📅{" "}
-									{new Date(
-										c.start_date
-									).toLocaleDateString()}
-								</span>
-
-								{/* Fees badge (optional) */}
-								{c.fees && (
-									<span
-										className="text-xs font-semibold px-2 py-1
-                                   rounded-lg bg-emerald-100 text-emerald-700"
-									>
-										From ₹{c.fees}
-									</span>
-								)}
-							</div>
-
-							<button
-								className="mt-3 w-full py-2 rounded-xl
-                  bg-gradient-to-r from-teal-400 to-green-500
-                  text-white font-semibold shadow-md"
-								onClick={() => goToCourse(c.course_id)}
-							>
-								View Details
-							</button>
-						</div>
-					</div>
-				))}
-			</div>
-		</div>
-	);
+  return (
+    <div
+      className="relative max-w-6xl mx-auto overflow-hidden"
+      onMouseEnter={handlePause}
+      onMouseLeave={handleResume}
+    >
+      <div
+        ref={trackRef}
+        className="flex gap-6 whitespace-nowrap animate-carousel"
+        style={{ "--speed": "7s" }}
+      >
+        {looped.map((c, i) => (
+          <div
+            key={i}
+            className="flex-none px-3"
+            style={{ width: `${100 / cardsPerView}%` }}
+            onClick={() => goToCourse(c.course_id)}
+          >
+            <CourseCard course={c} />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 }
+
+
 
 export default Landing;
