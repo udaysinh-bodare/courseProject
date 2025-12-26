@@ -6,6 +6,7 @@ import { loginContext } from "../App";
 import Register from "./Register";
 import { loginStudent } from "../services/studentServices";
 import bg from "../assets/background.png";
+import Profile from "./profile";
 
 function Login() {
   const navigate = useNavigate();
@@ -27,6 +28,8 @@ function Login() {
         localStorage.setItem("token", res.data.token);
         toast.success("Logged In Successfully!");
         navigate("/dashboard");
+       localStorage.setItem("token", res.data.token);
+
       }
     } catch (ex) {
       console.log(ex);
