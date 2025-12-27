@@ -4,23 +4,19 @@ import { Link, useNavigate } from "react-router";
 function Navbar() {
   const navigate = useNavigate();
 
-  // 🔑 Auth status from token
+ 
   const isLoggedIn = !!localStorage.getItem("token");
 
   const [open, setOpen] = useState(false);
   const [courseOpen, setCourseOpen] = useState(false);
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    navigate("/login");
-  };
-
   return (
     <nav className="mx-auto w-[90%] pt-2">
-      {/* Top Bar */}
-      <div className="flex items-center justify-between rounded-full px-6 py-2 bg-white/10 backdrop-blur-xl border border-white/20 shadow-lg">
+      
+      <div className="flex items-center justify-between rounded-full px-6 py-2 
+                      bg-white/10 backdrop-blur-xl border border-white/20 shadow-lg">
 
-        {/* Logo */}
+      
         <div className="flex items-center gap-2 text-xl font-semibold text-blue-600">
           <div className="h-8 w-8 rounded-full bg-blue-600 flex items-center justify-center text-white">
             🏠
@@ -28,11 +24,11 @@ function Navbar() {
           Skill Katta
         </div>
 
-        {/* Desktop Menu */}
+        
         <div className="hidden md:flex items-center gap-6">
           <Link to="/" className="nav-link">Home</Link>
 
-          {/* Courses Dropdown */}
+          
           <div className="relative group">
             <span className="nav-link cursor-pointer flex items-center gap-1">
               Courses <span>▾</span>
@@ -52,7 +48,6 @@ function Navbar() {
           <Link to="/contact" className="nav-link">Contact Us</Link>
         </div>
 
-        {/* Desktop Buttons */}
         <div className="hidden md:flex items-center gap-3">
           {!isLoggedIn ? (
             <button
@@ -70,7 +65,7 @@ function Navbar() {
                          bg-gradient-to-r from-blue-500 to-cyan-500 text-white
                          transition-all duration-300
                          hover:scale-110 hover:shadow-lg"
-              title="Logout"
+              title="Profile"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -90,7 +85,7 @@ function Navbar() {
           )}
         </div>
 
-        {/* Hamburger */}
+      
         <button
           onClick={() => setOpen(!open)}
           className="md:hidden text-2xl text-white"
@@ -99,7 +94,7 @@ function Navbar() {
         </button>
       </div>
 
-      {/* Mobile Menu */}
+  
       {open && (
         <div className="md:hidden mt-3 rounded-xl bg-white shadow-lg p-4 space-y-4">
 
@@ -107,7 +102,6 @@ function Navbar() {
             Home
           </Link>
 
-          {/* Courses Dropdown (Mobile) */}
           <div>
             <button
               onClick={() => setCourseOpen(!courseOpen)}
@@ -164,10 +158,13 @@ function Navbar() {
             </button>
           ) : (
             <button
-              onClick={handleLogout}
-              className="rounded-full bg-red-500 px-5 py-2 text-white"
+              onClick={() => {
+                setOpen(false);
+                navigate("/profile");
+              }}
+              className="rounded-full bg-blue-500 px-5 py-2 text-white"
             >
-              Logout
+              Profile
             </button>
           )}
         </div>
