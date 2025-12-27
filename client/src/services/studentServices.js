@@ -7,6 +7,8 @@ export async function loginStudent(email, password) {
         email,
         password
     }
+    console.log(body);
+    
     const response = await axios.post(url, body)
     return response
 }
