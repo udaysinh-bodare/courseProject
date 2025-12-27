@@ -10,6 +10,9 @@ import ViewCourse from "./pages/ViewCourses/ViewCourse"
 import Profile from "./pages/profile";
 import AddCourse from "./pages/AddCourse/AddCourse";
 import StudentDash from "./pages/dashboard/StudentDash";
+import AdminAllCourses from "./pages/AdminPages/AdminAllCourses";
+import AddVideo from "./pages/AddVideo/AddVideo";
+
 
 export const loginContext = createContext()
 function App() {
@@ -28,6 +31,8 @@ function App() {
 					<Route path="/viewcourse/:course_id" element={<ViewCourse/>} />
 					<Route path="/student/dashboard" element={loginStatus?<StudentDash/>:<Login/>}/>
 					<Route path="/addcourse" element={<AddCourse/>} />
+					<Route path="/addvideo/:course_id" element={<AddVideo/>} />
+					<Route path="/allcourses" element={<AdminAllCourses/>} />
 				</Routes>
 			</loginContext.Provider>
 		<ToastContainer />
