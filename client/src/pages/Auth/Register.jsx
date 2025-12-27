@@ -2,11 +2,11 @@ import React, { useContext, useState } from "react";
 import { Link, Links, useNavigate } from "react-router";
 import { toast } from "react-toastify";
 
-import { loginContext } from "../App";
+import { loginContext } from "../../App";
 // import Register from "./Register";
-import { loginStudent } from "../services/studentServices";
-import bg from "../assets/background.png";
-import { registerStudent } from "../services/studentServices";
+import { loginStudent } from "../../services/studentServices";
+import bg from "../../assets/background.png";
+import { registerStudent } from "../../services/studentServices";
 
 function Register() {
   const [name, setName] = useState("");
@@ -27,7 +27,7 @@ function Register() {
     if (!name) toast.warn("Name is Empty");
     else if (!email) toast.warn("Email is Empty");
     else if (!password) toast.warn("Password is Empty");
-    else if (!course_id) toast.warn("Course Id Not Entered");
+    // else if (!course_id) toast.warn("Course Id Not Entered");
     else if (!mobile_no) toast.warn("Mobile Number Not Entered");
     else {
       try {
@@ -39,6 +39,8 @@ function Register() {
           mobile_no,
           profile_pic
         );
+        const course_id = res.request.params.course_id
+        
         console.log(res);
 
         if (res.data.status == "SUCCESS") {

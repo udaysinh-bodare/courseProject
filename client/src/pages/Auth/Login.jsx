@@ -2,10 +2,11 @@ import React, { useContext, useState } from "react";
 import { Link, Links, useNavigate } from "react-router";
 import { toast } from "react-toastify";
 
-import { loginContext } from "../App";
+import { loginContext } from "../../App";
 import Register from "./Register";
-import { loginStudent } from "../services/studentServices";
-import bg from "../assets/background.png";
+import { loginStudent } from "../../services/studentServices";
+import bg from "../../assets/background.png";
+// import Profile from "./profile";
 
 function Login() {
 	const navigate = useNavigate();
@@ -13,27 +14,42 @@ function Login() {
 	const [password, setPassword] = useState("");
 	const { loginStatus, setLoginStatus } = useContext(loginContext);
 	const signIn = async (e) => {
-		e.preventDefault();
-		if (!email) toast.warn("Email Is Empty!");
-		else if (!password) toast.warn("Password Is Empty");
+	e.preventDefault();
 
-		try {
-			const res = await loginStudent(email, password);
-			if (res.data.status == "SUCCESS") {
-				console.log("hi");
-				console.log(res.data.token);
+	if (!email) {
+		toast.warn("Email Is Empty!");
+		return;
+	}
 
-				localStorage.setItem("token", res.data.token);
-				setLoginStatus(true);
-				toast.success("Logged In Successfully!");
-				navigate("/dashboard");
-			}
-		} catch (ex) {
-			console.log(ex);
+	if (!password) {
+		toast.warn("Password Is Empty!");
+		return;
+	}
 
+	try {
+		const res = await loginStudent(email, password);
+
+		if (res.data.status === "SUCCESS") {
+			console.log(res);
+			
+			localStorage.setItem("token", res.data.token);
+      
+			localStorage.setItem("email", res.data.data.email);
+			localStorage.setItem("role", res.data.data.role);
+			localStorage.setItem("name", res.data.data.name || "User");
+			setLoginStatus(true);
+
+			toast.success("Logged In Successfully!");
+			// navigate("/student/dashboard");
+		} else {
 			toast.error("Invalid Email or Password");
 		}
-	};
+	} catch (ex) {
+		console.log(ex);
+		toast.error("Invalid Email or Password");
+	}
+};
+
 
 	return (
 		<div>

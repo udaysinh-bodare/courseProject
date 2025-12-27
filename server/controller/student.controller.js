@@ -4,7 +4,8 @@ const crypto = require("crypto-js");
 const {
   changePasswordsql,
   myCoursessql,
-  myCourseandvediosql
+  myCourseandvediosql,
+  course_desc_sql
 } = require("../services/student.services");
 
 // REGISTER TO COURSE
@@ -133,7 +134,7 @@ function myCourses(req, res) {
     });
   }
 
-  pool.query(myCoursessql, [email], (err, result) => {
+  pool.query(myCoursessql, [email], (err, data) => {
     if (err) {
       return res.status(500).send({
         status: "ERROR",
@@ -144,9 +145,28 @@ function myCourses(req, res) {
     return res.send({
       status: "SUCCESS",
       message: "Courses fetched successfully",
-      result
+      data: data
     });
   });
+}
+
+function myCourseDescription(req, res) {
+  const email = req.user?.email;
+  const sql = course_desc_sql
+  pool.query(sql,[email], (error, data)=>{
+    if (error) {
+      return res.status(500).send({
+        status: "ERROR",
+        message: "Failed to fetch courses",
+        error: error
+      });
+    }
+    return res.send({
+      status: "SUCCESS",
+      message: "Courses fetched successfully",
+      data: data
+    });
+  })
 }
 
 // MY COURSES AND VIDEOS
@@ -180,5 +200,6 @@ module.exports = {
   registerToCourse,
   changePassword,
   myCourses,
-  myCoursesandvedio
+  myCoursesandvedio,
+  myCourseDescription
 };

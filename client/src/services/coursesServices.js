@@ -1,5 +1,5 @@
+import { config } from "../config/config.js";
 import axios from "axios";
-import { config } from "../config/config";
 
 function authHeaders() {
   const token = localStorage.getItem("token");
@@ -10,9 +10,20 @@ function authHeaders() {
 }
 
 export async function getAllCourses() {
-  const url = `${config.BASE_URL}/api/courses/all-active-courses`;
-  return axios.get(url, { headers: authHeaders() });
+    const url = config.BASE_URL + "/api/courses/all-active-courses"
+    const response = await axios.get(url)
+    return response
 }
+
+export async function myCourses(token) {
+    const url = config.BASE_URL + '/api/student/my-course-description'
+    const headers = {
+        token
+    }
+    const res = await axios.get(url, {headers})
+    return res
+}
+  
 
 export async function addCourse(payload) {
   const url = `${config.BASE_URL}/api/courses/courses-add`;
