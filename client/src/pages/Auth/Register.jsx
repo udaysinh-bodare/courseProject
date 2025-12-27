@@ -76,6 +76,7 @@ function Register() {
       }
     } catch (ex) {
       console.log(ex);
+      toast.error("Registration Failed")
     }
   };
 
@@ -107,7 +108,7 @@ function Register() {
                             px-6 py-1 shadow-[0_8px_32px_12px_rgba(31,38,135,0.37)]"
       >
         <h1 className="text-4xl text-center mb-3 font-bold text-blue-900 py-2">
-          Login
+          Registration
         </h1>
 
         <form>
@@ -198,7 +199,7 @@ function Register() {
                                hover:opacity-80 cursor-pointer py-2 rounded-3xl
                                text-white font-semibold px-7"
             >
-              Login
+              Registration To Course
             </button>
           </div>
 

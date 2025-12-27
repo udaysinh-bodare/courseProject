@@ -13,6 +13,7 @@ import ChangePassword from "./pages/Auth/ChangePassword";
 import AdminAllCourses from "./pages/AdminPages/AdminAllCourses";
 import AddVideo from "./pages/AddVideo/AddVideo";
 import AdminAllVideos from "./pages/AdminPages/AdminAllVideos";
+import EditVideo from "./pages/AddVideo/EditVideo";
 
 /* ================= PROTECTED ROUTE ================= */
 function ProtectedRoute({ children }) {
@@ -100,7 +101,19 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+        <Route
+          path="/editvideo/:video_id"
+          element={
+            <ProtectedRoute>
+              <EditVideo />
+            </ProtectedRoute>
+          }
+        />
+
       </Routes>
+
+      
 
       <ToastContainer />
     </>
