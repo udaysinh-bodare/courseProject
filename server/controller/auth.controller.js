@@ -18,14 +18,14 @@ function loginUser(req, res) {
         if (results.length === 0) {
             return res.status(401).send({
                 status: "ERROR",
-                message: "Invalid email or password"
+                message: "Invalid email or Password"
             });
         }
 
         token = generateToken({ email: results[0].email, role: results[0].role });
         res.send({
             status: "SUCCESS",
-            message: "Login successful",
+            message: "Login Successful",
             data: {
                 role: results[0].role,
                 email: results[0].email
