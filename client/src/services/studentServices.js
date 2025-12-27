@@ -23,6 +23,5 @@ export async function registerStudent(name, email, password, course_id, mobile_n
         profile_pic
     }
     const response = await axios.post(url, body)
-    return {response, 
 }
 
