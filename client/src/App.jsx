@@ -10,7 +10,14 @@ import ViewCourse from "./pages/ViewCourses/ViewCourse"
 import Profile from "./pages/profile";
 import AddCourse from "./pages/AddCourse/AddCourse";
 import StudentDash from "./pages/dashboard/StudentDash";
+<<<<<<< HEAD
 import ChangePassword from "./pages/Auth/ChangePassword";
+=======
+import AdminAllCourses from "./pages/AdminPages/AdminAllCourses";
+import AddVideo from "./pages/AddVideo/AddVideo";
+import AdminAllVideos from "./pages/AdminPages/AdminAllVideos";
+
+>>>>>>> 479af10d7074e16f2ce95b4e8eae65e7a6003d18
 
 export const loginContext = createContext()
 function App() {
@@ -30,6 +37,9 @@ function App() {
 					<Route path="/student/dashboard" element={loginStatus?<StudentDash/>:<Login/>}/>
 					<Route path="/addcourse" element={<AddCourse/>} />
 					<Route path="/changepassword" element={<ChangePassword/>} />
+					<Route path="/addvideo/:course_id" element={<AddVideo/>} />
+					<Route path="/allcourses" element={<AdminAllCourses/>} />
+					<Route path="/allvideos/:course_id" element={<AdminAllVideos/>} />
 				</Routes>
 			</loginContext.Provider>
 		<ToastContainer />
