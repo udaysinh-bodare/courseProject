@@ -44,10 +44,10 @@ function Profile() {
 
 
      <div className="bg-white rounded-xl px-10 pb-10 pt-5 max-w-4xl">
-        <h2 className="justify-center flex font-bold items-center text-5xl text-blue-500 p-2">
+        <h2 className="justify-center flex font-bold items-center text-5xl text-blue-500 p-2 pb-5">
           Profile</h2>
           <div className="flex justify-center">
-        <img src={logo} alt="logo" className="w-50 h-50 mb-4 bg-transparent rounded-full flex justify-center"/></div>
+        <img src={logo} alt="logo" className="w-50 h-50 mb-4 rounded-full bg-white/2000 flex justify-center transition-all duration-200  hover:shadow-amber-300 hover:shadow-xl"/></div>
 
  <div className="font-bold text-4xl text-gray-600">
         <p className="text-5xl flex justify-center text-red-400 p-1"> {user.name}</p>

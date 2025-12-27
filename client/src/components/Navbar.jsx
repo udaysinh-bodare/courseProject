@@ -1,13 +1,19 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router";
-import { loginContext } from "../App";
 
 function Navbar() {
   const navigate = useNavigate();
-  const { loginStatus } = useContext(loginContext);
-  console.log("Login Status in Navbar:", loginStatus);
+
+  // 🔑 Auth status from token
+  const isLoggedIn = !!localStorage.getItem("token");
+
   const [open, setOpen] = useState(false);
   const [courseOpen, setCourseOpen] = useState(false);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
 
   return (
     <nav className="mx-auto w-[90%] pt-2">
@@ -24,17 +30,15 @@ function Navbar() {
 
         {/* Desktop Menu */}
         <div className="hidden md:flex items-center gap-6">
-
           <Link to="/" className="nav-link">Home</Link>
 
-          {/* Courses Dropdown (Desktop) */}
+          {/* Courses Dropdown */}
           <div className="relative group">
             <span className="nav-link cursor-pointer flex items-center gap-1">
               Courses <span>▾</span>
             </span>
-
             <div className="absolute left-0 top-full mt-2 w-40 rounded-lg bg-white shadow-lg
-              opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+                            opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
               <Link to="/my-courses" className="block px-4 py-2 hover:bg-blue-100">
                 My Courses
               </Link>
@@ -50,21 +54,23 @@ function Navbar() {
 
         {/* Desktop Buttons */}
         <div className="hidden md:flex items-center gap-3">
-          {!loginStatus ? (
+          {!isLoggedIn ? (
             <button
               onClick={() => navigate("/login")}
               className="rounded-full bg-green-500 px-5 py-2 text-white
-                 transition-all duration-300
-                 hover:bg-green-600 hover:scale-105 hover:shadow-md"
+                         transition-all duration-300
+                         hover:bg-green-600 hover:scale-105 hover:shadow-md"
             >
               Login
             </button>
           ) : (
             <button
+              onClick={handleLogout}
               className="flex items-center justify-center rounded-full p-3
-                 bg-gradient-to-r from-blue-500 to-cyan-500 text-white
-                 transition-all duration-300
-                 hover:scale-110 hover:shadow-lg"
+                         bg-gradient-to-r from-blue-500 to-cyan-500 text-white
+                         transition-all duration-300
+                         hover:scale-110 hover:shadow-lg"
+              title="Logout"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -83,7 +89,6 @@ function Navbar() {
             </button>
           )}
         </div>
-
 
         {/* Hamburger */}
         <button
@@ -147,7 +152,7 @@ function Navbar() {
             Contact Us
           </Link>
 
-          {!loginStatus ? (
+          {!isLoggedIn ? (
             <button
               onClick={() => {
                 setOpen(false);
@@ -158,8 +163,11 @@ function Navbar() {
               Login
             </button>
           ) : (
-            <button className="rounded-full bg-blue-500 px-5 py-2 text-white">
-              Profile
+            <button
+              onClick={handleLogout}
+              className="rounded-full bg-red-500 px-5 py-2 text-white"
+            >
+              Logout
             </button>
           )}
         </div>

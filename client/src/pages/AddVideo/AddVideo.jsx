@@ -27,7 +27,7 @@ function AddVideo() {
       return;
     }
 
-    setForm(f => ({ ...f, course_id: course_id || "" })); // prefill
+    setForm(f => ({ ...f, course_id: course_id || "" }));
     setLoading(false);
   }, []);
 
@@ -36,7 +36,7 @@ function AddVideo() {
     title: "",
     description: "",
     youtube_url: "",
-    course_id: "",      // prefilled + locked
+    course_id: "",  
   });
 
   const [errors, setErrors] = useState({});
@@ -83,7 +83,7 @@ function AddVideo() {
       await addVideo(payload);
       toast.success("Video added successfully 🎉");
 
-      setTimeout(() => navigate("/allvideos"), 1200);
+      setTimeout(() => navigate(`/allvideos/${form.course_id}`), 1200);
     } catch (err) {
       console.error(err);
       toast.error(err?.response?.data?.message || "Failed to add video");
