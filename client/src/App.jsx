@@ -14,6 +14,8 @@ import AdminAllCourses from "./pages/AdminPages/AdminAllCourses";
 import AddVideo from "./pages/AddVideo/AddVideo";
 import AdminAllVideos from "./pages/AdminPages/AdminAllVideos";
 import AllVideos from "./pages/Videos/AllVideos";
+import AboutUs from "./extra/AboutUs";
+import ContactUs from "./extra/ContactUs";
 
 /* ================= PROTECTED ROUTE ================= */
 function ProtectedRoute({ children }) {
@@ -37,7 +39,8 @@ function App() {
         <Route path="/register/:course_id" element={<Register />} />
         <Route path="/viewcourse" element={<ViewCourse />} />
         <Route path="/viewcourse/:course_id" element={<ViewCourse />} />
-
+        <Route path="/about" element={<AboutUs />} />
+        <Route path="/contact" element={<ContactUs/>} />
         {/* Protected Routes */}
         <Route
           path="/student/dashboard"
