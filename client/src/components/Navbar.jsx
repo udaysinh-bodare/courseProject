@@ -1,81 +1,154 @@
-import React from 'react'
-import { Link, useNavigate } from 'react-router'
-import { loginContext } from '../App';  
+import React, { useState, useContext } from "react";
+import { Link, useNavigate } from "react-router";
+import { loginContext } from "../App";
 
 function Navbar() {
   const navigate = useNavigate();
-  const {loginStatus} = React.useContext(loginContext);
+  const { loginStatus } = useContext(loginContext);
+  console.log("Login Status in Navbar:", loginStatus);
+  const [open, setOpen] = useState(false);
+  const [courseOpen, setCourseOpen] = useState(false);
 
   return (
+    <nav className="mx-auto w-[90%] pt-2">
+      {/* Top Bar */}
+      <div className="flex items-center justify-between rounded-full px-6 py-2 bg-white/10 backdrop-blur-xl border border-white/20 shadow-lg">
 
-
-    <div>
-      <nav className=" mx-auto  w-[90%] max-w-full pt-2">
-        <div className="flex items-center justify-between rounded-full px-8 py-2 bg-white/10 backdrop-blur-xl border border-white/20 shadow-lg">
-
-
-
-          <div className="flex items-center gap-2 text-xl font-semibold text-blue-600">
-            <div className="h-8 w-8 rounded-full bg-blue-600 flex items-center justify-center text-white ">
-              🏠
-            </div>
-            Skill Katta
+        {/* Logo */}
+        <div className="flex items-center gap-2 text-xl font-semibold text-blue-600">
+          <div className="h-8 w-8 rounded-full bg-blue-600 flex items-center justify-center text-white">
+            🏠
           </div>
-
-
-          <div className="flex items-center gap-6">
-
-            <Link
-              to="/"
-              className="text-black text-md hover:text-blue-800 hover:underline decoration-black underline-offset-4"
-            >
-              Home
-            </Link>
-
-
-            <div className="relative group">
-
-              <span className="cursor-pointer text-black hover:text-blue-800 hover:underline decoration-black underline-offset-4 text-md flex items-center gap-1">
-                Courses
-                <span className="text-sm ">▾</span>
-              </span>
-
-              <div className="absolute left-0 top-full mt-2 w-40 rounded-lg bg-white shadow-lg 
-                    opacity-0 invisible group-hover:opacity-100 group-hover:visible 
-                    transition-all duration-200 ">
-
-                <Link to="/my-courses" className="block px-4 py-2 hover:bg-blue-100">My Courses</Link>
-                <Link to="/courses" className="block px-4 py-2 hover:bg-blue-100"> All Courses</Link>
-              </div>
-
-            </div>
-
-            <Link to="/about" className="text-black hover:text-blue-800 text-md hover:underline decoration-black underline-offset-4">About Us</Link>
-            <Link to="/contact" className="text-black hover:text-blue-800 text-md hover:underline decoration-black underline-offset-4">Contact Us</Link>
-          </div>
-
-
-          <div className="flex items-center gap-3">
-            {!loginStatus && (
-              <button className="rounded-full bg-green-500 px-5 py-2 text-white hover:bg-green-600" onClick={() => navigate('/login')}>Login</button>
-            )}
-
-            {loginStatus && (
-              <button className="flex items-center justify-center rounded-full p-3 text-white shadow-md bg-linear-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.75 7.5a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.5 20.25a7.5 7.5 0 0115 0" />
-                </svg>
-              </button>
-            )}
-
-
-          </div>
-
-
+          Skill Katta
         </div>
-      </nav>
-    </div>
-  )
+
+        {/* Desktop Menu */}
+        <div className="hidden md:flex items-center gap-6">
+
+          <Link to="/" className="nav-link">Home</Link>
+
+          {/* Courses Dropdown (Desktop) */}
+          <div className="relative group">
+            <span className="nav-link cursor-pointer flex items-center gap-1">
+              Courses <span>▾</span>
+            </span>
+
+            <div className="absolute left-0 top-full mt-2 w-40 rounded-lg bg-white shadow-lg
+              opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+              <Link to="/my-courses" className="block px-4 py-2 hover:bg-blue-100">
+                My Courses
+              </Link>
+              <Link to="/courses" className="block px-4 py-2 hover:bg-blue-100">
+                All Courses
+              </Link>
+            </div>
+          </div>
+
+          <Link to="/about" className="nav-link">About Us</Link>
+          <Link to="/contact" className="nav-link">Contact Us</Link>
+        </div>
+
+        {/* Desktop Buttons */}
+        <div className="hidden md:flex items-center gap-3">
+          {!loginStatus ? (
+            <button
+              onClick={() => navigate("/login")}
+              className="rounded-full bg-green-500 px-5 py-2 text-white"
+            >
+              Login
+            </button>
+          ) : (
+            <button className="flex items-center justify-center rounded-full p-3 bg-gradient-to-r from-blue-500 to-cyan-500 text-white">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none"
+                viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                  d="M15.75 7.5a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.5 20.25a7.5 7.5 0 0115 0" />
+              </svg>
+            </button>
+          )}
+        </div>
+
+        {/* Hamburger */}
+        <button
+          onClick={() => setOpen(!open)}
+          className="md:hidden text-2xl text-white"
+        >
+          ☰
+        </button>
+      </div>
+
+      {/* Mobile Menu */}
+      {open && (
+        <div className="md:hidden mt-3 rounded-xl bg-white shadow-lg p-4 space-y-4">
+
+          <Link onClick={() => setOpen(false)} to="/" className="mobile-link">
+            Home
+          </Link>
+
+          {/* Courses Dropdown (Mobile) */}
+          <div>
+            <button
+              onClick={() => setCourseOpen(!courseOpen)}
+              className="mobile-link flex justify-between w-full"
+            >
+              Courses
+              <span>{courseOpen ? "▲" : "▼"}</span>
+            </button>
+
+            {courseOpen && (
+              <div className="ml-4 mt-2 space-y-2">
+                <Link
+                  onClick={() => {
+                    setOpen(false);
+                    setCourseOpen(false);
+                  }}
+                  to="/my-courses"
+                  className="block text-sm text-gray-700"
+                >
+                  My Courses
+                </Link>
+
+                <Link
+                  onClick={() => {
+                    setOpen(false);
+                    setCourseOpen(false);
+                  }}
+                  to="/courses"
+                  className="block text-sm text-gray-700"
+                >
+                  All Courses
+                </Link>
+              </div>
+            )}
+          </div>
+
+          <Link onClick={() => setOpen(false)} to="/about" className="mobile-link">
+            About Us
+          </Link>
+
+          <Link onClick={() => setOpen(false)} to="/contact" className="mobile-link">
+            Contact Us
+          </Link>
+
+          {!loginStatus ? (
+            <button
+              onClick={() => {
+                setOpen(false);
+                navigate("/login");
+              }}
+              className="rounded-full bg-green-500 px-5 py-2 text-white"
+            >
+              Login
+            </button>
+          ) : (
+            <button className="rounded-full bg-blue-500 px-5 py-2 text-white">
+              Profile
+            </button>
+          )}
+        </div>
+      )}
+    </nav>
+  );
 }
 
-export default Navbar
+export default Navbar;
