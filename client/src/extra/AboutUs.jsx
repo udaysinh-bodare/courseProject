@@ -2,6 +2,8 @@ import React from "react";
 import bg from "../assets/background.png";
 import coursebg from "../assets/about.png";
 import Navbar from "../components/Navbar";
+import a1 from "../assets/a1.png";
+import a3 from "../assets/a3.png";  
 
 function AboutUs() {
   return (
@@ -30,7 +32,7 @@ function AboutUs() {
 
         <div className="md:w-1/2 flex justify-center">
           <img
-            src={coursebg}
+            src={a3}
             alt="About illustration"
             className="w-full max-w-md"
           />
@@ -74,9 +76,9 @@ function AboutUs() {
           </ul>
         </div>
 
-        <div className="flex justify-center ">
+        <div className="flex justify-center">
           <img
-            src={coursebg}
+            src={a1}
             alt="Values illustration"
             className="w-full max-w-md"
           />
