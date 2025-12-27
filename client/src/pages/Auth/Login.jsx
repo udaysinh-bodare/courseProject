@@ -40,7 +40,7 @@ function Login() {
 			setLoginStatus(true);
 
 			toast.success("Logged In Successfully!");
-			// navigate("/student/dashboard");
+			navigate("/student/dashboard");
 		} else {
 			toast.error("Invalid Email or Password");
 		}
