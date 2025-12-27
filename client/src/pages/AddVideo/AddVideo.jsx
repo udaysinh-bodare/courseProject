@@ -13,6 +13,7 @@ function AddVideo() {
 
   // ---------- ROLE CHECK ----------
   useEffect(() => {
+    
     const user = getAuthUser();
 
     if (!user) {
