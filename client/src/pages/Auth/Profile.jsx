@@ -1,0 +1,158 @@
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
+import background from "../../assets/background.png";
+import Navbar from "../../components/Navbar";
+import { toast } from "react-toastify";
+import { getUserDetails } from "../../services/userServices";
+
+function Profile() {
+  const navigate = useNavigate();
+  const [user, setUser] = useState(null);
+  const email = localStorage.getItem("email");
+
+  useEffect(() => {
+    async function loadProfile() {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        toast.error("Please login first");
+        return navigate("/login");
+      }
+
+      try {
+        const res = await getUserDetails(email);
+        const u = res?.data?.data;
+
+        setUser({
+          email: u.email,
+          role: u.role,
+          students: u.students || []   // <-- multiple course rows
+        });
+
+      } catch {
+        toast.error("Failed to load profile");
+      }
+    }
+
+    loadProfile();
+  }, [email, navigate]);
+
+  const logout = () => {
+    localStorage.clear();
+    toast.success("Logged out successfully");
+    navigate("/");
+  };
+
+  const goToChangePassword = () => navigate("/changepassword");
+
+  if (!user) return null;
+
+  // Avatar source (first student or fallback)
+  const firstStudent = user.students[0];
+  const avatarLetter = firstStudent?.name?.charAt(0) || "U";
+  const avatarPic = firstStudent?.profile_pic;
+
+  return (
+    <div
+      className="min-h-screen w-full bg-cover bg-center relative"
+      style={{ backgroundImage: `url(${background})` }}
+    >
+      <Navbar />
+
+      <div className="flex justify-center py-16 px-4">
+        <div
+          className="
+            w-full max-w-3xl
+            bg-white/20 backdrop-blur-2xl
+            border border-white/40
+            shadow-[0_40px_90px_rgba(0,0,0,0.25)]
+            rounded-3xl p-10
+          "
+        >
+          {/* ================= PROFILE HEADER ================= */}
+          <div className="flex flex-col sm:flex-row gap-8 items-center sm:items-start">
+
+            {/* Avatar */}
+            {avatarPic ? (
+              <img
+                src={avatarPic}
+                alt="Profile"
+                className="w-28 h-28 rounded-full object-cover border-4 border-white shadow-xl"
+              />
+            ) : (
+              <div className="w-28 h-28 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500
+                flex items-center justify-center text-white text-4xl font-bold shadow-xl">
+                {avatarLetter}
+              </div>
+            )}
+
+            {/* Profile Identity */}
+            <div className="flex-1">
+              <h2 className="text-3xl font-bold text-gray-900 tracking-wide">
+                {firstStudent?.name || "User"}
+              </h2>
+
+              <p className="text-gray-700 mt-1 text-sm">{user.email}</p>
+
+              <span
+                className="inline-block mt-2 px-3 py-1 rounded-full
+                text-xs font-semibold tracking-wide
+                bg-white/60 border border-white/70 text-gray-800"
+              >
+                {user.role?.toUpperCase()}
+              </span>
+
+              {/* Actions */}
+              <div className="flex gap-3 mt-4">
+                <button
+                  onClick={goToChangePassword}
+                  className="px-4 py-2 rounded-xl bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700 shadow"
+                >
+                  🔒 Change Password
+                </button>
+
+                <button
+                  onClick={logout}
+                  className="px-4 py-2 rounded-xl bg-red-500 text-white text-sm font-semibold hover:bg-red-600 shadow"
+                >
+                  🚪 Logout
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Divider */}
+          <div className="h-px bg-white/50 my-8" />
+
+          {/* ================= ENROLLMENTS LIST ================= */}
+          <h3 className="text-lg font-semibold mb-3">Enrolled Courses</h3>
+
+          {user.students.length === 0 && (
+            <p className="text-gray-600 text-sm">
+              No course enrollments found.
+            </p>
+          )}
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {user.students.map((s, i) => (
+              <div key={i}
+                className="bg-white/40 backdrop-blur-xl rounded-2xl border border-white/60 p-4 shadow"
+              >
+                <p className="text-[11px] text-gray-600">Course ID</p>
+                <p className="text-sm font-semibold">{s.course_id}</p>
+
+                <p className="text-[11px] text-gray-600 mt-2">Student Name</p>
+                <p className="text-sm font-semibold">{s.name}</p>
+
+                <p className="text-[11px] text-gray-600 mt-2">Mobile</p>
+                <p className="text-sm font-semibold">{s.mobile_no || "—"}</p>
+              </div>
+            ))}
+          </div>
+
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default Profile;
