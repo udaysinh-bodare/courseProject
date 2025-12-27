@@ -85,6 +85,8 @@ function deleteVideo(req, res) {
 // UPDATE video
 function updatevideo(req, res) {
   const video_id = req.params.video_id;
+  console.log(req);
+  
   const { course_id, title, description, youtube_url } = req.body;
 
   if (!video_id) {
