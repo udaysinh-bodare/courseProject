@@ -1,7 +1,7 @@
 import React from "react";
-import c1 from "../assets/c1.png";
-import background from "../assets/background.png";
-import Navbar from "../components/Navbar";
+import c1 from "../../assets/c1.png";
+import background from "../../assets/background.png";
+import Navbar from "../../components/Navbar";
 
 function ContactUs() {
   return (
