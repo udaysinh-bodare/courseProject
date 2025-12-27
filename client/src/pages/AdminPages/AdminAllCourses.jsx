@@ -42,7 +42,7 @@ function AdminAllCourses() {
 		loadCourses().finally(() => setLoading(false));
 	}, []);
 
-	const openCourse = (id) => navigate(`/viewcourse/${id}`);
+	const openCourse = (id) => navigate(`/allvideos/${id}`);
 
 	// ---------- DELETE COURSE ----------
 	const handleDelete = async (id) => {

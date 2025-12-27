@@ -15,4 +15,14 @@ export async function addVideo(payload) {
   return axios.post(url, payload, { headers: authHeaders() });
 }
 
+export async function getAllVideos(course_id) {
+  const url = `${config.BASE_URL}/api/video/all-videos/${course_id}`;
+  
+  return axios.get(url, { headers: authHeaders() });
+}
+
+export async function deleteVideo(id) {
+  const url = `${config.BASE_URL}/api/video/delete-video/${id}`;
+  return axios.delete(url, { headers: authHeaders() });
+}
 
