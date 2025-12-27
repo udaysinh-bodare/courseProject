@@ -1,9 +1,9 @@
 import React from "react";
-import bg from "../assets/background.png";
-import coursebg from "../assets/about.png";
-import Navbar from "../components/Navbar";
-import a1 from "../assets/a1.png";
-import a3 from "../assets/a3.png";  
+import bg from "../../assets/background.png";
+import coursebg from "../../assets/about.png";
+import Navbar from "../../components/Navbar";
+import a1 from "../../assets/a1.png";
+import a3 from "../../assets/a3.png";  
 
 function AboutUs() {
   return (

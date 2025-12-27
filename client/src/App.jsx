@@ -14,8 +14,8 @@ import AdminAllCourses from "./pages/AdminPages/AdminAllCourses";
 import AddVideo from "./pages/AddVideo/AddVideo";
 import AdminAllVideos from "./pages/AdminPages/AdminAllVideos";
 import AllVideos from "./pages/Videos/AllVideos";
-import AboutUs from "./extra/AboutUs";
-import ContactUs from "./extra/ContactUs";
+import AboutUs from "./pages/extra/AboutUs";
+import ContactUs from "./pages/extra/ContactUs";
 
 /* ================= PROTECTED ROUTE ================= */
 function ProtectedRoute({ children }) {

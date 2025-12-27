@@ -4,12 +4,13 @@ import background from "../../assets/background.png";
 import Navbar from "../../components/Navbar";
 import { toast } from "react-toastify";
 import { getUserDetails } from "../../services/userServices";
+import { getAuthUser } from "../../utils/auth";
+import AdminNavbar from "../../components/AdminNavbar";
 
 function Profile() {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
-  const email = localStorage.getItem("email");
-
+  const [email, setEmail] = useState("");
   useEffect(() => {
     async function loadProfile() {
       const token = localStorage.getItem("token");
@@ -17,7 +18,7 @@ function Profile() {
         toast.error("Please login first");
         return navigate("/login");
       }
-
+      setEmail(getAuthUser(token)?.email);
       try {
         const res = await getUserDetails(email);
         const u = res?.data?.data;
@@ -56,7 +57,9 @@ function Profile() {
       className="min-h-screen w-full bg-cover bg-center relative"
       style={{ backgroundImage: `url(${background})` }}
     >
-      <Navbar />
+    { (user.role === 'student')  ?  <Navbar /> : <AdminNavbar /> }
+    
+
 
       <div className="flex justify-center py-16 px-4">
         <div
