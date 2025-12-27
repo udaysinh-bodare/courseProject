@@ -12,7 +12,9 @@
   "dependencies": {
     "@tailwindcss/vite": "^4.1.18",
     "axios": "^1.13.2",
+    "flowbite-react": "^0.12.14",
     "jwt-decode": "^4.0.0",
+    "jwt-decoder": "^0.0.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-router": "^7.11.0",

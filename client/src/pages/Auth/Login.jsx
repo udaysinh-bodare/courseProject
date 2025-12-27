@@ -4,9 +4,9 @@ import { toast } from "react-toastify";
 
 import { loginContext } from "../../App";
 import Register from "./Register";
-import { loginStudent } from "../services/studentServices";
-import bg from "../assets/background.png";
-import Profile from "./profile";
+import { loginStudent } from "../../services/studentServices";
+import bg from "../../assets/background.png";
+// import Profile from "./profile";
 
 function Login() {
 	const navigate = useNavigate();
