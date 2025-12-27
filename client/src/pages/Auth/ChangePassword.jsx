@@ -27,7 +27,7 @@ function ChangePassword() {
       if (response.status === 200) {
         toast.success("Password changed successfully");
 
-        // 🔐 logout after password change
+        
         localStorage.removeItem("token");
         navigate("/login");
       } else {
@@ -53,7 +53,7 @@ function ChangePassword() {
           Change Password
         </h1>
 
-        {/* New Password */}
+       
         <div className="mb-5">
           <label className="block text-blue-700 font-medium mb-1">
             New Password
@@ -66,7 +66,7 @@ function ChangePassword() {
           />
         </div>
 
-        {/* Confirm Password */}
+       
         <div className="mb-8">
           <label className="block text-blue-700 font-medium mb-1">
             Confirm Password
@@ -79,7 +79,7 @@ function ChangePassword() {
           />
         </div>
 
-        {/* Button */}
+        
         <button
           onClick={changepassf}
           className="w-full bg-blue-500 text-white py-2 rounded-md
