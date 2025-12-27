@@ -29,7 +29,7 @@ function Login() {
 			if (res.data.status === "SUCCESS") {
 				// 🔑 Store token
 				localStorage.setItem("token", res.data.token);
-				if (res.data.user.role === "admin") {
+				if (res.data.data.role === "admin") {
 					toast.success("Logged in successfully!");
 					navigate("/allcourses");
 				} else {
