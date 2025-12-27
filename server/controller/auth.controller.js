@@ -1,5 +1,6 @@
 const pool = require("../config/db");
 const { loginuser } = require("../services/auth.services");
+const { getUserDetails } = require("../services/auth.services");
 const crypto = require("crypto-js");
 const { generateToken } = require("../utils/jwt");
 
@@ -35,7 +36,43 @@ function loginUser(req, res) {
         });
     });
 }
+function getUserDetailsController(req, res) {
+  const email = req.body.email || req.user.email;
+
+  pool.query(getUserDetails, [email], (err, results) => {
+    if (err) {
+      return res.status(500).send({
+        status: "ERROR",
+        message: "Failed to fetch user details"
+      });
+    }
+
+    if (!results.length) {
+      return res.status(404).send({
+        status: "ERROR",
+        message: "User not found"
+      });
+    }
+
+    res.send({
+      status: "SUCCESS",
+      message: "User details fetched successfully",
+      data: {
+        email: results[0].email,
+        role: results[0].role,
+
+        students: results.map(r => ({
+          name: r.student_name,
+          course_id: r.course_id,
+          mobile_no: r.mobile_no,
+          profile_pic: r.profile_pic
+        }))
+      }
+    });
+  });
+}
 
 module.exports = {
-    loginUser
+    loginUser,
+    getUserDetailsController
 };
