@@ -8,11 +8,12 @@ import Landing from "./pages/LandingPage/Landing";
 import ViewCourse from "./pages/ViewCourses/ViewCourse";
 import Profile from "./pages/Auth/Profile";
 import AddCourse from "./pages/AddCourse/AddCourse";
-import StudentDash from "./pages/dashboard/StudentDash";
+import StudentDash from "./pages/Dashboard/StudentDash";
 import ChangePassword from "./pages/Auth/ChangePassword";
 import AdminAllCourses from "./pages/AdminPages/AdminAllCourses";
 import AddVideo from "./pages/AddVideo/AddVideo";
 import AdminAllVideos from "./pages/AdminPages/AdminAllVideos";
+import AllVideos from "./pages/Videos/AllVideos";
 import AboutUs from "./extra/AboutUs";
 import ContactUs from "./extra/ContactUs";
 
@@ -100,6 +101,15 @@ function App() {
           element={
             <ProtectedRoute>
               <AdminAllVideos />
+            </ProtectedRoute>
+          }
+        />
+
+		<Route
+          path="/student/allvideos/:course_id"
+          element={
+            <ProtectedRoute>
+				<AllVideos />
             </ProtectedRoute>
           }
         />
