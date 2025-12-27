@@ -65,7 +65,7 @@ function Navbar() {
             </button>
           ) : (
             <button
-              onClick={handleLogout}
+              onClick={() => navigate("/profile")}
               className="flex items-center justify-center rounded-full p-3
                          bg-gradient-to-r from-blue-500 to-cyan-500 text-white
                          transition-all duration-300
