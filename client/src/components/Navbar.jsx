@@ -5,6 +5,7 @@ import { loginContext } from "../App";
 function Navbar() {
   const navigate = useNavigate();
   const { loginStatus } = useContext(loginContext);
+  console.log("Login Status in Navbar:", loginStatus);
   const [open, setOpen] = useState(false);
   const [courseOpen, setCourseOpen] = useState(false);
 
@@ -57,8 +58,12 @@ function Navbar() {
               Login
             </button>
           ) : (
-            <button className="rounded-full p-3 bg-gradient-to-r from-blue-500 to-cyan-500 text-white">
-              👤
+            <button className="flex items-center justify-center rounded-full p-3 bg-gradient-to-r from-blue-500 to-cyan-500 text-white">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none"
+                viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                  d="M15.75 7.5a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.5 20.25a7.5 7.5 0 0115 0" />
+              </svg>
             </button>
           )}
         </div>
