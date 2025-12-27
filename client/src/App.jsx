@@ -7,6 +7,7 @@ import { Route, Routes } from "react-router";
 import Register from "./pages/Auth/Register";
 import Landing from "./pages/LandingPage/Landing";
 import ViewCourse from "./pages/ViewCourses/ViewCourse"
+import Profile from "./pages/profile";
 import AddCourse from "./pages/AddCourse/AddCourse";
 import StudentDash from "./pages/dashboard/StudentDash";
 
@@ -20,6 +21,10 @@ function App() {
 					<Route path="/" element={<Landing/>} />
 					<Route path="/login" element={<Login />} />
 					<Route path="/register" element={<Register />} />
+					<Route path="/viewcourse" element={<ViewCourse/>} />
+					<Route path="/profile" element={<Profile />} />
+					{/* <Route path="/dashboard" element={<Profile />} /> */}
+					<Route path="/register/:course_id" element={<Register />} />
 					<Route path="/viewcourse/:course_id" element={<ViewCourse/>} />
 					<Route path="/student/dashboard" element={<StudentDash/>}/>
 					<Route path="/addcourse" element={<AddCourse/>} />

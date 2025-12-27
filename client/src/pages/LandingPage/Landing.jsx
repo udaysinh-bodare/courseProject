@@ -146,12 +146,6 @@ function Landing() {
 	);
 }
 
-async function getallcoursesforcarousel() {
-	let courses = await getAllCourses();
-
-	return courses.data;
-}
-
 
 function CourseCarousel() {
   const navigate = useNavigate();
@@ -210,7 +204,6 @@ function CourseCarousel() {
     return () => window.removeEventListener("resize", handler);
   }, []);
 
-  // ensure enough items
   const base = courses.length ? courses : fallbackCourses;
   const minItems = Math.max(cardsPerView * 2, 4);
   const filled =
@@ -225,7 +218,6 @@ function CourseCarousel() {
     const computed = window.getComputedStyle(trackRef.current);
     const matrix = computed.transform;
 
-    // lock current frame
     trackRef.current.style.transform = matrix;
     trackRef.current.style.animationPlayState = "paused";
 

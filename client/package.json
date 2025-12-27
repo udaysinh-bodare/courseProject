@@ -12,10 +12,15 @@
   "dependencies": {
     "@tailwindcss/vite": "^4.1.18",
     "axios": "^1.13.2",
+<<<<<<< HEAD
     "flowbite-react": "^0.12.14",
+=======
+    "jwt-decode": "^4.0.0",
+>>>>>>> 9def441e4f71e85878a6b1dd6190e64b68936bd8
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-router": "^7.11.0",
+    "react-router-dom": "^7.11.0",
     "react-toastify": "^11.0.5",
     "tailwindcss": "^4.1.18"
   },
@@ -23,11 +28,11 @@
     "@eslint/js": "^9.39.1",
     "@types/react": "^19.2.5",
     "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-react": "^5.1.1",
+    "@vitejs/plugin-react": "^5.1.2",
     "eslint": "^9.39.1",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.24",
     "globals": "^16.5.0",
-    "vite": "^7.2.4"
+    "vite": "^7.3.0"
   }
 }
