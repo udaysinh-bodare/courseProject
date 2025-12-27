@@ -29,6 +29,9 @@ function Login() {
 	try {
 		const res = await loginStudent(email, password);
 
+		console.log(res);
+		
+
 		if (res.data.status === "SUCCESS") {
 			console.log(res);
 			
