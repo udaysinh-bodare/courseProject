@@ -6,14 +6,17 @@ import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
 import Landing from "./pages/LandingPage/Landing";
 import ViewCourse from "./pages/ViewCourses/ViewCourse";
-import Profile from "./pages/profile";
+import Profile from "./pages/Auth/Profile";
 import AddCourse from "./pages/AddCourse/AddCourse";
-import StudentDash from "./pages/dashboard/StudentDash";
+import StudentDash from "./pages/Dashboard/StudentDash";
 import ChangePassword from "./pages/Auth/ChangePassword";
 import AdminAllCourses from "./pages/AdminPages/AdminAllCourses";
 import AddVideo from "./pages/AddVideo/AddVideo";
 import AdminAllVideos from "./pages/AdminPages/AdminAllVideos";
 import EditVideo from "./pages/AddVideo/EditVideo";
+import AllVideos from "./pages/Videos/AllVideos";
+import AboutUs from "./extra/AboutUs";
+import ContactUs from "./extra/ContactUs";
 
 /* ================= PROTECTED ROUTE ================= */
 function ProtectedRoute({ children }) {
@@ -37,7 +40,8 @@ function App() {
         <Route path="/register/:course_id" element={<Register />} />
         <Route path="/viewcourse" element={<ViewCourse />} />
         <Route path="/viewcourse/:course_id" element={<ViewCourse />} />
-
+        <Route path="/about" element={<AboutUs />} />
+        <Route path="/contact" element={<ContactUs/>} />
         {/* Protected Routes */}
         <Route
           path="/student/dashboard"
@@ -111,6 +115,14 @@ function App() {
           }
         />
 
+		<Route
+          path="/student/allvideos/:course_id"
+          element={
+            <ProtectedRoute>
+				<AllVideos />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
 
       
