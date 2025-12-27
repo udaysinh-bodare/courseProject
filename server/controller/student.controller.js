@@ -70,14 +70,14 @@ function registerToCourse(req, res) {
           if (err) {
             return res.status(500).send({
               status: "ERROR",
-              message: "Failed to register student",
+              message: "Registration failed. Please try again.",
               error: err.sqlMessage
             });
           }
 
           return res.status(201).send({
             status: "SUCCESS",
-            message: "User registered to course successfully",
+            message: "You have successfully registered for the course.",
             reg_no: results.insertId
           });
         }
