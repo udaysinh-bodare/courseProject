@@ -53,20 +53,37 @@ function Navbar() {
           {!loginStatus ? (
             <button
               onClick={() => navigate("/login")}
-              className="rounded-full bg-green-500 px-5 py-2 text-white"
+              className="rounded-full bg-green-500 px-5 py-2 text-white
+                 transition-all duration-300
+                 hover:bg-green-600 hover:scale-105 hover:shadow-md"
             >
               Login
             </button>
           ) : (
-            <button className="flex items-center justify-center rounded-full p-3 bg-gradient-to-r from-blue-500 to-cyan-500 text-white">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none"
-                viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                  d="M15.75 7.5a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.5 20.25a7.5 7.5 0 0115 0" />
+            <button
+              className="flex items-center justify-center rounded-full p-3
+                 bg-gradient-to-r from-blue-500 to-cyan-500 text-white
+                 transition-all duration-300
+                 hover:scale-110 hover:shadow-lg"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15.75 7.5a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.5 20.25a7.5 7.5 0 0115 0"
+                />
               </svg>
             </button>
           )}
         </div>
+
 
         {/* Hamburger */}
         <button
