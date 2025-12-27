@@ -41,7 +41,7 @@ function Navbar() {
                             opacity-0 invisible group-hover:opacity-100
                             group-hover:visible transition-all duration-200">
               <Link
-                to="/my-courses"
+                to="/student/dashboard"
                 className="block px-4 py-2 hover:bg-blue-100 rounded-t-lg"
               >
                 My Courses
@@ -132,7 +132,7 @@ function Navbar() {
                     setOpen(false);
                     setCourseOpen(false);
                   }}
-                  to="/my-courses"
+                  to="/student/dashboard"
                   className="block text-sm text-gray-700"
                 >
                   My Courses
