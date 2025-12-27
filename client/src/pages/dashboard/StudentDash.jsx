@@ -66,7 +66,6 @@ function StudentDash() {
 
               <h3 className="text-sm font-semibold">End Date: {elem.end_date}</h3>
 
-              <button className="bg-green-400 text-xl text-white rounded-lg w-fit p-2 hover:opacity-[.7] cursor-pointer ">Register to Course</button>
             </div>
           );
         })}

@@ -30,6 +30,8 @@ function Login() {
 		const res = await loginStudent(email, password);
 
 		if (res.data.status === "SUCCESS") {
+			console.log(res);
+			
 			localStorage.setItem("token", res.data.token);
       
 			localStorage.setItem("email", res.data.data.email);
@@ -38,7 +40,7 @@ function Login() {
 			setLoginStatus(true);
 
 			toast.success("Logged In Successfully!");
-			navigate("/student/dashboard");
+			// navigate("/student/dashboard");
 		} else {
 			toast.error("Invalid Email or Password");
 		}
