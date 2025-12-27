@@ -6,7 +6,7 @@ import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
 import Landing from "./pages/LandingPage/Landing";
 import ViewCourse from "./pages/ViewCourses/ViewCourse";
-import Profile from "./pages/profile";
+import Profile from "./pages/Auth/Profile";
 import AddCourse from "./pages/AddCourse/AddCourse";
 import StudentDash from "./pages/dashboard/StudentDash";
 import ChangePassword from "./pages/Auth/ChangePassword";
