@@ -92,6 +92,8 @@ function changePassword(req, res) {
   const { password } = req.body;
   const email = req.user?.email;
 
+  
+
   if (!password) {
     return res.status(400).send({
       status: "ERROR",
