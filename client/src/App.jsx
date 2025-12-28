@@ -33,7 +33,7 @@ function ProtectedRoute({ children }) {
 
 /* ================= APP ================= */
 function App() {
-  return(
+	return (
 		<>
 			<Routes>
 				{/* Public Routes */}
