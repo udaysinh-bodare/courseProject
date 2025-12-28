@@ -4,7 +4,6 @@ import Navbar from "../../components/Navbar";
 import bg from "../../assets/background.png";
 import { toast } from "react-toastify";
 
-import { getAuthUser } from "../../utils/auth";
 import { getAllCourses } from "../../services/coursesServices";
 import CourseCard from "../../components/CourseCard";
 
@@ -27,13 +26,6 @@ function AllCourses() {
 
 	// ---------- ROLE CHECK + LOAD ----------
 	useEffect(() => {
-		const user = getAuthUser();
-
-		if (!user) {
-			toast.error("Please login first");
-			return navigate("/login");
-		}
-
 		loadCourses().finally(() => setLoading(false));
 	}, []);
 

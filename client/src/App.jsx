@@ -44,6 +44,7 @@ function App() {
 				<Route path="/viewcourse/:course_id" element={<ViewCourse />} />
 				<Route path="/about" element={<AboutUs />} />
 				<Route path="/contact" element={<ContactUs />} />
+        <Route path="/student/allcourses" element={<AllCourses/>} />
 				{/* Protected Routes */}
 				<Route
 					path="/student/dashboard"
@@ -125,13 +126,6 @@ function App() {
 						</ProtectedRoute>
 					}
 				/>
-
-        <Route path="/student/allcourses" element={
-          <ProtectedRoute>
-            <AllCourses/>
-          </ProtectedRoute>
-        }/>
-
         <Route path="/students" element={
           <ProtectedRoute>
             <Students/>
