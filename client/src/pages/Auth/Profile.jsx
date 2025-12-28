@@ -31,11 +31,12 @@ function Profile() {
 
       } catch {
         toast.error("Failed to load profile");
+        navigate("/login");
       }
     }
 
     loadProfile();
-  }, [email, navigate]);
+  }, []);
 
   const logout = () => {
     localStorage.clear();
