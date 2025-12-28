@@ -1,5 +1,11 @@
 import React from 'react'
 import { useContext } from 'react';
+import { Link } from 'react-router';
+import ViewCourse from './../pages/ViewCourses/ViewCourse';
+import AllCourses from './../pages/Courses/AllCourses';
+import AboutUs from '../pages/extra/AboutUs';
+import ContactUs from './../pages/extra/ContactUs';
+
 
 function Footer() {
 
@@ -12,8 +18,8 @@ function Footer() {
 
                  <div className='pt-5'>
                     <ul className="space-y-1 text-gray-900">
-            <li className="hover:text-blue-400 cursor-pointer">About Us</li>
-            <li className="hover:text-blue-400 cursor-pointer">contact Us</li>
+            <li className="hover:text-blue-400 cursor-pointer"><Link to="/about">About Us</Link></li>
+            <li className="hover:text-blue-400 cursor-pointer"><Link to="/contact">Contact Us</Link></li>
             </ul>
                  </div>
                
@@ -21,18 +27,18 @@ function Footer() {
             <div>
           <h3 className="font-semibold mb-2">Courses</h3>
           <ul className="space-y-1 text-gray-900">
-            <li className="hover:text-blue-400 cursor-pointer">All courses</li>
-            <li className="hover:text-blue-400 cursor-pointer">Enroll now</li>
-            <li className="hover:text-blue-400 cursor-pointer">privacy policy</li>
+            <li className="hover:text-blue-400 cursor-pointer"><Link to="/viewcourse">AllCourses</Link></li>
+            <li className="hover:text-blue-400 cursor-pointer"><Link> Enroll me</Link></li>
+            <li className="hover:text-blue-400 cursor-pointer"><Link>Privacy Policy</Link></li>
             
           </ul>
         </div>
          <div>
           <h3 className="font-semibold mb-2">Resourses</h3>
           <ul className="space-y-1 text-gray-900">
-            <li className="hover:text-blue-400 cursor-pointer">All courses</li>
-            <li className="hover:text-blue-400 cursor-pointer">Blog</li>
-            <li className="hover:text-blue-400 cursor-pointer">FAQ</li>
+            <li className="hover:text-blue-400 cursor-pointer"><Link to="/allcourses">All courses</Link></li>
+            <li className="hover:text-blue-400 cursor-pointer"><Link>Blog</Link></li>
+            <li className="hover:text-blue-400 cursor-pointer"><Link>FAQ</Link></li>
             
           </ul>
         </div>
