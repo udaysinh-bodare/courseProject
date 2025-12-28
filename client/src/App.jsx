@@ -13,6 +13,9 @@ import ChangePassword from "./pages/Auth/ChangePassword";
 import AdminAllCourses from "./pages/AdminPages/AdminAllCourses";
 import AddVideo from "./pages/AddVideo/AddVideo";
 import AdminAllVideos from "./pages/AdminPages/AdminAllVideos";
+//import { Footer } from "flowbite-react";
+//import { Route } from 'react-router-dom';
+import Footer from "./components/Footer";
 
 /* ================= PROTECTED ROUTE ================= */
 function ProtectedRoute({ children }) {
@@ -100,8 +103,10 @@ function App() {
             </ProtectedRoute>
           }
         />
-      </Routes>
 
+		
+      </Routes>
+    <Footer/>
       <ToastContainer />
     </>
   );
