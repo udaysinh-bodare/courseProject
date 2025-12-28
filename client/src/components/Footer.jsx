@@ -43,9 +43,7 @@ function Footer() {
           </ul>
         </div>
         <div>
-          {/* <h3 className="font-semibold mb-2">Contact</h3>
-          <p className="text-gray-600 text-sm">Email: support@sunbeam.com</p> */}
-          {/* <p className="text-gray-600 text-sm">Phone: +91 9876543210</p> */}
+         
           <h1 className='font-bold'>Follow Us</h1>
             <div className="icons flex gap-2 mt-4">
                 <i className="text-xl fa-brands fa-facebook"></i>
