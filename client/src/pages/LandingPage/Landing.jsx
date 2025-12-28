@@ -56,7 +56,7 @@ function Landing() {
 
 						<div className="flex gap-4 mt-4">
 							<button
-								onClick={() => navigate("/courses")}
+								onClick={() => navigate("/student/allcourses")}
 								className="px-8 py-3 rounded-full font-semibold text-white
       bg-gradient-to-r from-emerald-400 to-teal-500 shadow-lg
       hover:shadow-emerald-400/60 hover:-translate-y-0.5 transition-all"

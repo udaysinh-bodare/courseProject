@@ -26,16 +26,17 @@ function Profile() {
         setUser({
           email: u.email,
           role: u.role,
-          students: u.students || []   // <-- multiple course rows
+          students: u.students || [] 
         });
 
       } catch {
         toast.error("Failed to load profile");
+        navigate("/login");
       }
     }
 
     loadProfile();
-  }, [email, navigate]);
+  }, []);
 
   const logout = () => {
     localStorage.clear();
