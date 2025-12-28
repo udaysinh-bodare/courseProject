@@ -3,10 +3,12 @@ const addVideo="insert into videos(course_id,title,description,youtube_url,added
 const delete_Video_sql = "DELETE FROM videos WHERE video_id = ?"
     
 const updateVideo = "UPDATE videos SET course_id = ?, title = ?, description = ?, youtube_url = ? WHERE video_id = ?"
+const get_video_det = "select * from videos where video_id = ?"
 
 module.exports = {
     allVideo,
     addVideo,
     updateVideo,
-    delete_Video_sql
+    delete_Video_sql,
+    get_video_det
 }

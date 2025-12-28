@@ -249,9 +249,8 @@ function CourseCarousel() {
             key={i}
             className="flex-none px-3"
             style={{ width: `${100 / cardsPerView}%` }}
-            onClick={() => goToCourse(c.course_id)}
           >
-            <CourseCard course={c} />
+            <CourseCard course={c} mode="student" />
           </div>
         ))}
       </div>
