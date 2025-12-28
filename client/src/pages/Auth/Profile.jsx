@@ -26,7 +26,7 @@ function Profile() {
         setUser({
           email: u.email,
           role: u.role,
-          students: u.students || []   // <-- multiple course rows
+          students: u.students || [] 
         });
 
       } catch {
