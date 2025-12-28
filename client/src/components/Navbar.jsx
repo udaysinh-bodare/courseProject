@@ -47,7 +47,7 @@ function Navbar() {
                 My Courses
               </Link>
               <Link
-                to="/courses"
+                to="/student/allcourses"
                 className="block px-4 py-2 hover:bg-blue-100 rounded-b-lg"
               >
                 All Courses
@@ -143,7 +143,7 @@ function Navbar() {
                     setOpen(false);
                     setCourseOpen(false);
                   }}
-                  to="/courses"
+                  to="/student/allcourses"
                   className="block text-sm text-gray-700"
                 >
                   All Courses
