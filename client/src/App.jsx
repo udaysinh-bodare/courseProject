@@ -11,6 +11,7 @@ import AddCourse from "./pages/AddCourse/AddCourse";
 import StudentDash from "./pages/Dashboard/StudentDash";
 import ChangePassword from "./pages/Auth/ChangePassword";
 import AdminAllCourses from "./pages/AdminPages/AdminAllCourses";
+import AdminAllVideos from "./pages/AdminPages/AdminAllVideos";
 import AddVideo from "./pages/AddVideo/AddVideo";
 import EditVideo from "./pages/AddVideo/EditVideo";
 import AllVideos from "./pages/Videos/AllVideos";
@@ -42,6 +43,7 @@ function App() {
 				<Route path="/viewcourse/:course_id" element={<ViewCourse />} />
 				<Route path="/about" element={<AboutUs />} />
 				<Route path="/contact" element={<ContactUs />} />
+        <Route path="/student/allcourses" element={<AllCourses/>} />
 				{/* Protected Routes */}
 				<Route
 					path="/student/dashboard"
@@ -123,12 +125,6 @@ function App() {
 						</ProtectedRoute>
 					}
 				/>
-
-        <Route path="/student/allcourses" element={
-          <ProtectedRoute>
-            <AllCourses/>
-          </ProtectedRoute>
-        }/>
 
 			</Routes>
 
