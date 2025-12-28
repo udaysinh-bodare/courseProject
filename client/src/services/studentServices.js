@@ -44,3 +44,24 @@ export async function changePassword(password) {
     const response = await axios.put(url, body, {headers: authHeaders()})
     return response
 }
+
+export async function getAllStudentsByid(course_id){
+        const url = config.BASE_URL + '/api/courses/enrolled-students/';
+        console.log(url);
+        const body = {
+            course_id : course_id
+        };
+
+     const response = await axios.post(url, body, {headers: authHeaders()})
+    return response
+
+}
+
+export async function getAllStudents(){
+        const url = config.BASE_URL + '/api/courses/allstudents/';
+        console.log(url);
+
+     const response = await axios.get(url,{headers: authHeaders()})
+    return response
+
+}

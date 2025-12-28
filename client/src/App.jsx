@@ -17,6 +17,7 @@ import EditVideo from "./pages/AddVideo/EditVideo";
 import AllVideos from "./pages/Videos/AllVideos";
 import AboutUs from "./pages/extra/AboutUs";
 import ContactUs from "./pages/extra/ContactUs";
+import Students from "./pages/AdminPages/students";
 
 /* ================= PROTECTED ROUTE ================= */
 function ProtectedRoute({ children }) {
@@ -42,6 +43,7 @@ function App() {
         <Route path="/viewcourse/:course_id" element={<ViewCourse />} />
         <Route path="/about" element={<AboutUs />} />
         <Route path="/contact" element={<ContactUs/>} />
+        
         {/* Protected Routes */}
         <Route
           path="/student/dashboard"
@@ -123,9 +125,18 @@ function App() {
             </ProtectedRoute>
           }
         />
-      </Routes>
+      
 
       
+      <Route
+          path="/students"
+          element={
+            <ProtectedRoute>
+				<Students />
+            </ProtectedRoute>
+          }
+        />
+  </Routes>
 
       <ToastContainer />
     </>
