@@ -1,5 +1,5 @@
 const pool = require("../config/db");
-const {delete_Video_sql} = require("../services/video.services")
+const {delete_Video_sql, get_video_det} = require("../services/video.services")
 const { allVideo, addVideo, updateVideo } = require("../services/video.services");
 
 // GET videos by course_id
@@ -119,9 +119,41 @@ function updatevideo(req, res) {
   );
 }
 
+function get_one_video(req, res) {
+  const {video_id} = req.body
+  pool.query(get_video_det, [video_id], (error, data)=>{
+
+    if(data) {
+      if(data.length == 0) {
+
+        return res.status(400).json({
+          status: "FAILED",
+          error: error
+        })
+
+      }
+      else {
+
+        return  res.status(200).json({
+          status: "SUCCESS",
+          data: data
+        })
+
+      }
+    }
+    else {
+      return res.status(500).json({
+        status: "FAILED",
+        error: error
+      })
+    }
+  })
+}
+
 module.exports = {
   videos,
   addvideo,
   updatevideo,
-  deleteVideo
+  deleteVideo,
+  get_one_video
 };

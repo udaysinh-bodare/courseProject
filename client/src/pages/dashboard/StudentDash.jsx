@@ -24,6 +24,13 @@ function StudentDash() {
     }
   };
 
+  const formatDate = (iso) =>
+    new Date(iso).toLocaleDateString("en-IN", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    });
+
   useEffect(() => {
     getMyCourses();
   }, []);
@@ -67,20 +74,17 @@ function StudentDash() {
               <span className="text-3xl text-blue-500">📘</span>
             </div>
 
-            <h1 className="text-lg font-bold">
+            <h1 className="text-xl font-bold">
               {elem.course_name}
             </h1>
 
-            <p className="text-sm text-gray-900 font-semibold">
-              {elem.description}
-            </p>
 
-            <h3 className="text-sm font-semibold">
-              Start Date: {elem.start_date}
+            <h3 className="text-md font-semibold">
+              Start Date: {formatDate(elem.start_date)}
             </h3>
 
-            <h3 className="text-sm font-semibold">
-              End Date: {elem.end_date}
+            <h3 className="text-md font-semibold">
+              End Date: {formatDate(elem.end_date)}
             </h3>
 
             <button
@@ -88,7 +92,7 @@ function StudentDash() {
                 e.stopPropagation(); // avoid double navigation
                 navigate(`/student/allvideos/${elem.course_id}`);
               }}
-              className="mt-2 px-4 py-2 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700"
+              className="mt-2 px-4 py-2 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700 cursor-pointer"
             >
               ▶ Watch Videos
             </button>
