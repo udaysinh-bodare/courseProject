@@ -11,11 +11,13 @@ import AddCourse from "./pages/AddCourse/AddCourse";
 import StudentDash from "./pages/Dashboard/StudentDash";
 import ChangePassword from "./pages/Auth/ChangePassword";
 import AdminAllCourses from "./pages/AdminPages/AdminAllCourses";
+import AdminAllVideos from "./pages/AdminPages/AdminAllVideos"
 import AddVideo from "./pages/AddVideo/AddVideo";
 import EditVideo from "./pages/AddVideo/EditVideo";
 import AllVideos from "./pages/Videos/AllVideos";
 import AboutUs from "./pages/extra/AboutUs";
 import ContactUs from "./pages/extra/ContactUs";
+import Students from "./pages/AdminPages/students";
 import AllCourses from "./pages/Courses/AllCourses";
 
 /* ================= PROTECTED ROUTE ================= */
@@ -127,6 +129,12 @@ function App() {
         <Route path="/student/allcourses" element={
           <ProtectedRoute>
             <AllCourses/>
+          </ProtectedRoute>
+        }/>
+
+        <Route path="/students" element={
+          <ProtectedRoute>
+            <Students/>
           </ProtectedRoute>
         }/>
 
