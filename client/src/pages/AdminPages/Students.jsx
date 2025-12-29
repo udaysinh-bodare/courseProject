@@ -9,7 +9,7 @@ function Students() {
   const [allStudents, setAllStudents] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const [courseId, setCourseId] = useState("");
+  const [courseName, setCourseName] = useState("");
   const [name, setName] = useState("");
 
   useEffect(() => {
@@ -36,13 +36,13 @@ function Students() {
   }
 
   function filterByCourse() {
-    if (courseId === "") {
-      toast.warn("Enter Course ID");
+    if (courseName === "") {
+      toast.warn("Enter Course name");
       return;
     }
 
     const filtered = allStudents.filter(
-      (s) => String(s.course_id) === String(courseId)
+      (s) => String(s.course_name) === String(courseName)
     );
 
     setStudents(filtered);
@@ -62,7 +62,7 @@ function Students() {
   }
 
   function resetFilter() {
-    setCourseId("");
+    setCourseName("");
     setName("");
     setStudents(allStudents);
   }
@@ -83,22 +83,7 @@ function Students() {
 
           {/* Filters */}
           <div className="flex gap-4 mb-6 flex-wrap">
-            <input
-              type="number"
-              placeholder="Course ID"
-              value={courseId}
-              onChange={(e) => setCourseId(e.target.value)}
-              className="p-2 border rounded-md"
-            />
-
-            <button
-              onClick={filterByCourse}
-              className="bg-blue-500 text-white px-4 py-2 rounded-md"
-            >
-              Filter Course
-            </button>
-
-            <input
+             <input
               type="text"
               placeholder="Student Name"
               value={name}
@@ -112,6 +97,23 @@ function Students() {
             >
               Filter Name
             </button>
+
+            <input
+              type="text"
+              placeholder="Course Name"
+              value={courseName}
+              onChange={(e) => setCourseName(e.target.value)}
+              className="p-2 border rounded-md"
+            />
+
+            <button
+              onClick={filterByCourse}
+              className="bg-blue-500 text-white px-4 py-2 rounded-md"
+            >
+              Filter Course
+            </button>
+
+           
 
             <button
               onClick={resetFilter}
@@ -129,7 +131,6 @@ function Students() {
                   <th className="p-3 text-left">Reg No</th>
                   <th className="p-3 text-left">Name</th>
                   <th className="p-3 text-left">Email</th>
-                  <th className="p-3 text-left">Course ID</th>
                   <th className="p-3 text-left">Course Name</th>
                   <th className="p-3 text-left">Mobile</th>
                 </tr>
@@ -164,9 +165,6 @@ function Students() {
                         <td className="p-3">{s.reg_no}</td>
                         <td className="p-3">{s.name}</td>
                         <td className="p-3">{s.email}</td>
-                        <td className="p-3 font-medium">
-                          {s.course_id}
-                        </td>
                         <td className="p-3 font-medium text-blue-800">
                           {s.course_name ? s.course_name : "N/A"}
                         </td>
