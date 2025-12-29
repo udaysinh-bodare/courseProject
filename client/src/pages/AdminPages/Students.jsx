@@ -140,7 +140,7 @@ function Students() {
                 {loading && (
                   <tr>
                     <td colSpan="6" className="text-center p-4">
-                      Loading...
+                      Loading....
                     </td>
                   </tr>
                 )}
