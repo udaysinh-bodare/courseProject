@@ -17,6 +17,7 @@ import EditVideo from "./pages/AddVideo/EditVideo";
 import AllVideos from "./pages/Videos/AllVideos";
 import AboutUs from "./extra/AboutUs";
 import ContactUs from "./extra/ContactUs";
+import EditCourse from "./pages/AddCourse/EditCourse";
 
 /* ================= PROTECTED ROUTE ================= */
 function ProtectedRoute({ children }) {
@@ -89,6 +90,15 @@ function App() {
         />
 
         <Route
+          path="/editcourse/:course_id"
+          element={
+            <ProtectedRoute>
+              <EditCourse />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
           path="/allcourses"
           element={
             <ProtectedRoute>
@@ -105,6 +115,8 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+        
 
         <Route
           path="/editvideo/:video_id"

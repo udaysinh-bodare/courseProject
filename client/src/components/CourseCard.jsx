@@ -8,6 +8,10 @@ function CourseCard({ course }) {
     navigate(`/viewcourse/${course.course_id}`);
   };
 
+  const goToEditCourse = ()=>{
+    navigate( `/editcourse/${course.course_id}`)
+  }
+
   return (
     <div className="bg-white/80 backdrop-blur shadow-lg rounded-2xl p-4
                     hover:-translate-y-1 hover:shadow-2xl transition-all">
@@ -47,6 +51,8 @@ function CourseCard({ course }) {
       >
         View Details
       </button>
+
+
     </div>
   );
 }
