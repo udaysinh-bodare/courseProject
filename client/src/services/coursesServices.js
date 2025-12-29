@@ -51,3 +51,9 @@ export async function deleteCourse(course_id) {
   const url = `${config.BASE_URL}/api/courses/delete-course/${course_id}`;
   return axios.delete(url, { headers: authHeaders() });
 }
+
+export async function editCourse(payload, course_id) {
+  const url =  config.BASE_URL + `/api/courses/update-course/${course_id}`
+  const res = axios.put(url, payload, {headers: authHeaders()})
+  return res
+}

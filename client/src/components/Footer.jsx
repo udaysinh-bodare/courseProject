@@ -52,7 +52,7 @@ function Footer() {
             </div>
           <div className='pt-5'>
             <div className="border-t border-gray-700 text-center py-3 text-sm text-gray-400">
-        © {new Date().getFullYear()} Sunbeam Project. All rights reserved.
+        © {new Date().getFullYear()} Skill Katta. All rights reserved.
       </div>
           </div>
         </div>

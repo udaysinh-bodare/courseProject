@@ -12,6 +12,10 @@ function CourseCard({ course, mode = "student" }) {
     }
   };
 
+  const goToEditCourse = ()=>{
+    navigate( `/editcourse/${course.course_id}`)
+  }
+
   return (
     <div
       className="bg-white/80 backdrop-blur shadow-lg rounded-2xl p-4
@@ -52,6 +56,8 @@ function CourseCard({ course, mode = "student" }) {
       >
         {mode === "admin" ? "Manage Videos" : "View Details"}
       </button>
+
+
     </div>
   );
 }
