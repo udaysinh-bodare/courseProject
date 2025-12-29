@@ -30,6 +30,17 @@ export async function addCourse(payload) {
   return axios.post(url, payload, { headers: authHeaders() });
 }
 
+export async function uploadImage(formData) {
+  const url = `${config.BASE_URL}/api/courses/upload-course-image`;
+  return axios.post(url, formData, {
+    headers: {
+      token: localStorage.getItem("token"),
+      "Content-Type": "multipart/form-data",
+    },
+  });
+}
+
+
 export async function getCourseDetails(course_id) {
   const url = `${config.BASE_URL}/api/courses/course-details/${course_id}`;
   return axios.get(url, { headers: authHeaders() });

@@ -8,6 +8,9 @@ const {activeCourses} = require("../controller/courses.controller")
 const allowRoles = require("../middlewares/role.middleware")
 const authUser = require("../middlewares/auth.middleware");
 const {getCourseDetails} = require("../controller/courses.controller")
+const {uploadImage} = require("../controller/courses.controller")
+const multer = require("multer");
+
 const router = express.Router()
 
 router.post("/courses-add", authUser, allowRoles("admin"), addCourse);
@@ -19,5 +22,13 @@ router.get("/course-details/:course_id", getCourseDetails)
 
 router.post("/enrolled-students", authUser, allowRoles("admin"), enrolledstudents)
 router.get("/allstudents",authUser,allowRoles("admin"),getAllstudent)
+
+const upload = multer({ dest: "uploads/tmp" });
+
+router.post(
+  "/upload-course-image",
+  upload.single("image"),
+  uploadImage
+);
 
 module.exports = router
