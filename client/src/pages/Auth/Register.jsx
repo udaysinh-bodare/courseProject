@@ -85,8 +85,8 @@ function Register() {
       className="min-h-screen w-full flex flex-wrap items-center justify-center gap-10 bg-cover p-5"
       style={{ backgroundImage: `url(${bg})` }}
     >
-      {/* COURSE CARD */}
-      <div className="bg-white/20 p-6 rounded-2xl min-w-[300px]">
+     
+      <div className="bg-white/20 p-6 py-7 rounded-2xl min-w-[300px]">
         <div className="h-[180px] bg-gradient-to-br from-sky-300 to-blue-200 rounded-lg flex justify-center items-center">
           <span className="text-3xl text-blue-500">📘</span>
         </div>
@@ -101,11 +101,11 @@ function Register() {
         </h3>
       </div>
 
-      {/* REGISTER FORM */}
+ 
       <div
         className="bg-white/20 lg:min-w-[35%] md:min-w-[35%] sm:min-w-[30%]
                             backdrop-blur-md rounded-xl border border-white/30
-                            px-6 py-1 shadow-[0_8px_32px_12px_rgba(31,38,135,0.37)]"
+                            px-6 py-6 shadow-[0_8px_32px_12px_rgba(31,38,135,0.37)]"
       >
         <h1 className="text-4xl text-center mb-3 font-bold text-blue-900 py-2">
           Registration
@@ -127,7 +127,7 @@ function Register() {
             </div>
           </div>
 
-          {/* Email */}
+          
           <div className="flex flex-col mb-5">
             <label className="text-xl mb-1 ml-1 font-semibold text-gray-600">
               Email
@@ -143,7 +143,7 @@ function Register() {
             </div>
           </div>
 
-          {/* Password */}
+     
           <div className="flex flex-col mb-5">
             <label className="text-xl mb-1 ml-1 font-semibold text-gray-600">
               Password
@@ -191,8 +191,8 @@ function Register() {
             </div>
           </div>
 
-          {/* Button */}
-          <div className="w-full flex justify-center">
+     
+          <div className="w-full mt-10 flex justify-center">
             <button
               onClick={signUp}
               className="text-xl border border-green-400 bg-[#1aac9f]
@@ -203,13 +203,8 @@ function Register() {
             </button>
           </div>
 
-          {/* Register link */}
-          <div className="mt-5 mb-5 text-center">
-            Don&apos;t have an account?
-            <Link className="text-blue-700 ml-1 hover:underline" to="/register">
-              Sign Up
-            </Link>
-          </div>
+
+         
         </form>
       </div>
     </div>

@@ -108,7 +108,7 @@ function updateCourse(req, res) {
       fees,
       start_date,
       end_date,
-      video_expire_days || null,
+      video_expire_days,
       course_id,
     ],
     (error, data) => {

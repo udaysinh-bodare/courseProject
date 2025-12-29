@@ -8,13 +8,14 @@ import Landing from "./pages/LandingPage/Landing";
 import ViewCourse from "./pages/ViewCourses/ViewCourse";
 import Profile from "./pages/Auth/Profile";
 import AddCourse from "./pages/AddCourse/AddCourse";
-import StudentDash from "./pages/Dashboard/StudentDash";
+import StudentDash from "./pages/dashboard/StudentDash";
 import ChangePassword from "./pages/Auth/ChangePassword";
 import AdminAllCourses from "./pages/AdminPages/AdminAllCourses";
 import AdminAllVideos from "./pages/AdminPages/AdminAllVideos"
 import AddVideo from "./pages/AddVideo/AddVideo";
 import EditVideo from "./pages/AddVideo/EditVideo";
 import AllVideos from "./pages/Videos/AllVideos";
+import EditCourse from "./pages/AddCourse/EditCourse";
 import AboutUs from "./pages/extra/AboutUs";
 import ContactUs from "./pages/extra/ContactUs";
 import Students from "./pages/AdminPages/students";
@@ -91,14 +92,23 @@ function App() {
 					}
 				/>
 
-				<Route
-					path="/allcourses"
-					element={
-						<ProtectedRoute>
-							<AdminAllCourses />
-						</ProtectedRoute>
-					}
-				/>
+        <Route
+          path="/editcourse/:course_id"
+          element={
+            <ProtectedRoute>
+              <EditCourse />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/allcourses"
+          element={
+            <ProtectedRoute>
+              <AdminAllCourses />
+            </ProtectedRoute>
+          }
+        />
 
 				<Route
 					path="/allvideos/:course_id"
@@ -109,14 +119,16 @@ function App() {
 					}
 				/>
 
-				<Route
-					path="/editvideo/:video_id"
-					element={
-						<ProtectedRoute>
-							<EditVideo />
-						</ProtectedRoute>
-					}
-				/>
+        
+
+        <Route
+          path="/editvideo/:video_id"
+          element={
+            <ProtectedRoute>
+              <EditVideo />
+            </ProtectedRoute>
+          }
+        />
 
 				<Route
 					path="/student/allvideos/:course_id"

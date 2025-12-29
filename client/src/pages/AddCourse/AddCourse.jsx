@@ -240,6 +240,7 @@ function AddCourse() {
               >
                 Save Course
               </button>
+
             </div>
           </form>
         </div>
