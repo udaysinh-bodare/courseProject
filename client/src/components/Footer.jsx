@@ -36,9 +36,15 @@ function Footer() {
          <div>
           <h3 className="font-semibold mb-2">Resourses</h3>
           <ul className="space-y-1 text-gray-900">
+<<<<<<< HEAD
+            <li className="hover:text-blue-400 cursor-pointer"><Link to="/student/allcourses">All Courses</Link></li>
+            <li className="hover:text-blue-400 cursor-pointer"><Link>Blog</Link></li>
+            <li className="hover:text-blue-400 cursor-pointer"><Link>FAQ</Link></li>
+=======
             <li className="hover:text-blue-400 cursor-pointer"><Link to="/student/allcourses">All courses</Link></li>
             <li className="hover:text-blue-400 cursor-pointer"><Link to="/login">Login</Link></li>
             <li className="hover:text-blue-400 cursor-pointer"><Link to="/student/dashboard">Dashboard</Link></li>
+>>>>>>> 70f47a9736da94d309653c1a67914bfb7cb9319c
             
           </ul>
         </div>
@@ -52,7 +58,7 @@ function Footer() {
             </div>
           <div className='pt-5'>
             <div className="border-t border-gray-700 text-center py-3 text-sm text-gray-400">
-        © {new Date().getFullYear()} Sunbeam Project. All rights reserved.
+        © {new Date().getFullYear()} Skill Katta. All rights reserved.
       </div>
           </div>
         </div>

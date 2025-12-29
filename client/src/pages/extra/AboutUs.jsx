@@ -4,6 +4,8 @@ import coursebg from "../../assets/about.png";
 import Navbar from "../../components/Navbar";
 import a1 from "../../assets/a1.png";
 import a3 from "../../assets/a3.png";  
+import Footer from "../../components/Footer";
+import AllCourses from "../Courses/AllCourses";
 
 function AboutUs() {
   return (
@@ -95,16 +97,14 @@ function AboutUs() {
             Join thousands of learners and upgrade your skills with expert-led
             training programs.
           </p>
-          <button className="bg-white text-blue-600 px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition">
+          <button  className="bg-white text-blue-600 px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition">
             Get Started
           </button>
         </div>
       </div>
 
-      {/* Footer */}
-      <div className="w-full py-6 text-center text-gray-600 text-sm">
-        © {new Date().getFullYear()} Skill Katta. All rights reserved.
-      </div>
+      
+      <Footer/>
     </div>
   );
 }

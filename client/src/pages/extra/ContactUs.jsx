@@ -3,6 +3,7 @@ import c1 from "../../assets/c1.png";
 import background from "../../assets/background.png";
 import Navbar from "../../components/Navbar";
 import { toast } from "react-toastify";
+import Footer from './../../components/Footer';
 
 function ContactUs() {
   const [name, setName] = useState("");
@@ -122,6 +123,7 @@ function ContactUs() {
           </div>
         </div>
       </div>
+      <Footer/>
     </div>
   );
 }
