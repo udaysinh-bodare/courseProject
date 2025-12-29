@@ -150,118 +150,130 @@ function Landing() {
 	);
 }
 
+
 function CourseCarousel() {
-	const navigate = useNavigate();
+  const navigate = useNavigate();
 
-	const [courses, setCourses] = useState([]);
-	const [isPaused, setIsPaused] = useState(false);
-	const trackRef = React.useRef(null);
+  const [courses, setCourses] = useState([]);
+  const [cardsPerView, setCardsPerView] = useState(3);
+  const trackRef = React.useRef(null);
+  const frameRef = React.useRef(null);
 
-	const fallbackCourses = [
-		{
-			course_id: 1,
-			course_name: "Full-Stack MERN Development",
-			description:
-				"Learn MongoDB, Express, React and Node with real projects.",
-			fees: 12999,
-			start_date: "2025-02-10",
-		},
-		{
-			course_id: 2,
-			course_name: "Data Science & Machine Learning",
-			description: "Hands-on Python, Pandas, ML models and datasets.",
-			fees: 14999,
-			start_date: "2025-03-01",
-		},
-		{
-			course_id: 3,
-			course_name: "UI / UX Design Fundamentals",
-			description: "Figma, wireframing, user research and portfolios.",
-			fees: 10999,
-			start_date: "2025-02-15",
-		},
-	];
+  const fallbackCourses = [
+    { course_id: 1, course_name: "Full-Stack MERN Development" },
+    { course_id: 2, course_name: "Data Science & Machine Learning" },
+    { course_id: 3, course_name: "UI / UX Design Fundamentals" },
+  ];
 
-	// fetch courses
-	useEffect(() => {
-		async function load() {
-			try {
-				const res = await getAllCourses();
-				const data = res?.data?.data;
+  useEffect(() => {
+    async function load() {
+      try {
+        const res = await getAllCourses();
+        const data = res?.data?.data;
+        setCourses(Array.isArray(data) && data.length ? data : fallbackCourses);
+      } catch {
+        setCourses(fallbackCourses);
+      }
+    }
+    load();
+  }, []);
 
-				setCourses(
-					Array.isArray(data) && data.length ? data : fallbackCourses
-				);
-			} catch {
-				setCourses(fallbackCourses);
-			}
-		}
-		load();
-	}, []);
+  const computeCards = () =>
+    typeof window !== "undefined" && window.innerWidth < 768 ? 1 : 3;
 
-	const getCardsPerView = () =>
-		typeof window !== "undefined" && window.innerWidth < 768 ? 1 : 3;
+  useEffect(() => {
+    setCardsPerView(computeCards());
+    const handler = () => setCardsPerView(computeCards());
+    window.addEventListener("resize", handler);
+    return () => window.removeEventListener("resize", handler);
+  }, []);
 
-	const [cardsPerView, setCardsPerView] = useState(getCardsPerView);
+  const base = courses.length ? courses : fallbackCourses;
+  const minItems = Math.max(cardsPerView * 2, 4);
 
-	useEffect(() => {
-		const handler = () => setCardsPerView(getCardsPerView());
-		window.addEventListener("resize", handler);
-		return () => window.removeEventListener("resize", handler);
-	}, []);
+  const filled =
+    base.length >= minItems
+      ? base
+      : Array.from({ length: minItems }, (_, i) => base[i % base.length]);
 
-	const base = courses.length ? courses : fallbackCourses;
-	const minItems = Math.max(cardsPerView * 2, 4);
-	const filled =
-		base.length >= minItems
-			? base
-			: Array.from({ length: minItems }, (_, i) => base[i % base.length]);
-	const looped = [...filled, ...filled];
+  const looped = [...filled, ...filled];
 
-	const handlePause = () => {
-		if (!trackRef.current) return;
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
 
-		const computed = window.getComputedStyle(trackRef.current);
-		const matrix = computed.transform;
+    let x = 0;
+    const speed = 1.4;
 
-		trackRef.current.style.transform = matrix;
-		trackRef.current.style.animationPlayState = "paused";
+    function tick() {
+      x -= speed;
 
-		setIsPaused(true);
-	};
+      const half = track.scrollWidth / 2;
+      if (-x >= half) x += half;
 
-	const handleResume = () => {
-		if (!trackRef.current) return;
+      track.style.transform = `translateX(${x}px)`;
+      frameRef.current = requestAnimationFrame(tick);
+    }
 
-		trackRef.current.style.animationPlayState = "running";
-		setIsPaused(false);
-	};
+    frameRef.current = requestAnimationFrame(tick);
 
-	const goToCourse = (id) => navigate(`/viewcourse/${id}`);
+    return () => cancelAnimationFrame(frameRef.current);
+  }, [looped]);
 
-	return (
-		<div
-			className="relative max-w-6xl mx-auto overflow-hidden"
-			onMouseEnter={handlePause}
-			onMouseLeave={handleResume}
-		>
-			<div
-				ref={trackRef}
-				className="flex gap-6 whitespace-nowrap animate-carousel"
-				style={{ "--speed": "7s" }}
-			>
-				{looped.map((c, i) => (
-					<div
-						key={i}
-						className="flex-none px-3"
-						style={{ width: `${100 / cardsPerView}%` }}
-					>
-						<CourseCard course={c} mode="student" />
-					</div>
-				))}
-			</div>
-		</div>
-	);
+  const pause = () => {
+    if (frameRef.current) cancelAnimationFrame(frameRef.current);
+    frameRef.current = null;
+  };
+
+  const resume = () => {
+    if (frameRef.current) return;
+
+    const track = trackRef.current;
+    if (!track) return;
+
+    let x = parseFloat(
+      track.style.transform.replace("translateX(", "").replace("px)", "")
+    ) || 0;
+
+    const speed = 0.4;
+
+    function tick() {
+      x -= speed;
+
+      const half = track.scrollWidth / 2;
+      if (-x >= half) x += half;
+
+      track.style.transform = `translateX(${x}px)`;
+      frameRef.current = requestAnimationFrame(tick);
+    }
+
+    frameRef.current = requestAnimationFrame(tick);
+  };
+
+  return (
+    <div
+      className="relative max-w-6xl mx-auto overflow-hidden"
+      onMouseEnter={pause}
+      onMouseLeave={resume}
+    >
+      <div ref={trackRef} className="flex whitespace-nowrap">
+        {looped.map((c, i) => (
+          <div
+            key={`${c.course_id}-${i}`}
+            className="flex-none px-6"
+            style={{
+              width: `${100 / cardsPerView}%`,
+              minWidth: `${100 / cardsPerView}%`,
+            }}
+            onClick={() => navigate(`/viewcourse/${c.course_id}`)}
+          >
+            <CourseCard course={c} mode="student" />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 }
+
 
 export default Landing;

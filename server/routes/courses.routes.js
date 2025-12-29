@@ -8,7 +8,7 @@ const {activeCourses} = require("../controller/courses.controller")
 const allowRoles = require("../middlewares/role.middleware")
 const authUser = require("../middlewares/auth.middleware");
 const {getCourseDetails} = require("../controller/courses.controller")
-const {uploadImage} = require("../controller/courses.controller")
+const {uploadImage, returnImage} = require("../controller/courses.controller")
 const multer = require("multer");
 
 const router = express.Router()
@@ -30,5 +30,7 @@ router.post(
   upload.single("image"),
   uploadImage
 );
+
+router.get('/courseimage/:course_id', returnImage);
 
 module.exports = router
