@@ -7,7 +7,7 @@ import coursebg from "../../assets/coursebg.png";
 import { getCourseDetails } from "../../services/coursesServices";
 import bg from "../../assets/background.png";
 import Navbar from "../../components/Navbar";
-import { useNavigate } from "react-router"; 
+import { useNavigate } from "react-router";
 
 function ViewCourse() {
   const navigate = useNavigate();
@@ -47,19 +47,19 @@ function ViewCourse() {
   if (!courseDetails) {
     return <div>No course details available.</div>;
   }
-  
+
   function formatDate(dateString) {
-  const date = new Date(dateString);
-  return date.toLocaleDateString("en-IN", {
-    day: "2-digit",
-    month: "long",
-    year: "numeric",
-  });
-}
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-IN", {
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+    });
+  }
 
   return (
 
-  <div
+    <div
       className="min-h-screen w-full bg-cover bg-center bg-no-repeat flex flex-col items-center"
       style={{ backgroundImage: `url(${bg})` }}
     >
@@ -100,13 +100,17 @@ function ViewCourse() {
             </div>
 
           </div>
-          
-            <div className="bg-white/40 backdrop-blur-md p-4 rounded-xl border border-white/30 sm:col-span-2 ml-30 mr-30">
-              <p className="text-sm text-slate-600">Fees</p>
-              <p className="font-semibold text-green-600 text-lg">
-                ₹ {courseDetails.data[0].fees}
-              </p>
-            </div>
+
+          <div
+            className="bg-white/40 backdrop-blur-md p-4 rounded-xl border border-white/30 
+             sm:col-span-2 mx-auto w-full sm:w-2/4"
+          >
+            <p className="text-sm text-slate-600">Fees</p>
+            <p className="font-semibold text-green-600 text-lg">
+              ₹ {courseDetails.data[0].fees}
+            </p>
+          </div>
+
 
           {/* Centered Enroll Button */}
           <div className="flex justify-center mt-8">
@@ -116,8 +120,8 @@ function ViewCourse() {
               text-white font-semibold 
               rounded-full shadow-lg 
               hover:bg-green-600 hover:scale-105 
-              transition-all" 
-            onClick={() => navigate(`/register/${courseDetails.data[0].course_id}`)}
+              transition-all"
+              onClick={() => navigate(`/register/${courseDetails.data[0].course_id}`)}
             >
               Enroll Now
             </button>
