@@ -61,6 +61,7 @@ function addCourse(req, res) {
 
 const path = require("path");
 const fs = require("fs");
+const fsp = require("fs/promises");
 const multer = require("multer");
 
 
@@ -120,7 +121,11 @@ function returnImage(req, res) {
   const imagePath = path.join(__dirname, "../../client/public/courseimages", `${course_id}.jpg`);
 
   if (!fs.existsSync(imagePath)) {
-    return res.status(404).send(result.createResult("Image not found"));
+    return res.status(200).json({
+      status: "ERROR",
+      message: "Image not found",
+      data: `/courseimages/default.jpg`
+    });
   }
 
   res.status(200).json({
@@ -129,6 +134,36 @@ function returnImage(req, res) {
     data: `/courseimages/${course_id}.jpg`
 
   });
+}
+
+
+async function deleteImage(req, res) {
+  try {
+    const { course_id } = req.params;
+
+    if (!/^[a-zA-Z0-9_-]+$/.test(course_id)) {
+      return res.status(400).send(result.createResult("Invalid course id"));
+    }
+
+    const imagePath = path.join(
+      __dirname,
+      "../../client/public/courseimages",
+      `${course_id}.jpg`
+    );
+
+    await fsp.unlink(imagePath);  
+
+    return res.send(result.createResult(null, "Image deleted successfully"));
+  } catch (err) {
+    if (err.code === "ENOENT") {
+      return res.status(404).send(result.createResult("Image not found"));
+    }
+
+    console.error("Delete image error:", err);
+    return res
+      .status(500)
+      .send(result.createResult("Failed to delete image"));
+  }
 }
 
 
@@ -317,5 +352,6 @@ module.exports = {
   getCourseDetails,
   getAllstudent,
   uploadImage,
-  returnImage
+  returnImage,
+  deleteImage
 };
