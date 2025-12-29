@@ -110,6 +110,27 @@ function uploadImage(req, res) {
 }
 
 
+function returnImage(req, res) {
+  const { course_id } = req.params;
+
+  if (!course_id) {
+    return res.status(400).send(result.createResult("course_id is required"));
+  }
+
+  const imagePath = path.join(__dirname, "../../client/public/courseimages", `${course_id}.jpg`);
+
+  if (!fs.existsSync(imagePath)) {
+    return res.status(404).send(result.createResult("Image not found"));
+  }
+
+  res.status(200).json({
+    status: "SUCCESS",
+    message: "Image retrieved successfully",
+    data: `/courseimages/${course_id}.jpg`
+
+  });
+}
+
 
 // GET COURSES BETWEEN DATES
 function getCourses(req, res) {
@@ -295,5 +316,6 @@ module.exports = {
   enrolledstudents,
   getCourseDetails,
   getAllstudent,
-  uploadImage
+  uploadImage,
+  returnImage
 };
