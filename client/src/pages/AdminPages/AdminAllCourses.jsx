@@ -5,7 +5,7 @@ import bg from "../../assets/background.png";
 import { toast } from "react-toastify";
 
 import { getAuthUser } from "../../utils/auth";
-import { getAllCourses, deleteCourse } from "../../services/coursesServices";
+import { getAllCourses, deleteCourse , deleteCourseImage } from "../../services/coursesServices";
 import CourseCard from "../../components/CourseCard";
 
 function AdminAllCourses() {
@@ -52,7 +52,7 @@ function AdminAllCourses() {
       await deleteCourse(id);
       await deleteCourseImage(id);
       toast.success("Course deleted successfully");
-      loadCourses(); // refresh list
+      loadCourses(); 
     } catch (err) {
       console.error(err);
       toast.error(err?.response?.data?.message || "Delete failed");

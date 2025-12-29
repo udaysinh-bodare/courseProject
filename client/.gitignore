@@ -52,3 +52,7 @@ Thumbs.db
 # ── Misc ────────────────────────────────────────
 *.local
 *.log
+
+# Ignore all course images except default.jpg
+client/public/courseimages/*.jpg
+!client/public/courseimages/default.jpg
