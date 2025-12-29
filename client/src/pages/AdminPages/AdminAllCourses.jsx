@@ -50,6 +50,7 @@ function AdminAllCourses() {
 
     try {
       await deleteCourse(id);
+      await deleteCourseImage(id);
       toast.success("Course deleted successfully");
       loadCourses(); // refresh list
     } catch (err) {

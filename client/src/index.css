@@ -8,18 +8,15 @@ html, body{
 }
 
 @keyframes carousel-scroll {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-  to {
-    transform: translate3d(-50%, 0, 0);
-  }
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
 }
 
 .animate-carousel {
   animation: carousel-scroll var(--speed) linear infinite;
   will-change: transform;
 }
+
 
 .glass-input {
   @apply px-4 py-2 rounded-xl border

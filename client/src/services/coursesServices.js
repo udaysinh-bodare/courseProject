@@ -40,6 +40,10 @@ export async function uploadImage(formData) {
   });
 }
 
+export async function getCourseImage(course_id) {
+  const url = `${config.BASE_URL}/api/courses/courseimage/${course_id}`;
+  return axios.get(url, { headers: authHeaders() });
+}
 
 export async function getCourseDetails(course_id) {
   const url = `${config.BASE_URL}/api/courses/course-details/${course_id}`;
@@ -50,6 +54,12 @@ export async function getCourseDetails(course_id) {
 export async function deleteCourse(course_id) {
   const url = `${config.BASE_URL}/api/courses/delete-course/${course_id}`;
   return axios.delete(url, { headers: authHeaders() });
+}
+
+export async function deleteCourseImage(course_id) {
+  const url =  config.BASE_URL + `/api/courses/delete-course-image/${course_id}`
+  const res = axios.delete(url, {headers: authHeaders()})
+  return res
 }
 
 export async function editCourse(payload, course_id) {
