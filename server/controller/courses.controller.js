@@ -57,6 +57,60 @@ function addCourse(req, res) {
   );
 }
 
+// UPLOAD IMAGE CODE
+
+const path = require("path");
+const fs = require("fs");
+const multer = require("multer");
+
+
+
+function uploadImage(req, res) {
+  try {
+    const course_id = req.body.course_id;
+
+    if (!course_id) {
+      return res
+        .status(400)
+        .send(result.createResult("course_id is required"));
+    }
+
+    if (!req.file) {
+      return res
+        .status(400)
+        .send(result.createResult("No image uploaded"));
+    }
+
+    const targetDir = path.join(
+      __dirname,
+      "../../client/public/courseimages"
+    );
+
+    if (!fs.existsSync(targetDir)) {
+      fs.mkdirSync(targetDir, { recursive: true });
+    }
+
+    const targetPath = path.join(targetDir, `${course_id}.jpg`);
+
+    fs.renameSync(req.file.path, targetPath);
+
+    return res.send(
+      result.createResult(null, {
+        message: "Image saved successfully",
+        filename: `${course_id}.jpg`,
+      })
+    );
+
+  } catch (err) {
+    console.error("Upload error:", err);
+    return res
+      .status(500)
+      .send(result.createResult("Failed to save image"));
+  }
+}
+
+
+
 // GET COURSES BETWEEN DATES
 function getCourses(req, res) {
   const { start_date, end_date } = req.body;
@@ -240,5 +294,6 @@ module.exports = {
   activeCourses,
   enrolledstudents,
   getCourseDetails,
-  getAllstudent
+  getAllstudent,
+  uploadImage
 };
