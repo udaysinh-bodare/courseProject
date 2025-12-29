@@ -6,6 +6,7 @@ import Navbar from "../../components/Navbar";
 import { useNavigate } from "react-router";
 import { getAllCourses } from "../../services/coursesServices";
 import CourseCard from "../../components/CourseCard";
+import Footer from "../../components/Footer";
 
 function Landing() {
 	const [loading, setLoading] = useState(true);
@@ -142,122 +143,125 @@ function Landing() {
 					</div>
 				</section>
 			</div>
+			<div className="footer">
+				<Footer />
+			</div>
 		</div>
 	);
 }
 
-
 function CourseCarousel() {
-  const navigate = useNavigate();
+	const navigate = useNavigate();
 
-  const [courses, setCourses] = useState([]);
-  const [isPaused, setIsPaused] = useState(false);
-  const trackRef = React.useRef(null);
+	const [courses, setCourses] = useState([]);
+	const [isPaused, setIsPaused] = useState(false);
+	const trackRef = React.useRef(null);
 
-  const fallbackCourses = [
-    {
-      course_id: 1,
-      course_name: "Full-Stack MERN Development",
-      description: "Learn MongoDB, Express, React and Node with real projects.",
-      fees: 12999,
-      start_date: "2025-02-10",
-    },
-    {
-      course_id: 2,
-      course_name: "Data Science & Machine Learning",
-      description: "Hands-on Python, Pandas, ML models and datasets.",
-      fees: 14999,
-      start_date: "2025-03-01",
-    },
-    {
-      course_id: 3,
-      course_name: "UI / UX Design Fundamentals",
-      description: "Figma, wireframing, user research and portfolios.",
-      fees: 10999,
-      start_date: "2025-02-15",
-    },
-  ];
+	const fallbackCourses = [
+		{
+			course_id: 1,
+			course_name: "Full-Stack MERN Development",
+			description:
+				"Learn MongoDB, Express, React and Node with real projects.",
+			fees: 12999,
+			start_date: "2025-02-10",
+		},
+		{
+			course_id: 2,
+			course_name: "Data Science & Machine Learning",
+			description: "Hands-on Python, Pandas, ML models and datasets.",
+			fees: 14999,
+			start_date: "2025-03-01",
+		},
+		{
+			course_id: 3,
+			course_name: "UI / UX Design Fundamentals",
+			description: "Figma, wireframing, user research and portfolios.",
+			fees: 10999,
+			start_date: "2025-02-15",
+		},
+	];
 
-  // fetch courses
-  useEffect(() => {
-    async function load() {
-      try {
-        const res = await getAllCourses();
-        const data = res?.data?.data;
+	// fetch courses
+	useEffect(() => {
+		async function load() {
+			try {
+				const res = await getAllCourses();
+				const data = res?.data?.data;
 
-        setCourses(Array.isArray(data) && data.length ? data : fallbackCourses);
-      } catch {
-        setCourses(fallbackCourses);
-      }
-    }
-    load();
-  }, []);
+				setCourses(
+					Array.isArray(data) && data.length ? data : fallbackCourses
+				);
+			} catch {
+				setCourses(fallbackCourses);
+			}
+		}
+		load();
+	}, []);
 
-  const getCardsPerView = () =>
-    typeof window !== "undefined" && window.innerWidth < 768 ? 1 : 3;
+	const getCardsPerView = () =>
+		typeof window !== "undefined" && window.innerWidth < 768 ? 1 : 3;
 
-  const [cardsPerView, setCardsPerView] = useState(getCardsPerView);
+	const [cardsPerView, setCardsPerView] = useState(getCardsPerView);
 
-  useEffect(() => {
-    const handler = () => setCardsPerView(getCardsPerView());
-    window.addEventListener("resize", handler);
-    return () => window.removeEventListener("resize", handler);
-  }, []);
+	useEffect(() => {
+		const handler = () => setCardsPerView(getCardsPerView());
+		window.addEventListener("resize", handler);
+		return () => window.removeEventListener("resize", handler);
+	}, []);
 
-  const base = courses.length ? courses : fallbackCourses;
-  const minItems = Math.max(cardsPerView * 2, 4);
-  const filled =
-    base.length >= minItems
-      ? base
-      : Array.from({ length: minItems }, (_, i) => base[i % base.length]);
-  const looped = [...filled, ...filled];
+	const base = courses.length ? courses : fallbackCourses;
+	const minItems = Math.max(cardsPerView * 2, 4);
+	const filled =
+		base.length >= minItems
+			? base
+			: Array.from({ length: minItems }, (_, i) => base[i % base.length]);
+	const looped = [...filled, ...filled];
 
-  const handlePause = () => {
-    if (!trackRef.current) return;
+	const handlePause = () => {
+		if (!trackRef.current) return;
 
-    const computed = window.getComputedStyle(trackRef.current);
-    const matrix = computed.transform;
+		const computed = window.getComputedStyle(trackRef.current);
+		const matrix = computed.transform;
 
-    trackRef.current.style.transform = matrix;
-    trackRef.current.style.animationPlayState = "paused";
+		trackRef.current.style.transform = matrix;
+		trackRef.current.style.animationPlayState = "paused";
 
-    setIsPaused(true);
-  };
+		setIsPaused(true);
+	};
 
-  const handleResume = () => {
-    if (!trackRef.current) return;
+	const handleResume = () => {
+		if (!trackRef.current) return;
 
-    trackRef.current.style.animationPlayState = "running";
-    setIsPaused(false);
-  };
+		trackRef.current.style.animationPlayState = "running";
+		setIsPaused(false);
+	};
 
-  const goToCourse = (id) => navigate(`/viewcourse/${id}`);
+	const goToCourse = (id) => navigate(`/viewcourse/${id}`);
 
-  return (
-    <div
-      className="relative max-w-6xl mx-auto overflow-hidden"
-      onMouseEnter={handlePause}
-      onMouseLeave={handleResume}
-    >
-      <div
-        ref={trackRef}
-        className="flex gap-6 whitespace-nowrap animate-carousel"
-        style={{ "--speed": "7s" }}
-      >
-        {looped.map((c, i) => (
-          <div
-            key={i}
-            className="flex-none px-3"
-            style={{ width: `${100 / cardsPerView}%` }}
-          >
-            <CourseCard course={c} mode="student" />
-          </div>
-        ))}
-      </div>
-    </div>
-  );
+	return (
+		<div
+			className="relative max-w-6xl mx-auto overflow-hidden"
+			onMouseEnter={handlePause}
+			onMouseLeave={handleResume}
+		>
+			<div
+				ref={trackRef}
+				className="flex gap-6 whitespace-nowrap animate-carousel"
+				style={{ "--speed": "7s" }}
+			>
+				{looped.map((c, i) => (
+					<div
+						key={i}
+						className="flex-none px-3"
+						style={{ width: `${100 / cardsPerView}%` }}
+					>
+						<CourseCard course={c} mode="student" />
+					</div>
+				))}
+			</div>
+		</div>
+	);
 }
-
-
 
 export default Landing;
