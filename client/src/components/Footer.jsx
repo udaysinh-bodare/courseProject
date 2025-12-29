@@ -27,7 +27,7 @@ function Footer() {
             <div>
           <h3 className="font-semibold mb-2">Courses</h3>
           <ul className="space-y-1 text-gray-900">
-            <li className="hover:text-blue-400 cursor-pointer"><Link to="/viewcourse">AllCourses</Link></li>
+            <li className="hover:text-blue-400 cursor-pointer"><Link to="/student/allcourses">All Courses</Link></li>
             <li className="hover:text-blue-400 cursor-pointer"><Link> Enroll me</Link></li>
             <li className="hover:text-blue-400 cursor-pointer"><Link>Privacy Policy</Link></li>
             
@@ -36,9 +36,9 @@ function Footer() {
          <div>
           <h3 className="font-semibold mb-2">Resourses</h3>
           <ul className="space-y-1 text-gray-900">
-            <li className="hover:text-blue-400 cursor-pointer"><Link to="/allcourses">All courses</Link></li>
-            <li className="hover:text-blue-400 cursor-pointer"><Link>Blog</Link></li>
-            <li className="hover:text-blue-400 cursor-pointer"><Link>FAQ</Link></li>
+            <li className="hover:text-blue-400 cursor-pointer"><Link to="/student/allcourses">All courses</Link></li>
+            <li className="hover:text-blue-400 cursor-pointer"><Link to="/login">Login</Link></li>
+            <li className="hover:text-blue-400 cursor-pointer"><Link to="/student/dashboard">Dashboard</Link></li>
             
           </ul>
         </div>
