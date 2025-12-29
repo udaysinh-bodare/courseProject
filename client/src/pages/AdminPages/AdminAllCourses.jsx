@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import Navbar from "../../components/Navbar";
+import AdminNavbar from "../../components/AdminNavbar";
 import bg from "../../assets/background.png";
 import { toast } from "react-toastify";
 
@@ -79,8 +79,8 @@ function AdminAllCourses() {
     >
       <div className="absolute inset-0 bg-gradient-to-b from-white/10 to-white/40 pointer-events-none" />
 
-      <div className="relative max-w-7xl mx-auto">
-        <Navbar />
+			<div className="relative max-w-7xl mx-auto">
+				<AdminNavbar />
 
         <div className="px-4 py-10">
           <div className="flex justify-between items-center mb-6">
@@ -88,14 +88,14 @@ function AdminAllCourses() {
               All Courses (Admin)
             </h1>
 
-            <button
-              onClick={() => navigate("/addcourse")}
-              className="px-6 py-2 rounded-full font-semibold text-white
-                bg-gradient-to-r from-emerald-400 to-teal-500 shadow-lg"
-            >
-              ➕ Add Course
-            </button>
-          </div>
+						<button
+							onClick={() => navigate("/addcourse")}
+							className="px-6 py-2 rounded-full font-semibold text-white
+              bg-gradient-to-r from-emerald-400 to-teal-500 shadow-lg"
+						>
+							➕ Add Course
+						</button>
+					</div>
 
           {!courses.length && (
             <p className="text-center text-gray-600">

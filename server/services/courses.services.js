@@ -7,10 +7,12 @@ const getstudentsbycourses = `select * from students where course_id = ?`
 
 
 const getCourseDetailsql = `select * from courses where course_id = ?`
+const getAllstudentsql = "select * from students natural join courses"
 
 module.exports = {
     getallcourses,
 	allCourse,
 	getstudentsbycourses,
-	getCourseDetailsql
+	getCourseDetailsql,
+	getAllstudentsql
 }

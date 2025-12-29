@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
-import Navbar from "../../components/Navbar";
 import bg from "../../assets/background.png";
 import { toast } from "react-toastify";
 
 import { getAuthUser } from "../../utils/auth";
 import { getCourseDetails } from "../../services/coursesServices";
 import { getAllVideos, deleteVideo } from "../../services/videoServices";
+import AdminNavbar from "../../components/AdminNavbar";
 
 const getYoutubeEmbed = (url) => {
   try {
@@ -100,7 +100,7 @@ function AdminAllVideos() {
       <div className="absolute inset-0 bg-gradient-to-b from-white/10 to-white/40 pointer-events-none" />
 
       <div className="relative max-w-7xl mx-auto">
-        <Navbar />
+        <AdminNavbar />
 
         <div className="px-4 py-10">
           <div className="flex justify-between items-center mb-6">

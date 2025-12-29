@@ -54,7 +54,7 @@ function Login() {
 			}}
 		>
 			<div
-				className="bg-white/20 lg:min-w-[35%] md:min-w-[35%] sm:min-w-[30%]
+				className="bg-white/20 lg:min-w-[30%] md:min-w-[35%] sm:min-w-[30%]
                       backdrop-blur-md rounded-xl border border-white/30
                       px-6 py-3 shadow-[0_8px_32px_12px_rgba(31,38,135,0.37)]"
 			>
@@ -112,9 +112,9 @@ function Login() {
 						Don&apos;t have an account?
 						<Link
 							className="text-blue-700 ml-1 hover:underline"
-							to="/register"
+							to="/student/allcourses"
 						>
-							Sign Up
+							Register to course
 						</Link>
 					</div>
 				</form>

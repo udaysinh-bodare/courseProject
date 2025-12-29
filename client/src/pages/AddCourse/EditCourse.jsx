@@ -4,7 +4,8 @@ import Navbar from "../../components/Navbar";
 import { getAuthUser } from "../../utils/auth";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router";
-import { editCourse } from "../../services/coursesServices";
+import { editCourse, getCourseDetails } from "../../services/coursesServices";
+
 function EditCourse() {
     const navigate = useNavigate()
     const {course_id} = useParams()
@@ -18,6 +19,9 @@ function EditCourse() {
             toast.error("Not Authorised")
             navigate('/login')
         }
+
+        oldCourseDets()
+
     })
 
     const[course_name, setCourseName] = useState("")
@@ -26,8 +30,36 @@ function EditCourse() {
     const [start_date, setStart_date] = useState("")
     const[end_date, setEnd_date] = useState("")
     const[video_expire_days, setVideo_expire_days] = useState("")
+
+  
+
+    const oldCourseDets = async ()=> {
+      const res = await getCourseDetails(course_id)
+      const d = res.data.data[0];
+      console.log(d);
+
+      setCourseName(d.course_name)
+      setDescription(d.description)
+      setStart_date(d.start_date)
+      setEnd_date(d.end_date)
+      setFees(d.fees)
+      setVideo_expire_days(d.video_expire_days)
+      
+    }
+
+
     
-    const updateCourse = async()=>{
+    const updateCourse = async(e)=>{
+      if(!course_name) 
+        toast.warn("Course Name is Empty")
+      else if(!fees) 
+        toast.warn("Fees is Empty")
+      else if(!start_date)
+        toast.warn("Start date is Empty")
+      else if(!end_date)
+        toast.warn("End date is Empty")
+      else {
+        e.preventDefault()
         const payload = {
             course_name: course_name,
             description: description,
@@ -37,11 +69,14 @@ function EditCourse() {
             video_expire_days: video_expire_days
         }
         try {
-
           const res = await editCourse(payload, course_id)
-        }catch{
-          
+          if(res.status == "success")
+            toast.success("Course Edited Successfully")
+        }catch(ex){
+          console.log(ex);
+          toast.error("No Course with such id")
         }
+      }
         
     }
 
@@ -71,9 +106,11 @@ function EditCourse() {
               <input
                 name="course_name"
                 // value={form.course_name}
+                value={course_name}
                 onChange={(e)=>setCourseName(e.target.value)}
                 className="w-full glass-input"
                 placeholder="Enter course name"
+                required
               />
               
             </div>
@@ -84,10 +121,12 @@ function EditCourse() {
               <textarea
                 rows={3}
                 name="description"
+                
                 // value={form.description}
                 onChange={(e)=>setDescription(e.target.value)}
                 className="w-full glass-input resize-none"
                 placeholder="Write course description..."
+                value={description}
               />
              
             </div>
@@ -102,6 +141,8 @@ function EditCourse() {
                 onChange={(e)=>setFees(e.target.value)}
                 className="w-full glass-input"
                 placeholder="Eg: 9999"
+                value={fees}
+                required
               />
               
             </div>
@@ -116,6 +157,8 @@ function EditCourse() {
                 //   value={form.start_date}
                 onChange={(e)=>setStart_date(e.target.value)}
                   className="w-full glass-input"
+                  value={start_date}
+                  required
                 />
                
               </div>
@@ -128,6 +171,8 @@ function EditCourse() {
                 //   value={form.end_date}
                 onChange={(e)=>setEnd_date(e.target.value)}
                   className="w-full glass-input"
+                  value={end_date}
+                  required
                 />
                 
               </div>
@@ -137,12 +182,14 @@ function EditCourse() {
             <div>
               <label className="font-medium">Video Expire Days</label>
               <input
-                type="number"
+                type="text"
                 name="video_expire_days"
                 // value={form.video_expire_days}
+                value={video_expire_days}
                 onChange={(e)=>setVideo_expire_days(e.target.value)}
                 className="w-full glass-input"
                 placeholder="Eg: 180"
+                required
               />
               
             </div>
@@ -152,7 +199,7 @@ function EditCourse() {
               <button
                 type="button"
                 onClick={() => navigate(-1)}
-                className="px-6 py-2 rounded-full bg-white/60 hover:bg-white text-blue-800 font-medium shadow"
+                className="cursor-pointer px-6 py-2 rounded-full bg-white/60 hover:bg-white text-blue-800 font-medium shadow"
               >
                 Cancel
               </button>
@@ -161,9 +208,10 @@ function EditCourse() {
                 type="submit"
                 className="px-8 py-2 rounded-full font-semibold text-white
                   bg-gradient-to-r from-emerald-400 to-teal-500
-                  shadow-lg hover:-translate-y-0.5 transition-all"
+                  shadow-lg hover:-translate-y-0.5 transition-all cursor-pointer"
+                onClick={updateCourse}
               >
-                Save Course
+                Edit Changes
               </button>
             </div>
           </form>

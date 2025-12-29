@@ -11,7 +11,8 @@ const {
   getallcourses,
   getstudentsbycourses,
   getCourseDetailsql,
-  myCourses
+  getAllstudentsql
+  
 } = require("../services/courses.services");
 
 // ADD COURSE
@@ -107,7 +108,7 @@ function updateCourse(req, res) {
       fees,
       start_date,
       end_date,
-      video_expire_days || null,
+      video_expire_days,
       course_id,
     ],
     (error, data) => {
@@ -216,6 +217,20 @@ function getCourseDetails(req, res) {
   });
 }
 
+function getAllstudent (req,res){
+      pool.query(getAllstudentsql,(err, data) => {
+    if (err) {
+      return res.status(500).send(result.createResult(err));
+    } 
+    if (data.length === 0) {
+      return res.send(
+        result.createResult("No students found")
+      );
+    }
+    return res.send(result.createResult(null, data));
+  });
+}
+
 
 module.exports = {
   addCourse,
@@ -224,5 +239,6 @@ module.exports = {
   deleteCourse,
   activeCourses,
   enrolledstudents,
-  getCourseDetails
+  getCourseDetails,
+  getAllstudent
 };

@@ -3,6 +3,7 @@ import bg from "../../assets/background.png";
 import Navbar from "../../components/Navbar";
 import { myCourses } from "../../services/coursesServices";
 import { useNavigate } from "react-router";
+import Footer from "../../components/Footer";
 
 function StudentDash() {
   const navigate = useNavigate();
@@ -99,6 +100,9 @@ function StudentDash() {
           </div>
         ))}
       </div>
+
+        
+
     </div>
   );
 }

@@ -42,7 +42,7 @@ export async function deleteCourse(course_id) {
 }
 
 export async function editCourse(payload, course_id) {
-  const url =  config.BASE_URL + `/api/admin/update-course/${course_id}`
+  const url =  config.BASE_URL + `/api/courses/update-course/${course_id}`
   const res = axios.put(url, payload, {headers: authHeaders()})
   return res
 }
