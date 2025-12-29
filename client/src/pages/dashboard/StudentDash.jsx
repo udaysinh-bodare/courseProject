@@ -101,7 +101,7 @@ function StudentDash() {
         ))}
       </div>
 
-        <Footer />
+        
 
     </div>
   );
