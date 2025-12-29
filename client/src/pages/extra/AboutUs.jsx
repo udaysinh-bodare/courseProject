@@ -6,8 +6,10 @@ import a1 from "../../assets/a1.png";
 import a3 from "../../assets/a3.png";  
 import Footer from "../../components/Footer";
 import AllCourses from "../Courses/AllCourses";
+import { useNavigate } from "react-router";
 
 function AboutUs() {
+    const navigate = useNavigate();
   return (
     <div
       className="min-h-screen w-full bg-cover bg-center"
@@ -97,7 +99,9 @@ function AboutUs() {
             Join thousands of learners and upgrade your skills with expert-led
             training programs.
           </p>
-          <button  className="bg-white text-blue-600 px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition">
+          <button  className="bg-white text-blue-600 px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition" onClick={(e)=>{
+            navigate("/student/allcourses")
+          }}>
             Get Started
           </button>
         </div>
