@@ -124,10 +124,11 @@ function Landing() {
 								<li>✔ Certificates of completion</li>
 							</ul>
 
-							<button
+							<button onClick={(e)=>{
+								navigate("/student/allcourses")}}
 								className="mt-6 px-6 py-3 rounded-full font-semibold
                 bg-gradient-to-r from-emerald-400 to-teal-500
-                text-white shadow-lg hover:shadow-emerald-400/60 transition-all"
+                text-white shadow-lg hover:shadow-emerald-400/60 transition-all cursor-pointer"
 							>
 								Get Started
 							</button>
