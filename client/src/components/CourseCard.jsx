@@ -64,19 +64,15 @@ function CourseCard({ course, mode = "student" }) {
 			</div>
 
 			{mode === "admin" ? (
-				<div className="mt-3 flex gap-2">
+				<div className="mt-3 flex justify-center">
 					<button
-						className="w-1/2 py-2 rounded-xl bg-blue-500 text-white font-semibold"
-						onClick={handleClick}
+						className="px-5 py-2 rounded-xl bg-blue-500 text-white font-semibold w-[90%]"
+						onClick={(e) => {
+							e.stopPropagation(); // prevents double navigation
+							handleClick();
+						}}
 					>
 						Manage Videos
-					</button>
-
-					<button
-						className="w-1/2 py-2 rounded-xl bg-amber-500 text-white font-semibold"
-						onClick={goToEditCourse}
-					>
-						Edit Course
 					</button>
 				</div>
 			) : (
