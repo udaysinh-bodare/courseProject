@@ -203,7 +203,7 @@ function CourseCarousel() {
     if (!track) return;
 
     let x = 0;
-    const speed = 1.4;
+    const speed = 1.9;
 
     function tick() {
       x -= speed;
