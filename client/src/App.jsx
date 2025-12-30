@@ -20,6 +20,7 @@ import AboutUs from "./pages/extra/AboutUs";
 import ContactUs from "./pages/extra/ContactUs";
 import Students from "./pages/AdminPages/students";
 import AllCourses from "./pages/Courses/AllCourses";
+import PrivacyPolicy from "./pages/extra/PrivacyPolicy";
 
 /* ================= PROTECTED ROUTE ================= */
 function ProtectedRoute({ children }) {
@@ -46,6 +47,7 @@ function App() {
 				<Route path="/about" element={<AboutUs />} />
 				<Route path="/contact" element={<ContactUs />} />
         <Route path="/student/allcourses" element={<AllCourses/>} />
+		<Route path="/privacy" element={<PrivacyPolicy/>} />
 				{/* Protected Routes */}
 				<Route
 					path="/student/dashboard"

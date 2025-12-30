@@ -29,8 +29,8 @@ function Footer() {
           <ul className="space-y-1 text-gray-900">
             <li className="hover:text-blue-400 cursor-pointer"><Link to="/student/allcourses">All Courses</Link></li>
             <li className="hover:text-blue-400 cursor-pointer"><Link> Enroll me</Link></li>
-            <li className="hover:text-blue-400 cursor-pointer"><Link>Privacy Policy</Link></li>
-            
+            <li className="hover:text-blue-400 cursor-pointer"><Link to="/privacy">Privacy Policy</Link></li>
+
           </ul>
         </div>
          <div>
