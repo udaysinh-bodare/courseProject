@@ -58,7 +58,7 @@ function Landing() {
 						<div className="flex gap-4 mt-4">
 							<button
 								onClick={() => navigate("/student/allcourses")}
-								className="px-8 py-3 rounded-full font-semibold text-white
+								className="px-8 cursor-pointer py-3 rounded-full font-semibold text-white
       bg-gradient-to-r from-emerald-400 to-teal-500 shadow-lg
       hover:shadow-emerald-400/60 hover:-translate-y-0.5 transition-all"
 							>
@@ -71,7 +71,7 @@ function Landing() {
 						<img
 							src={heroImg}
 							alt="Training Illustration"
-							className="w-[620px] max-w-full drop-shadow-[0_20px_40px_rgba(0,0,0,0.25)]"
+							className="w-[620px] max-w-full  drop-shadow-[0_20px_40px_rgba(0,0,0,0.25)]"
 						/>
 					</div>
 				</section>
