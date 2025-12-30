@@ -99,7 +99,7 @@ function AboutUs() {
             Join thousands of learners and upgrade your skills with expert-led
             training programs.
           </p>
-          <button  className="bg-white text-blue-600 px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition" onClick={(e)=>{
+          <button  className="bg-white text-blue-600 px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition cursor-pointer" onClick={(e)=>{
             navigate("/student/allcourses")
           }}>
             Get Started
