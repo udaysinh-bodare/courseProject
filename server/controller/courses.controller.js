@@ -158,7 +158,7 @@ async function deleteImage(req, res) {
     return res.send(result.createResult(null, "Image deleted successfully"));
   } catch (err) {
     if (err.code === "ENOENT") {
-      return res.status(404).send(result.createResult("Image not found"));
+      return res.status(200).send(result.createResult(null , "Image not found"));
     }
 
     console.error("Delete image error:", err);
