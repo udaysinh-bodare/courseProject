@@ -124,8 +124,10 @@ function Landing() {
 								<li>✔ Certificates of completion</li>
 							</ul>
 
-							<button onClick={(e)=>{
-								navigate("/student/allcourses")}}
+							<button
+								onClick={(e) => {
+									navigate("/student/allcourses");
+								}}
 								className="mt-6 px-6 py-3 rounded-full font-semibold
                 bg-gradient-to-r from-emerald-400 to-teal-500
                 text-white shadow-lg hover:shadow-emerald-400/60 transition-all cursor-pointer"
@@ -160,20 +162,17 @@ function CourseCarousel() {
   const trackRef = React.useRef(null);
   const frameRef = React.useRef(null);
 
-  const fallbackCourses = [
-    { course_id: 1, course_name: "Full-Stack MERN Development" },
-    { course_id: 2, course_name: "Data Science & Machine Learning" },
-    { course_id: 3, course_name: "UI / UX Design Fundamentals" },
-  ];
+  const isExpired = (course) =>
+    course?.end_date && new Date(course.end_date) < new Date();
 
   useEffect(() => {
     async function load() {
       try {
         const res = await getAllCourses();
         const data = res?.data?.data;
-        setCourses(Array.isArray(data) && data.length ? data : fallbackCourses);
+        setCourses(Array.isArray(data) ? data : []);
       } catch {
-        setCourses(fallbackCourses);
+        setCourses([]); // no fallback courses
       }
     }
     load();
@@ -189,35 +188,39 @@ function CourseCarousel() {
     return () => window.removeEventListener("resize", handler);
   }, []);
 
-  const base = courses.length ? courses : fallbackCourses;
-  const minItems = Math.max(cardsPerView * 2, 4);
+  // Filter active courses — still just plain data (no conditional return)
+  const activeCourses = courses.filter((c) => !isExpired(c));
 
+  // Build looping list (safe even when 0 items — handled in JSX below)
+  const minItems = Math.max(cardsPerView * 2, 4);
   const filled =
-    base.length >= minItems
-      ? base
-      : Array.from({ length: minItems }, (_, i) => base[i % base.length]);
+    activeCourses.length >= minItems && activeCourses.length > 0
+      ? activeCourses
+      : activeCourses.length > 0
+      ? Array.from(
+          { length: minItems },
+          (_, i) => activeCourses[i % activeCourses.length]
+        )
+      : [];
 
   const looped = [...filled, ...filled];
 
   useEffect(() => {
     const track = trackRef.current;
-    if (!track) return;
+    if (!track || !looped.length) return;
 
     let x = 0;
     const speed = 1.9;
 
     function tick() {
       x -= speed;
-
       const half = track.scrollWidth / 2;
       if (-x >= half) x += half;
-
       track.style.transform = `translateX(${x}px)`;
       frameRef.current = requestAnimationFrame(tick);
     }
 
     frameRef.current = requestAnimationFrame(tick);
-
     return () => cancelAnimationFrame(frameRef.current);
   }, [looped]);
 
@@ -227,23 +230,22 @@ function CourseCarousel() {
   };
 
   const resume = () => {
-    if (frameRef.current) return;
+    if (frameRef.current || !looped.length) return;
 
     const track = trackRef.current;
     if (!track) return;
 
-    let x = parseFloat(
-      track.style.transform.replace("translateX(", "").replace("px)", "")
-    ) || 0;
+    let x =
+      parseFloat(
+        track.style.transform.replace("translateX(", "").replace("px)", "")
+      ) || 0;
 
-    const speed = 0.4;
+    const speed = 1.9;
 
     function tick() {
       x -= speed;
-
       const half = track.scrollWidth / 2;
       if (-x >= half) x += half;
-
       track.style.transform = `translateX(${x}px)`;
       frameRef.current = requestAnimationFrame(tick);
     }
@@ -257,24 +259,31 @@ function CourseCarousel() {
       onMouseEnter={pause}
       onMouseLeave={resume}
     >
-      <div ref={trackRef} className="flex whitespace-nowrap">
-        {looped.map((c, i) => (
-          <div
-            key={`${c.course_id}-${i}`}
-            className="flex-none px-6"
-            style={{
-              width: `${100 / cardsPerView}%`,
-              minWidth: `${100 / cardsPerView}%`,
-            }}
-            onClick={() => navigate(`/viewcourse/${c.course_id}`)}
-          >
-            <CourseCard course={c} mode="student" />
-          </div>
-        ))}
-      </div>
+      {!activeCourses.length ? (
+        <div className="text-center text-gray-600 font-medium py-6">
+          No live courses available right now.
+        </div>
+      ) : (
+        <div ref={trackRef} className="flex whitespace-nowrap">
+          {looped.map((c, i) => (
+            <div
+              key={`${c.course_id}-${i}`}
+              className="flex-none px-6"
+              style={{
+                width: `${100 / cardsPerView}%`,
+                minWidth: `${100 / cardsPerView}%`,
+              }}
+              onClick={() => navigate(`/viewcourse/${c.course_id}`)}
+            >
+              <CourseCard course={c} mode="student" />
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
+
 
 
 export default Landing;
