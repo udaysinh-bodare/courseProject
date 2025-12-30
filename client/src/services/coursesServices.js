@@ -10,7 +10,7 @@ function authHeaders() {
 }
 
 export async function getAllCourses() {
-    const url = config.BASE_URL + "/api/courses/all-active-courses"
+    const url = config.BASE_URL + "/api/courses/get-courses"
     const response = await axios.get(url)
     return response
 }

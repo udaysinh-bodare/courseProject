@@ -36,7 +36,7 @@ function Landing() {
 			className="min-h-screen w-full bg-cover bg-no-repeat bg-center relative"
 			style={{ backgroundImage: `url(${bg})` }}
 		>
-			<div className="absolute inset-0 bg-gradient-to-b from-white/10 to-white/40 pointer-events-none" />
+			{/* <div className="absolute inset-0 bg-gradient-to-b from-white/10 to-white/40 pointer-events-none" /> */}
 
 			<div className="relative max-w-7xl mx-auto ">
 				{/* NAVBAR */}
