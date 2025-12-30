@@ -17,6 +17,8 @@ function StudentDash() {
   const getMyCourses = async () => {
     try {
       const result = await myCourses(token);
+      console.log(result.data);
+      
       if (result.data.status === "SUCCESS") {
         setCourseArr(result.data.data);
       }
@@ -25,20 +27,18 @@ function StudentDash() {
     }
   };
 
-  const formatDate = (iso) =>
-    new Date(iso).toLocaleDateString("en-IN", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-    });
+ 
 
   useEffect(() => {
     getMyCourses();
+
+    
   }, []);
 
 
-  console.log(courseArr);
+  // console.log(courseArr[0].start_date);
   
+  // const today = new Date().toISOString().split("T")[0];
 
   return (
     <div
@@ -81,13 +81,14 @@ function StudentDash() {
 
 
             <h3 className="text-md font-semibold">
-              Start Date: {formatDate(elem.start_date)}
+              Start Date: (elem.start_date)
             </h3>
 
             <h3 className="text-md font-semibold">
-              End Date: {formatDate(elem.end_date)}
+              End Date: formatDate(elem.end_date)
             </h3>
 
+          
             <button
               onClick={(e) => {
                 e.stopPropagation(); // avoid double navigation
@@ -97,6 +98,7 @@ function StudentDash() {
             >
               ▶ Watch Videos
             </button>
+
           </div>
         ))}
       </div>

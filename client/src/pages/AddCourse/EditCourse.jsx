@@ -7,213 +7,159 @@ import { useNavigate, useParams } from "react-router";
 import { editCourse, getCourseDetails } from "../../services/coursesServices";
 
 function EditCourse() {
-    const navigate = useNavigate()
-    const {course_id} = useParams()
-    useEffect(()=>{
-        const user = getAuthUser()
-        if(!user) {
-            toast.error("Not Logged In")
-            navigate('/login')
-        }
-        if(user.role !== "admin") {
-            toast.error("Not Authorised")
-            navigate('/login')
-        }
+  const navigate = useNavigate();
+  const { course_id } = useParams();
 
-        oldCourseDets()
+  // ✅ FIX 1: correct state setter name
+  const [course_name, setCourseName] = useState("");
+  const [description, setDescription] = useState("");
+  const [fees, setFees] = useState(null);
+  const [start_date, setStart_date] = useState("");
+  const [end_date, setEnd_date] = useState("");
+  const [video_expire_days, setVideo_expire_days] = useState("");
 
-    })
-
-    const[course_name, setCourseName] = useState("")
-    const[description, setDescription] = useState("")
-    const[fees, setFees] = useState(null)
-    const [start_date, setStart_date] = useState("")
-    const[end_date, setEnd_date] = useState("")
-    const[video_expire_days, setVideo_expire_days] = useState("")
-
-  
-
-    const oldCourseDets = async ()=> {
-      const res = await getCourseDetails(course_id)
-      const d = res.data.data[0];
-      console.log(d);
-
-      setCourseName(d.course_name)
-      setDescription(d.description)
-      setStart_date(d.start_date)
-      setEnd_date(d.end_date)
-      setFees(d.fees)
-      setVideo_expire_days(d.video_expire_days)
-      
-    }
-
-
+  // ✅ FIX 2: dependency array added
+  useEffect(() => {
+    console.log("type",typeof(course_id));
     
-    const updateCourse = async(e)=>{
-      if(!course_name) 
-        toast.warn("Course Name is Empty")
-      else if(!fees) 
-        toast.warn("Fees is Empty")
-      else if(!start_date)
-        toast.warn("Start date is Empty")
-      else if(!end_date)
-        toast.warn("End date is Empty")
-      else {
-        e.preventDefault()
-        const payload = {
-            course_name: course_name,
-            description: description,
-            fees: fees,
-            start_date: start_date,
-            end_date: end_date,
-            video_expire_days: video_expire_days
-        }
-        try {
-          const res = await editCourse(payload, course_id)
-          if(res.status == "success")
-            toast.success("Course Edited Successfully")
-        }catch(ex){
-          console.log(ex);
-          toast.error("No Course with such id")
-        }
-      }
-        
+    const user = getAuthUser();
+    if (!user) {
+      toast.error("Not Logged In");
+      navigate("/login");
+      return;
+    }
+    if (user.role !== "admin") {
+      toast.error("Not Authorised");
+      navigate("/login");
+      return;
     }
 
+    oldCourseDets();
+  }, []); // ✅ IMPORTANT
+
+  const oldCourseDets = async () => {
+    const res = await getCourseDetails(course_id);
+    const d = res.data.data[0];
+
+    setCourseName(d.course_name);
+    setDescription(d.description);
+    setStart_date(d.start_date);
+    setEnd_date(d.end_date);
+    setFees(d.fees);
+    setVideo_expire_days(d.video_expire_days);
+  };
+
+  const updateCourse = async (e) => {
+    e.preventDefault();
+
+    if (!course_name) toast.warn("Course Name is Empty");
+    else if (!fees) toast.warn("Fees is Empty");
+    else if (!start_date) toast.warn("Start date is Empty");
+    else if (!end_date) toast.warn("End date is Empty");
+    else {
+      const payload = {
+        course_name,
+        description,
+        fees,
+        start_date,
+        end_date,
+        video_expire_days,
+      };
+
+      try {
+        const res = await editCourse(payload, course_id);
+        console.log(res);
+        
+        if (res.data.status === "success")
+          toast.success("Course Edited Successfully");
+      } catch (ex) {
+        console.log(ex);
+        toast.error("No Course with such id");
+      }
+    }
+  };
 
   return (
     <div>
       <div
-        className="wrapper min-h-screen w-full bg-cover bg-fixed "
+        className="wrapper min-h-screen w-full bg-cover bg-fixed"
         style={{ backgroundImage: `url(${bg})` }}
       >
         <Navbar />
 
         <div className="flex justify-center py-12 px-4">
           <form
-            // onSubmit={handleSubmit}
-            className="w-full max-w-2xl
-              bg-white/20 backdrop-blur-xl border border-white/40
-              shadow-2xl rounded-3xl p-8 space-y-5 text-blue-900"
+            onSubmit={updateCourse}
+            className="w-full max-w-2xl bg-white/20 backdrop-blur-xl
+              border border-white/40 shadow-2xl rounded-3xl
+              p-8 space-y-5 text-blue-900"
           >
             <h2 className="text-2xl font-semibold text-center text-blue-950">
               Edit Course
             </h2>
 
-            {/* Course Name */}
             <div>
               <label className="font-medium">Course Name</label>
               <input
-                name="course_name"
-                // value={form.course_name}
                 value={course_name}
-                onChange={(e)=>setCourseName(e.target.value)}
+                onChange={(e) => setCourseName(e.target.value)}
                 className="w-full glass-input"
                 placeholder="Enter course name"
-                required
               />
-              
             </div>
 
-            {/* Description */}
             <div>
               <label className="font-medium">Description</label>
               <textarea
                 rows={3}
-                name="description"
-                
-                // value={form.description}
-                onChange={(e)=>setDescription(e.target.value)}
-                className="w-full glass-input resize-none"
-                placeholder="Write course description..."
                 value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                className="w-full glass-input resize-none"
               />
-             
             </div>
 
-            {/* Fees */}
             <div>
               <label className="font-medium">Fees (₹)</label>
               <input
                 type="number"
-                name="fees"
-                // value={form.fees}
-                onChange={(e)=>setFees(e.target.value)}
-                className="w-full glass-input"
-                placeholder="Eg: 9999"
                 value={fees}
-                required
+                onChange={(e) => setFees(e.target.value)}
+                className="w-full glass-input"
               />
-              
             </div>
 
-            {/* Dates */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label className="font-medium">Start Date</label>
-                <input
-                  type="date"
-                  name="start_date"
-                //   value={form.start_date}
-                onChange={(e)=>setStart_date(e.target.value)}
-                  className="w-full glass-input"
-                  value={start_date}
-                  required
-                />
-               
-              </div>
+              <input
+                type="date"
+                value={start_date}
+                onChange={(e) => setStart_date(e.target.value)}
+                className="w-full glass-input"
+              />
 
-              <div>
-                <label className="font-medium">End Date</label>
-                <input
-                  type="date"
-                  name="end_date"
-                //   value={form.end_date}
-                onChange={(e)=>setEnd_date(e.target.value)}
-                  className="w-full glass-input"
-                  value={end_date}
-                  required
-                />
-                
-              </div>
+              <input
+                type="date"
+                value={end_date}
+                onChange={(e) => setEnd_date(e.target.value)}
+                className="w-full glass-input"
+              />
             </div>
 
-            {/* Video Expiry */}
             <div>
               <label className="font-medium">Video Expire Days</label>
               <input
-                type="text"
-                name="video_expire_days"
-                // value={form.video_expire_days}
                 value={video_expire_days}
-                onChange={(e)=>setVideo_expire_days(e.target.value)}
+                onChange={(e) => setVideo_expire_days(e.target.value)}
                 className="w-full glass-input"
-                placeholder="Eg: 180"
-                required
               />
-              
             </div>
 
-            {/* Buttons */}
-            <div className="flex justify-between pt-3">
-              <button
-                type="button"
-                onClick={() => navigate(-1)}
-                className="cursor-pointer px-6 py-2 rounded-full bg-white/60 hover:bg-white text-blue-800 font-medium shadow"
-              >
-                Cancel
-              </button>
-
-              <button
-                type="submit"
-                className="px-8 py-2 rounded-full font-semibold text-white
-                  bg-gradient-to-r from-emerald-400 to-teal-500
-                  shadow-lg hover:-translate-y-0.5 transition-all cursor-pointer"
-                onClick={updateCourse}
-              >
-                Edit Changes
-              </button>
-            </div>
+            <button
+              type="submit"
+              className="px-8 py-2 rounded-full font-semibold text-white
+                bg-gradient-to-r from-emerald-400 to-teal-500"
+            >
+              Edit Changes
+            </button>
           </form>
         </div>
       </div>

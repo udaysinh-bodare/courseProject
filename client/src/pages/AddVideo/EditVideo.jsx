@@ -14,6 +14,7 @@ function EditVideo() {
 
     useEffect(()=>{
 
+        
 
         const user = getAuthUser()
 
@@ -35,34 +36,28 @@ function EditVideo() {
     const abc = async()=>{
 
       const res = await getVidDetails(video_id)
-      setOldCourse_id(res.data.data[0].course_id)
-      setOldDesc(res.data.data[0].description)
-      setOldUrl(res.data.data[0].youtube_url)
-      setOldVidTitle(res.data.data[0].title)
-
-      setCourse_id()
-
-      console.log(res.data.data[0].title);
+      
+      const d = res.data.data[0]
+      console.log(d);
+      
+      setVidTitle(d.title)
+      setDesc(d.description)
+      setUrl(d.youtube_url)
+      setCourse_id(d.course_id)
+      
+      console.log(d.vidTitle);
+      
       
     }
 
     
 
-    const [oldVidTitle, setOldVidTitle] = useState("")
-    const [oldDesc, setOldDesc] = useState("")
-    const [oldUrl, setOldUrl] = useState("")
-    const [oldCourse_id, setOldCourse_id] = useState(null)
-   
 
     const [vidTitle, setVidTitle] = useState("")
     const [desc, setDesc] = useState("")
     const [url, setUrl] = useState("")
     const [course_id, setCourse_id] = useState(null)
 
-    function stringToInt(str) {
-      return parseInt(str, 10);
-    }
-    
 
 
     const editVid= async(e)=> {
@@ -77,7 +72,7 @@ function EditVideo() {
         console.log(payload);
         
         try {
-            const res = await editVideo(payload, stringToInt(video_id))
+            const res = await editVideo(payload, video_id)
             console.log(res);
             
             if(res.data.status == "success") {
@@ -114,10 +109,10 @@ function EditVideo() {
               <label className="font-medium">Video Title</label>
               <input
                 name="title"
-                // value={oldVidTitle}
+                value = {vidTitle}
                 onChange={(e)=>setVidTitle(e.target.value)}
                 className="w-full glass-input"
-                placeholder={oldVidTitle}
+                // placeholder={oldVidTitle}
               />
             </div>
 
@@ -127,10 +122,10 @@ function EditVideo() {
               <textarea
                 rows={3}
                 name="description"
-                // value={oldDesc}
+                value={desc}
                 onChange={(e)=>setDesc(e.target.value)}
                 className="w-full glass-input resize-none"
-                placeholder={oldDesc}
+                // placeholder={oldDesc}
               />
             </div>
 
@@ -139,10 +134,10 @@ function EditVideo() {
               <label className="font-medium">YouTube URL</label>
               <input
                 name="youtube_url"
-                // value={oldUrl}
+                value={url}
                 onChange={(e)=>setUrl(e.target.value)}
                 className="w-full glass-input"
-                placeholder={oldUrl}
+                // placeholder={oldUrl}
               />
             </div>
 
@@ -152,8 +147,8 @@ function EditVideo() {
               <input
                 className="w-full glass-input bg-gray-200 cursor-not-allowed"
                 name="course_id"
-                // value={oldCourse_id}
-                placeholder={oldCourse_id}
+                value={course_id}
+                // placeholder={oldCourse_id}
                 onChange={(e)=>setCourse_id(e.target.value)}
               />
             </div>
