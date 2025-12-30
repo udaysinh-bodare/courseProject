@@ -10,6 +10,7 @@ function ContactUs() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false); //  loading state
 
   async function sendemail(e) {
     e.preventDefault();
@@ -28,6 +29,8 @@ function ContactUs() {
     }
 
     try {
+      setLoading(true); //  start loading
+
       const response = await sendemailsys(name, email, message);
       console.log(response);
       toast.success("Email sent successfully ✅");
@@ -38,7 +41,23 @@ function ContactUs() {
     } catch (err) {
       console.error(err);
       toast.error("Email not sent ❌");
+    } finally {
+      setLoading(false); //  stop loading
     }
+  }
+
+  // LOADING SCREEN
+  if (loading) {
+    return (
+      <div className="h-screen w-full bg-gradient-to-br from-blue-500 to-sky-200 flex items-center justify-center">
+        <div className="flex flex-col items-center gap-3">
+          <div className="w-12 h-12 border-4 border-white/50 border-t-teal-400 rounded-full animate-spin" />
+          <p className="text-white/90 font-medium tracking-wide">
+            Sending email…
+          </p>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -124,9 +143,10 @@ function ContactUs() {
               {/* Button */}
               <button
                 type="submit"
+                disabled={loading}
                 className="bg-blue-500 text-white px-6 py-2
                            rounded-full hover:bg-blue-600
-                           transition-all cursor-pointer"
+                           transition-all cursor-pointer disabled:opacity-50"
               >
                 Send Message
               </button>
