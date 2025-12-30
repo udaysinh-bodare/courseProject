@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router";
 import bg from "../../assets/background.png";
-import Navbar from "../../components/Navbar";
 import { toast } from "react-toastify";
 import { getAuthUser } from "../../utils/auth";
 import { addVideo } from "../../services/videoServices";
+import AdminNavbar from "../../components/AdminNavbar";
 
 function AddVideo() {
   const [loading, setLoading] = useState(true);
@@ -112,7 +112,7 @@ function AddVideo() {
       <div className="absolute inset-0 bg-gradient-to-b from-white/10 to-white/40 pointer-events-none" />
 
       <div className="relative max-w-7xl mx-auto">
-        <Navbar />
+        <AdminNavbar/>
 
         <div className="flex justify-center py-12 px-4">
           <form

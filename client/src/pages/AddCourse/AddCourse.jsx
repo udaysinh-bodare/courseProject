@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import bg from "../../assets/background.png";
-import Navbar from "../../components/Navbar";
 import { addCourse, uploadImage } from "../../services/coursesServices";
 import { getAuthUser } from "../../utils/auth";
 import { toast } from "react-toastify";
+import AdminNavbar from "../../components/AdminNavbar";
 
 function AddCourse() {
 	const [loading, setLoading] = useState(true);
@@ -139,7 +139,7 @@ function AddCourse() {
 			<div className="absolute inset-0 bg-gradient-to-b from-white/10 to-white/40 pointer-events-none" />
 
 			<div className="relative max-w-7xl mx-auto">
-				<Navbar />
+				<AdminNavbar />
 
 				<div className="flex justify-center py-12 px-4">
 					<form
