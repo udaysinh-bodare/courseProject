@@ -11,7 +11,8 @@ const {
   getallcourses,
   getstudentsbycourses,
   getCourseDetailsql,
-  getAllstudentsql
+  getAllstudentsql,
+  allCourse
   
 } = require("../services/courses.services");
 
@@ -63,6 +64,7 @@ const path = require("path");
 const fs = require("fs");
 const fsp = require("fs/promises");
 const multer = require("multer");
+const { error } = require("console");
 
 
 
@@ -164,6 +166,15 @@ async function deleteImage(req, res) {
       .status(500)
       .send(result.createResult("Failed to delete image"));
   }
+}
+
+function courseWithoutDate(req, res) {
+  pool.query(allCourse, (error, data)=>{
+    if(error) {
+      return res.status(404).send(result.createResult(error))
+    }
+    return res.send(result.createResult(null, data))
+  })
 }
 
 
@@ -353,5 +364,6 @@ module.exports = {
   getAllstudent,
   uploadImage,
   returnImage,
-  deleteImage
+  deleteImage,
+  courseWithoutDate
 };
