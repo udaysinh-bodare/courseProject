@@ -12,7 +12,6 @@ function AllCourses() {
 
   const [loading, setLoading] = useState(true);
   const [courses, setCourses] = useState([]);
-  
 
   // ---------- FETCH ----------
   async function loadCourses() {
@@ -83,52 +82,53 @@ function AllCourses() {
 
           {/* Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {courses.map((course) =>
-              toDateObject(formatDate(course.end_date)) < new Date() ? (
+            {courses.map((course) => {
+              console.log(course);
+              
+              const isExpired = new Date(course.end_date) >= new Date();
+              console.log(isExpired);
+              return (
                 <div key={course.course_id} className="space-y-2">
-                  {/* Admin Mode Card */}
-                  <CourseCard course={course} mode="student" />
+                  {isExpired ? (
+                    
+                    <CourseCard course={course} mode="student" />
+                  ) : (
+                      <div className="bg-white/80 backdrop-blur shadow-lg rounded-2xl p-4 hover:-translate-y-1 hover:shadow-2xl transition-all">
+                        <div className="h-[140px] rounded-xl bg-gradient-to-br from-sky-100 to-blue-200 flex items-center justify-center cursor-pointer">
+                          <img
+                            src="/courseimages/default.jpg"
+                            alt="Course Name"
+                            className="h-full w-full object-cover rounded-xl"
+                          />
+                        </div>
+
+                        <h3 className="font-semibold mt-3 text-gray-900">
+                          {course.course_name}
+                        </h3>
+
+                        <p className="text-sm text-gray-600 line-clamp-2">
+                          {course.description}
+                        </p>
+
+                        <div className="flex justify-between items-center mt-2">
+                          <span className="text-xs text-gray-700">
+                            📅 {formatDate(course.start_date)}
+                          </span>
+
+                          <span className="text-xs font-semibold px-2 py-1 rounded-lg bg-emerald-100 text-emerald-700">
+                            {course.fee}
+                          </span>
+                        </div>
+
+                        <button className="mt-3 w-full py-2 rounded-xl bg-gradient-to-r from-red-400 to-red-500 text-white font-semibold shadow-md hover:opacity-90">
+                          Expired
+                        </button>
+                      </div>
+                    
+                  )}
                 </div>
-              ) : (
-                <div key={course.course_id} className="space-y-2">
-
-                  <div className="bg-white/80 backdrop-blur shadow-lg rounded-2xl p-4 transition-all">
-                    <div className="h-[140px] rounded-xl bg-gradient-to-br from-sky-100 to-blue-200 flex items-center justify-center">
-                      <img
-                        // src={image}
-                        alt={course.course_name}
-                        className="h-full w-full object-cover rounded-xl"
-                      />
-                    </div>
-
-                    <h3 className="font-semibold mt-3">{course.course_name}</h3>
-
-                    <p className="text-sm text-gray-600 line-clamp-2">
-                      {course.description || "Course description coming soon."}
-                    </p>
-
-                    <div className="flex justify-between items-center mt-2">
-                      {course.start_date && (
-                        <span className="text-xs text-gray-700">
-                          📅 {new Date(course.start_date).toLocaleDateString()}
-                        </span>
-                      )}
-
-                      {course.fees && (
-                        <span className="text-xs font-semibold px-2 py-1 rounded-lg bg-emerald-100 text-emerald-700">
-                          From ₹{course.fees}
-                        </span>
-                      )}
-                    </div>
-
-                    <div className="mt-3 w-full py-2 rounded-xl bg-red-500 text-gray-700 font-semibold text-center text-lg">
-                      Expired
-                    </div>
-                  </div>
-
-                </div>
-              )
-            )}
+              );
+            })}
           </div>
         </div>
       </div>
