@@ -235,7 +235,6 @@ async function SendEmail(req, res) {
  
 
 
-
 module.exports = {
   registerToCourse,
   changePassword,

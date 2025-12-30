@@ -98,12 +98,11 @@ function PrivacyPolicy() {
               </p>
             </section>
           </div>
-
-          <div className="mt-10">
-            <Footer />
-          </div>
         </div>
       </div>
+      <div className="footer">
+				<Footer />
+			</div>
     </div>
   );
 }

@@ -101,7 +101,7 @@ function CourseCard({ course, mode = "public" }) {
 				</button>
 			)}
 
-			{mode === "public" && (
+			{mode !== "admin" && mode !== "student-dashboard" && (
 				<button
 					className="mt-5 w-full py-2 rounded-xl bg-gradient-to-r from-teal-400 to-green-500 text-white font-semibold shadow-md"
 					onClick={goToCourse}

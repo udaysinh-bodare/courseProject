@@ -6,6 +6,7 @@ import AdminNavbar from "../../components/AdminNavbar";
 import { toast } from "react-toastify";
 import { getUserDetails } from "../../services/userServices";
 import { getAuthUser } from "../../utils/auth";
+import { getCourseDetails } from "../../services/coursesServices";
 
 function Profile() {
   const navigate = useNavigate();
@@ -29,10 +30,30 @@ function Profile() {
         const res = await getUserDetails(auth.email);
         const u = res?.data?.data;
 
+        // -------- Fetch course name for each enrolled course --------
+        const studentsWithNames = await Promise.all(
+          (u.students || []).map(async (s) => {
+            try {
+              const courseRes = await getCourseDetails(s.course_id);
+
+              // API RETURNS ARRAY -> pick first record
+              const course = courseRes?.data?.data?.[0];
+
+              return {
+                ...s,
+                course_name: course?.course_name || "Unknown Course",
+              };
+
+            } catch {
+              return { ...s, course_name: "Unknown Course" };
+            }
+          })
+        );
+
         setUser({
           email: u.email,
           role: u.role,
-          students: u.students || []
+          students: studentsWithNames,
         });
 
       } catch {
@@ -54,17 +75,13 @@ function Profile() {
 
   if (!user) return null;
 
-  // ------------ AVATAR HANDLING ------------
+  // Avatar
   const firstStudent = user.students[0];
   const avatarLetter =
-    user.role === "admin"
-      ? "A"
-      : firstStudent?.name?.charAt(0) || "S";
+    user.role === "admin" ? "A" : firstStudent?.name?.charAt(0) || "S";
 
   const avatarPic =
-    user.role === "admin"
-      ? null
-      : firstStudent?.profile_pic;
+    user.role === "admin" ? null : firstStudent?.profile_pic;
 
   return (
     <div
@@ -75,13 +92,12 @@ function Profile() {
 
       <div className="flex justify-center py-16 px-4">
         <div className="w-full max-w-3xl bg-white/20 backdrop-blur-2xl
-            border border-white/40 shadow-[0_40px_90px_rgba(0,0,0,0.25)]
-            rounded-3xl p-10">
+          border border-white/40 shadow-[0_40px_90px_rgba(0,0,0,0.25)]
+          rounded-3xl p-10">
 
           {/* ===== PROFILE HEADER ===== */}
           <div className="flex flex-col sm:flex-row gap-8 items-center sm:items-start">
 
-            {/* Avatar */}
             {avatarPic ? (
               <img
                 src={avatarPic}
@@ -89,14 +105,12 @@ function Profile() {
                 className="w-28 h-28 rounded-full object-cover border-4 border-white shadow-xl"
               />
             ) : (
-              <div className="w-28 h-28 rounded-full bg-gradient-to-br
-                  from-indigo-500 to-purple-500 flex items-center justify-center
-                  text-white text-4xl font-bold shadow-xl">
+              <div className="w-28 h-28 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500
+                flex items-center justify-center text-white text-4xl font-bold shadow-xl">
                 {avatarLetter}
               </div>
             )}
 
-            {/* Profile Info */}
             <div className="flex-1">
               <h2 className="text-3xl font-bold text-gray-900 tracking-wide">
                 {user.role === "admin"
@@ -132,7 +146,7 @@ function Profile() {
           {/* Divider */}
           <div className="h-px bg-white/50 my-8" />
 
-          {/* ===== STUDENT-ONLY SECTION ===== */}
+          {/* ===== STUDENT COURSES ===== */}
           {user.role === "student" && (
             <>
               <h3 className="text-lg font-semibold mb-3">Enrolled Courses</h3>
@@ -149,14 +163,17 @@ function Profile() {
                     className="bg-white/40 backdrop-blur-xl rounded-2xl
                       border border-white/60 p-4 shadow"
                   >
-                    <p className="text-[11px] text-gray-600">Course ID</p>
-                    <p className="text-sm font-semibold">{s.course_id}</p>
+                    <p className="text-[11px] text-gray-600">Course Name</p>
+                    <p className="text-sm font-semibold">
+                      {s.course_name}
+                    </p>
 
-                    <p className="text-[11px] text-gray-600 mt-2">Student Name</p>
-                    <p className="text-sm font-semibold">{s.name}</p>
-
-                    <p className="text-[11px] text-gray-600 mt-2">Mobile</p>
-                    <p className="text-sm font-semibold">{s.mobile_no || "—"}</p>
+                    <p className="text-[11px] text-gray-600 mt-2">
+                      Student Name
+                    </p>
+                    <p className="text-sm font-semibold">
+                      {s.name || "—"}
+                    </p>
                   </div>
                 ))}
               </div>
