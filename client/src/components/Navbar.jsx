@@ -1,11 +1,19 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router";
+import { getAuthUser } from "../utils/auth";
 
 function Navbar() {
   const navigate = useNavigate();
 
   // Auth status from token
-  const isLoggedIn = !!localStorage.getItem("token");
+  const [isLoggedIn , setIsLoggedIn] = useState(!!localStorage.getItem("token"));
+  const token = localStorage.getItem("token");
+  if (token) {
+    const user = getAuthUser(token);
+    if (!user) {
+      setIsLoggedIn(false);
+    }
+  }
 
   const [open, setOpen] = useState(false);
   const [courseOpen, setCourseOpen] = useState(false);
