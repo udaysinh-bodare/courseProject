@@ -113,7 +113,7 @@ function AdminAllCourses() {
                   onClick={() => openCourse(course.course_id)}
                   className="cursor-pointer"
                 >
-                  <CourseCard course={course} />
+                  <CourseCard course={course} mode="admin" />
                 </div>
 
                 {/* Action Row */}
