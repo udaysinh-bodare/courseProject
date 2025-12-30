@@ -1,6 +1,7 @@
 const pool = require("../config/db");
 const { createuser, registerstudent, allusers } = require("../services/auth.services");
 const crypto = require("crypto-js");
+const nodemailer = require("nodemailer");
 const {
   changePasswordsql,
   myCoursessql,
@@ -14,7 +15,7 @@ function registerToCourse(req, res) {
 
   if (!name || !email || !password || !course_id || !mobile_no) {
     console.log(req.body);
-    
+
     return res.status(400).send({
       status: "ERROR",
       message: "Missing required fields"
@@ -92,7 +93,7 @@ function changePassword(req, res) {
   const { password } = req.body;
   const email = req.user?.email;
 
-  
+
 
   if (!password) {
     return res.status(400).send({
@@ -155,7 +156,7 @@ function myCourses(req, res) {
 function myCourseDescription(req, res) {
   const email = req.user?.email;
   const sql = course_desc_sql
-  pool.query(sql,[email], (error, data)=>{
+  pool.query(sql, [email], (error, data) => {
     if (error) {
       return res.status(500).send({
         status: "ERROR",
@@ -198,10 +199,48 @@ function myCoursesandvedio(req, res) {
   });
 }
 
+async function SendEmail(req, res) {
+  const { name, email, message } = req.body;
+
+  try {
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: "sunbeaminternship@gmail.com",
+        pass: "luzd guqr qayx pwel"
+      }
+    });
+
+    const mailOptions = {
+      from: "sunbeaminternship@gmail.com",
+      replyTo: email,
+      to: "sunbeaminternship@gmail.com",
+      subject: "New Contact Us Message",
+      html: `
+        <h3>New Message from Student</h3>
+        <p><b>Name:</b> ${name}</p>
+        <p><b>Email:</b> ${email}</p>
+        <p><b>Message:</b> ${message}</p>
+      `
+    };
+
+    await transporter.sendMail(mailOptions);
+    res.json({ success: true, message: "Message sent successfully" });
+
+  } catch (err) {
+    console.error("EMAIL ERROR:", err);
+    res.status(500).json({ success: false, message: "Email not sent" });
+  }
+}
+ 
+
+
+
 module.exports = {
   registerToCourse,
   changePassword,
   myCourses,
   myCoursesandvedio,
-  myCourseDescription
+  myCourseDescription,
+  SendEmail
 };
