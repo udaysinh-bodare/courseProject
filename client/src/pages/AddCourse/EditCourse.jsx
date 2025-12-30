@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import bg from "../../assets/background.png";
-import Navbar from "../../components/Navbar";
 import { getAuthUser } from "../../utils/auth";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router";
 import { editCourse, getCourseDetails } from "../../services/coursesServices";
+import AdminNavbar from "../../components/AdminNavbar";
 
 function EditCourse() {
   const navigate = useNavigate();
@@ -85,7 +85,7 @@ function EditCourse() {
         className="wrapper min-h-screen w-full bg-cover bg-fixed"
         style={{ backgroundImage: `url(${bg})` }}
       >
-        <Navbar />
+        <AdminNavbar/>
 
         <div className="flex justify-center py-12 px-4">
           <form

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../../components/Navbar";
 import bg from "../../assets/background.png";
 import { Await, useNavigate, useParams } from "react-router";
 import { editVideo, getVidDetails } from "../../services/videoServices";
 import { toast } from "react-toastify";
 import { getAuthUser} from "../../utils/auth"
+import AdminNavbar from "../../components/AdminNavbar";
 
 
 function EditVideo() {
@@ -90,7 +90,7 @@ function EditVideo() {
       className="wrapper min-w-full h-screen bg-cover bg-fixed"
       style={{ backgroundImage: `url(${bg})` }}
     >
-      <Navbar />
+      <AdminNavbar/>
 
       <div className="relative max-w-7xl mx-auto">
         
