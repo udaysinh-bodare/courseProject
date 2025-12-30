@@ -35,6 +35,21 @@ function StudentDash() {
     
   }, []);
 
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+
+    const day = date.getDate();
+    const month = date.toLocaleString('en-US', { month: 'short' });
+    const year = date.getFullYear();
+
+    return `${day} ${month} ${year}`;
+  }
+
+  function toDateObject(dateString) {
+    return new Date(dateString);
+  }
+
+
 
   // console.log(courseArr[0].start_date);
   
@@ -81,25 +96,41 @@ function StudentDash() {
 
 
             <h3 className="text-md font-semibold">
-              Start Date: (elem.start_date)
+              Start Date: {formatDate(elem.start_date)}
             </h3>
 
             <h3 className="text-md font-semibold">
-              End Date: formatDate(elem.end_date)
+              End Date: {formatDate(elem.end_date)}
             </h3>
 
-          
-            <button
-              onClick={(e) => {
-                e.stopPropagation(); // avoid double navigation
-                navigate(`/student/allvideos/${elem.course_id}`);
-              }}
-              className="mt-2 px-4 py-2 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700 cursor-pointer"
-            >
-              ▶ Watch Videos
-            </button>
+            
+            
+            {(toDateObject(elem.end_date) < new Date()) ?   (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation(); // avoid double navigation
+                  navigate(`/student/allvideos/${elem.course_id}`);
+                }}
+                className="mt-2 px-4 py-2 rounded-lg bg-red-600 text-white font-semibold"
+              >
+                Expired
+              </button>
+              ): (
+                <button
+                onClick={(e) => {
+                  e.stopPropagation(); // avoid double navigation
+                  navigate(`/student/allvideos/${elem.course_id}`);
+                }}
+                className="mt-2 px-4 py-2 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700 cursor-pointer"
+              >
+                ▶ Watch Videos
+              </button>
+              )
+
+            }
 
           </div>
+
         ))}
       </div>
 
