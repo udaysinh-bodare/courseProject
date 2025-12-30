@@ -35,28 +35,35 @@ function Students() {
     }
   }
 
-  function filterByCourse() {
-    if (courseName === "") {
-      toast.warn("Enter Course name");
+  
+  function applyFilters(clickedFrom) {
+    if (name.trim() === "" && courseName.trim() === "") {
+      toast.warn("Please enter student name or course name");
       return;
     }
 
-    const filtered = allStudents.filter(
-      (s) => String(s.course_name) === String(courseName)
-    );
-
-    setStudents(filtered);
-  }
-
-  function filterByName() {
-    if (name === "") {
-      toast.warn("Enter student name");
+    if (clickedFrom === "name" && name.trim() === "") {
+      toast.warn("Please enter student name");
       return;
     }
 
-    const filtered = allStudents.filter((s) =>
-      s.name.toLowerCase().includes(name.toLowerCase())
-    );
+    if (clickedFrom === "course" && courseName.trim() === "") {
+      toast.warn("Please enter course name");
+      return;
+    }
+
+    const filtered = allStudents.filter((s) => {
+      const matchName =
+        name.trim() === "" ||
+        s.name.toLowerCase().includes(name.toLowerCase());
+
+      const matchCourse =
+        courseName.trim() === "" ||
+        (s.course_name &&
+          s.course_name.toLowerCase().includes(courseName.toLowerCase()));
+
+      return matchName && matchCourse;
+    });
 
     setStudents(filtered);
   }
@@ -81,9 +88,8 @@ function Students() {
             All Students
           </h2>
 
-          {/* Filters */}
           <div className="flex gap-4 mb-6 flex-wrap">
-             <input
+            <input
               type="text"
               placeholder="Student Name"
               value={name}
@@ -92,7 +98,7 @@ function Students() {
             />
 
             <button
-              onClick={filterByName}
+              onClick={() => applyFilters("name")}
               className="bg-green-500 text-white px-4 py-2 rounded-md"
             >
               Filter Name
@@ -107,13 +113,11 @@ function Students() {
             />
 
             <button
-              onClick={filterByCourse}
+              onClick={() => applyFilters("course")}
               className="bg-blue-500 text-white px-4 py-2 rounded-md"
             >
               Filter Course
             </button>
-
-           
 
             <button
               onClick={resetFilter}
@@ -123,7 +127,7 @@ function Students() {
             </button>
           </div>
 
-          {/* Table */}
+          
           <div className="overflow-x-auto">
             <table className="w-full border-collapse">
               <thead>
@@ -139,7 +143,7 @@ function Students() {
               <tbody>
                 {loading && (
                   <tr>
-                    <td colSpan="6" className="text-center p-4">
+                    <td colSpan="5" className="text-center p-4">
                       Loading....
                     </td>
                   </tr>
@@ -147,7 +151,7 @@ function Students() {
 
                 {!loading && students.length === 0 && (
                   <tr>
-                    <td colSpan="6" className="text-center p-4">
+                    <td colSpan="5" className="text-center p-4">
                       No students found
                     </td>
                   </tr>
@@ -155,10 +159,7 @@ function Students() {
 
                 {!loading &&
                   students.map((s, index) => {
-                    let rowClass = "bg-white/20";
-                    if (index % 2 === 0) {
-                      rowClass = "bg-white/40";
-                    }
+                    let rowClass = index % 2 === 0 ? "bg-white/40" : "bg-white/20";
 
                     return (
                       <tr key={s.reg_no} className={rowClass}>
@@ -166,7 +167,7 @@ function Students() {
                         <td className="p-3">{s.name}</td>
                         <td className="p-3">{s.email}</td>
                         <td className="p-3 font-medium text-blue-800">
-                          {s.course_name ? s.course_name : "N/A"}
+                          {s.course_name || "N/A"}
                         </td>
                         <td className="p-3">{s.mobile_no}</td>
                       </tr>
