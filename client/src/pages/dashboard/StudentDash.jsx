@@ -1,155 +1,69 @@
 import React, { useEffect, useState } from "react";
 import bg from "../../assets/background.png";
 import Navbar from "../../components/Navbar";
-import { myCourses } from "../../services/coursesServices";
-import { useNavigate } from "react-router";
 import Footer from "../../components/Footer";
+import { myCourses } from "../../services/coursesServices";
+import CourseCard from "../../components/CourseCard";
+import { useNavigate } from "react-router";
 
 function StudentDash() {
-  const navigate = useNavigate();
   const [courseArr, setCourseArr] = useState([]);
   const token = localStorage.getItem("token");
+  const navigate = useNavigate();
 
-  if (!token) {
-    navigate("/login");
-  }
-
-  const getMyCourses = async () => {
-    try {
-      const result = await myCourses(token);
-      console.log(result.data);
-      
-      if (result.data.status === "SUCCESS") {
-        setCourseArr(result.data.data);
-      }
-    } catch {
-      console.log("Failed to load courses");
-    }
-  };
-
- 
-
+  // ✅ Redirect safely
   useEffect(() => {
-    getMyCourses();
+    if (!token) {
+      navigate("/login");
+    }
+  }, [token, navigate]);
 
-    
-  }, []);
+  // ✅ Load enrolled courses
+  useEffect(() => {
+    const getMyCourses = async () => {
+      try {
+        const result = await myCourses(token);
+        if (result.data.status === "SUCCESS") {
+          setCourseArr(result.data.data || []);
+        }
+      } catch {
+        console.log("Failed to load courses");
+      }
+    };
 
-  function formatDate(dateString) {
-    const date = new Date(dateString);
-
-    const day = date.getDate();
-    const month = date.toLocaleString('en-US', { month: 'short' });
-    const year = date.getFullYear();
-
-    return `${day} ${month} ${year}`;
-  }
-
-  function toDateObject(dateString) {
-    return new Date(dateString);
-  }
-
-
-
-  // console.log(courseArr[0].start_date);
-  
-  // const today = new Date().toISOString().split("T")[0];
-
-  console.log(courseArr.length);
-  
+    if (token) getMyCourses();
+  }, [token]);
 
   return (
     <div
       className="min-w-full min-h-screen bg-cover bg-fixed bg-no-repeat relative"
-      style={{
-        backgroundImage: `url(${bg})`,
-        backgroundSize: "cover",
-        backgroundAttachment: "fixed",
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "left",
-      }}
+      style={{ backgroundImage: `url(${bg})` }}
     >
       <Navbar />
 
-      <div className="title w-full flex justify-center mt-20 font-bold text-[#155DFC]">
+      <div className="w-full flex justify-center mt-20 font-bold text-[#155DFC]">
         <h1 className="text-3xl">My Courses</h1>
       </div>
 
-      
-        {courseArr.length === 0 && (<div className="w-[100%] flex justify-center text-2xl mt-5">
+      {courseArr.length === 0 && (
+        <div className="w-full flex justify-center text-2xl mt-5">
           <div className="border-2 border-red-100 p-5 bg-red-400 font-semibold text-white rounded-2xl">
             <h1>Not Enrolled to any courses yet</h1>
           </div>
-        </div>)}
-      
+        </div>
+      )}
 
-      <div
-        className="main w-full px-4 sm:px-8 lg:px-20 py-10
-        grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
-      >
-       
-
-        {courseArr.map((elem, index) => (
-          <div
+      <div className="w-full px-4 sm:px-8 lg:px-20 py-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        {courseArr.map((course, index) => (
+          <CourseCard
             key={index}
-            onClick={() =>
-              navigate(`/student/allvideos/${elem.course_id}`)
-            }
-            className="card bg-white/20 p-6 rounded-2xl shadow-lg
-            hover:scale-105 transition-transform cursor-pointer
-            flex flex-col gap-3 min-w-[300px]"
-          >
-            <div className="pic w-full h-[180px] bg-gradient-to-br from-sky-300 to-blue-200 rounded-lg flex justify-center items-center">
-              <span className="text-3xl text-blue-500">📘</span>
-            </div>
-
-            <h1 className="text-xl font-bold">
-              {elem.course_name}
-            </h1>
-
-
-            <h3 className="text-md font-semibold">
-              Start Date: {formatDate(elem.start_date)}
-            </h3>
-
-            <h3 className="text-md font-semibold">
-              End Date: {formatDate(elem.end_date)}
-            </h3>
-
-            
-           
-
-            {(toDateObject(elem.end_date) < new Date()) ?   (
-              <button
-                onClick={(e) => {
-                  e.stopPropagation(); // avoid double navigation
-                  navigate(`/student/allvideos/${elem.course_id}`);
-                }}
-                className="mt-2 px-4 py-2 rounded-lg bg-red-600 text-white font-semibold"
-              >
-                Expired
-              </button>
-              ): (
-                <button
-                onClick={(e) => {
-                  e.stopPropagation(); // avoid double navigation
-                  navigate(`/student/allvideos/${elem.course_id}`);
-                }}
-                className="mt-2 px-4 py-2 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700 cursor-pointer"
-              >
-                ▶ Watch Videos
-              </button>
-              )
-
-            }
-
-          </div>
-
+            course={course}
+            mode="student-dashboard"
+          />
         ))}
       </div>
 
-        
-
+      <Footer />
     </div>
   );
 }
