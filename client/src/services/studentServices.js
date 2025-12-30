@@ -65,3 +65,14 @@ export async function getAllStudents(){
     return response
 
 }
+
+export async function sendemailsys(name,email,message) {
+    const url = config.BASE_URL + '/api/student/contact-us/';
+    const body = {
+        name : name ,
+        email : email,
+        message : message
+    }
+     const response = await axios.post(url,body)
+    return response 
+}
