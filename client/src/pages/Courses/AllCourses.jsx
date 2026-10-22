@@ -85,7 +85,8 @@ function AllCourses() {
             {courses.map((course) => {
               console.log(course);
               
-              const isExpired = new Date(course.end_date) >= new Date();
+              const isExpired = new Date(course.end_date) < new Date();
+              
               console.log(isExpired);
               return (
                 <div key={course.course_id} className="space-y-2">

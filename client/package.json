@@ -13,7 +13,7 @@
     "@tailwindcss/vite": "^4.1.18",
     "axios": "^1.13.2",
     "flowbite": "^4.0.1",
-    "flowbite-react": "^0.12.14",
+    "flowbite-react": "^0.10.2",
     "jwt-decode": "^4.0.0",
     "jwt-decoder": "^0.0.0",
     "react": "^19.2.0",

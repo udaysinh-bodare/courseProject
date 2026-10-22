@@ -118,6 +118,27 @@ function Login() {
 						</Link>
 					</div>
 				</form>
+
+			
+<div className="mt-2 rounded-lg border border-gray-200 bg-gray-50 p-3">
+  <h3 className="mb-1 font-semibold text-gray-800">
+    Demo Credentials
+  </h3>
+
+  <div className="mb-2">
+    <p className="font-medium text-blue-700">Admin Account</p>
+    <p className="text-sm">Email: uday1234@gmail.com</p>
+    <p className="text-sm">Password: uday1234</p>
+  </div>
+
+  <div>
+    <p className="font-medium text-green-700">Student Account</p>
+    <p className="text-sm">Email: sagar@gmail.com</p>
+    <p className="text-sm">Password: sagar123</p>
+  </div>
+</div>
+
+
 			</div>
 		</div>
 	);
