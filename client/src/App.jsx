@@ -18,7 +18,7 @@ import AllVideos from "./pages/Videos/AllVideos";
 import EditCourse from "./pages/AddCourse/EditCourse";
 import AboutUs from "./pages/extra/AboutUs";
 import ContactUs from "./pages/extra/ContactUs";
-import Students from "./pages/AdminPages/students";
+import Students from "./pages/AdminPages/Students";
 import AllCourses from "./pages/Courses/AllCourses";
 import PrivacyPolicy from "./pages/extra/PrivacyPolicy";
 
